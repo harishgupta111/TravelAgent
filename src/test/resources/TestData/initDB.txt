@@ -1,0 +1,27 @@
+-- Dump the structure of the tables here eg
+-- CREATE TABLE role (
+--   roleId bigint(20) NOT NULL AUTO_INCREMENT,
+--   roleDesc varchar(50) DEFAULT NULL,
+--   PRIMARY KEY (roleId),
+--   UNIQUE KEY roleDesc (roleDesc)
+-- );
+
+-- CREATE TABLE user (
+--   userId bigint(20) NOT NULL AUTO_INCREMENT,
+--   loginId varchar(50) DEFAULT NULL,
+--   name varchar(50) DEFAULT NULL,
+--   password varchar(50) DEFAULT NULL,
+--   PRIMARY KEY (userId),
+--   UNIQUE KEY loginId (loginId)
+-- );
+
+-- Dumping structure for table userrole
+-- CREATE TABLE userrole (
+--   userId bigint(20) NOT NULL,
+--   roleId bigint(20) NOT NULL,
+--   PRIMARY KEY (userId,roleId),
+--   KEY FKF3F76701537F6510 (roleId),
+--   KEY FKF3F7670158D4BA7A (userId),
+--  CONSTRAINT FKF3F76701537F6510 FOREIGN KEY (roleId) REFERENCES role (roleId),
+--   CONSTRAINT FKF3F7670158D4BA7A FOREIGN KEY (userId) REFERENCES user (userId)
+-- );
