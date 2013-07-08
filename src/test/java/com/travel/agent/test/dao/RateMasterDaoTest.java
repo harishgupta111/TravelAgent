@@ -38,7 +38,7 @@ public class RateMasterDaoTest {
 		RateMaster rateMaster = new RateMaster();
 		RateMaster.RateMasterBuilder rm = rateMaster.new RateMasterBuilder();
 		rateMaster = rm.activeIndicator(true).destinationLocationCode("Jammu")
-				.effectiveStartDate(new Date()).rateMasterID("123")
+				.effectiveStartDate(new Date())
 				.originLocationCode("VaishnoDevi").rate(250.00)
 				.rateType(RateType.FROM_TO).createdBy(RecordCreatorType.TEST)
 				.updatedBy(RecordCreatorType.TEST).buildNew();

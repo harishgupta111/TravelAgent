@@ -2,7 +2,6 @@ package com.travel.agent.restful.service;
 
 import java.io.IOException;
 import java.util.Set;
-import java.util.UUID;
 
 import javax.validation.ConstraintViolation;
 import javax.validation.Validation;
@@ -55,12 +54,10 @@ public class UserMasterRestService implements InitializingBean {
 	Response createUser(String jsonRequest) throws TASystemException {
 		
 		ObjectMapper mapper = this.hibernateObjectMapper.fetchEagerly(false);
-		
 		UserMaster user = null;
 		
 		try {
 			user = mapper.readValue(jsonRequest, UserMaster.class);
-			user.setUserId(UUID.randomUUID().toString());
 			Set<ConstraintViolation<UserMaster>> constraintViolationsSet = validator
 					.validate(user);
 

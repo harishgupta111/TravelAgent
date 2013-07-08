@@ -43,7 +43,6 @@ public class StateMasterDaoTest {
 		StateMasterBuilder smb = stateMaster.new StateMasterBuilder();
 		stateMaster = smb
 				.stateCode("NJ")
-				.stateMasterId("123")
 				.stateName("New Jersey")
 				.unionTerritory(false)
 				.createdBy(RecordCreatorType.TEST)

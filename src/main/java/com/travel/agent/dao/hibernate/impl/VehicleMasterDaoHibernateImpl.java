@@ -6,6 +6,7 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.UUID;
 
 import org.apache.log4j.Logger;
 import org.hibernate.HibernateException;
@@ -36,6 +37,7 @@ public class VehicleMasterDaoHibernateImpl extends
 			throws TASystemException {
 		VehicleMaster created = null;
 		try {
+			vehicleMaster.setVehicleMasterID(UUID.randomUUID().toString());
 			created = this.insert(vehicleMaster, true);
 			logger.debug("created entity with ID"
 					+ vehicleMaster.getVehicleMasterID());

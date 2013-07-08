@@ -40,7 +40,7 @@ public class ContactUsDaoTest {
 		ContactUs c = new ContactUs();
 		ContactUsBuilder cb = c.new ContactUsBuilder();
 		c = cb.firstName("First Name").lastName("Last Name").senderEmail("abc@abc.com")
-				.contactUsMessageType(ContactUsMessageType.Feedback).contactUsId("123")
+				.contactUsMessageType(ContactUsMessageType.Feedback)
 				.userMessage("New User Feedback").createdBy(RecordCreatorType.TEST)
 				.updatedBy(RecordCreatorType.TEST).buildNew();
 		ContactUs created = iContactUsDao.createEntity(c);

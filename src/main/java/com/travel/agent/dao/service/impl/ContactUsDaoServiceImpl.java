@@ -14,9 +14,9 @@ import com.travel.agent.model.ContactUs;
 
 @Transactional(readOnly=true)
 @Component("iContactUsDaoService")
-public class ContactUsDaoService implements IContactUsDaoService {
+public class ContactUsDaoServiceImpl implements IContactUsDaoService {
 	
-	private static Logger logger = Logger.getLogger(ContactUsDaoService.class);
+	private static Logger logger = Logger.getLogger(ContactUsDaoServiceImpl.class);
 
 	@Autowired
 	private IContactUsDao iContactUsDao;

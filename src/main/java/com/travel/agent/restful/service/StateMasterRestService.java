@@ -2,7 +2,6 @@ package com.travel.agent.restful.service;
 
 import java.io.IOException;
 import java.util.Set;
-import java.util.UUID;
 
 import javax.validation.ConstraintViolation;
 import javax.validation.Validation;
@@ -115,7 +114,6 @@ public class StateMasterRestService {
 	{
 		ObjectMapper mapper = this.hibernateObjectMapper.fetchEagerly(false);
 		StateMaster sm = mapper.readValue(jsonRequest, StateMaster.class);
-		sm.setStateMasterID(UUID.randomUUID().toString());
 		Set<ConstraintViolation<StateMaster>> constraintViolations = validator.validate(sm);
 		
 		if (constraintViolations != null

@@ -37,7 +37,7 @@ public class LocationMasterDaoTest {
 	public void shouldCreate() throws TASystemException {
 		LocationMaster lm = new LocationMaster();
 		LocationMasterBuilder lmb = lm.new LocationMasterBuilder();
-		lm = lmb.locationCode("TEST").locationMasterId("123")
+		lm = lmb.locationCode("TEST")
 				.locationName("TEST").locationPin("0000").createDate(new Date())
 				.createdBy(RecordCreatorType.TEST)
 				.updatedBy(RecordCreatorType.TEST).buildNew();

@@ -6,6 +6,7 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.UUID;
 
 import org.apache.log4j.Logger;
 import org.hibernate.HibernateException;
@@ -35,6 +36,7 @@ public class LocationDaoHibernateImpl extends
 	public LocationMaster createEntity(LocationMaster t) throws TASystemException {
 		LocationMaster created = null;
 		try {
+			t.setLocationMasterID(UUID.randomUUID().toString());
 			created = this.insert(t, true);
 			logger.debug("created entity with ID" + t.getLocationMasterID());
 		} catch (HibernateException e) {

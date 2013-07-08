@@ -2,7 +2,6 @@ package com.travel.agent.restful.service;
 
 import java.io.IOException;
 import java.util.Set;
-import java.util.UUID;
 
 import javax.validation.ConstraintViolation;
 import javax.validation.Validation;
@@ -94,7 +93,6 @@ public class VehicleMasterRestService {
 	{
 		ObjectMapper mapper = this.hibernateObjectMapper.fetchEagerly(false);
 		VehicleMaster vm = mapper.readValue(jsonRequest, VehicleMaster.class);
-		vm.setVehicleMasterID(UUID.randomUUID().toString());
 		Set<ConstraintViolation<VehicleMaster>> constraintViolations = validator.validate(vm);
 		
 		if (constraintViolations != null

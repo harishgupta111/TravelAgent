@@ -6,6 +6,7 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.UUID;
 
 import org.apache.log4j.Logger;
 import org.hibernate.HibernateException;
@@ -40,6 +41,7 @@ public class UserMasterDaoHibernateImpl extends BaseDaoHibernateSupport<UserMast
 	public UserMaster createEntity(UserMaster user) throws TASystemException {
 		UserMaster user1 = null;
 		try {
+			user.setUserId(UUID.randomUUID().toString());
 			String passwordEncoded = shaPasswordEncoder.encodePassword(user.getPassword(), user.getUsername());
 			logger.info(passwordEncoded);
 			user.setPassword(passwordEncoded);

@@ -43,7 +43,7 @@ public class VehicleMasterDaoTest {
 		VehicleMasterBuilder vmb = vm.new VehicleMasterBuilder();
 		vm = vmb.availableVehicleCount(3).bookingSet(null)
 				.createDate(new Date()).make("Tata").modelName("Indica")
-				.vehicleMasterID("123").modelYear(2012).noOfSeats(4)
+				.modelYear(2012).noOfSeats(4)
 				.plateNumber("ABC 1788").vehicleCount(6)
 				.vehicleMasterID(UUID.randomUUID().toString())
 				.vehicleType(VehicleType.CAR).updatedBy(RecordCreatorType.TEST)

@@ -6,6 +6,7 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.UUID;
 
 import org.apache.log4j.Logger;
 import org.hibernate.HibernateException;
@@ -33,6 +34,7 @@ public class ContactUsDaoHibernateImpl extends
 	public ContactUs createEntity(ContactUs t) throws TASystemException {
 		ContactUs created = null;
 		try {
+			t.setContactUsId(UUID.randomUUID().toString());
 			created = this.insert(t, true);
 			logger.debug("created entity with ID" + t.getContactUsId());
 		} catch (HibernateException e) {

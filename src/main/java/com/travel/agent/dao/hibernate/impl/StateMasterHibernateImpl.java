@@ -6,6 +6,7 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.UUID;
 
 import org.apache.log4j.Logger;
 import org.hibernate.HibernateException;
@@ -32,6 +33,7 @@ public class StateMasterHibernateImpl extends BaseDaoHibernateSupport<StateMaste
 	public StateMaster createEntity(StateMaster t) throws TASystemException {
 		StateMaster created = null;
 		try {
+			t.setStateMasterID(UUID.randomUUID().toString());
 			created = this.insert(t, true);
 			logger.debug("created entity with ID" + t.getStateMasterID());
 		} catch (HibernateException e) {

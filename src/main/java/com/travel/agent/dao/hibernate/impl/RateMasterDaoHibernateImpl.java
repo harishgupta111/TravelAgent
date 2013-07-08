@@ -6,6 +6,7 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.UUID;
 
 import org.apache.log4j.Logger;
 import org.hibernate.HibernateException;
@@ -35,6 +36,7 @@ public class RateMasterDaoHibernateImpl extends
 	public RateMaster createEntity(RateMaster rateMaster) throws TASystemException {
 		RateMaster created = null;
 		try {
+			rateMaster.setRateMasterID(UUID.randomUUID().toString());
 			created = this.insert(rateMaster, true);
 			logger.debug("created entity with ID"
 					+ rateMaster.getRateMasterID());

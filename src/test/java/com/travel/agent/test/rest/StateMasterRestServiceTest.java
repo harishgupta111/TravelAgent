@@ -28,57 +28,56 @@ import com.travel.agent.model.enums.RecordCreatorType;
 @ContextConfiguration(locations = { "/jerseyApplicationContext-test.xml" })
 @Transactional
 public class StateMasterRestServiceTest extends SpringAwareJerseyTests {
-	
+
 	@Autowired
 	private HibernateObjectMapper hibernateObjectMapper;
-	
 
 	public StateMasterRestServiceTest() {
 		super();
 	}
-	
+
 	@Test
 	public void testGetAllStates() throws Exception {
 		WebResource webResource = resource();
-		ClientResponse clientResponse = (ClientResponse) webResource.path("/state/getAll")
-				.get(ClientResponse.class);
+		ClientResponse clientResponse = (ClientResponse) webResource.path(
+				"/state/getAll").get(ClientResponse.class);
 		Assert.assertNotNull(clientResponse);
-		
+
 		System.out.println("*******************************************");
 		System.out.println(clientResponse.getEntity(String.class));
 		System.out.println("*******************************************");
-		Assert.assertTrue("clientResponse found as " + clientResponse.getStatus(), clientResponse.getStatus()==201);
+		Assert.assertTrue(
+				"clientResponse found as " + clientResponse.getStatus(),
+				clientResponse.getStatus() == 201);
 	}
-	
-	
+
 	@Test
-	public void shouldCreate() throws TASystemException{
+	public void shouldCreate() throws TASystemException {
 		WebResource webResource = resource();
 		StateMaster stateMaster = new StateMaster();
 		StateMasterBuilder smb = stateMaster.new StateMasterBuilder();
-		stateMaster = smb
-				.stateCode("NJ")
-				.stateName("New Jersey")
-				.unionTerritory(false)
-				.createdBy(RecordCreatorType.TEST)
-				.updatedBy(RecordCreatorType.TEST)
-				.buildNew();
+		stateMaster = smb.stateCode("NJ").stateName("New Jersey")
+				.unionTerritory(false).createdBy(RecordCreatorType.TEST)
+				.updatedBy(RecordCreatorType.TEST).buildNew();
 		ObjectMapper mapper = this.hibernateObjectMapper.fetchEagerly(false);
 
-		String json = this.hibernateObjectMapper
-				.prepareJSON(mapper, stateMaster);
-		
-		 ClientResponse clientResponse = webResource.path("/state/create").accept(MediaType.APPLICATION_JSON).type(MediaType.APPLICATION_JSON)
-		    .post(ClientResponse.class, json);
+		String json = this.hibernateObjectMapper.prepareJSON(mapper,
+				stateMaster);
+
+		ClientResponse clientResponse = webResource.path("/state/create")
+				.accept(MediaType.APPLICATION_JSON)
+				.type(MediaType.APPLICATION_JSON)
+				.post(ClientResponse.class, json);
 
 		Assert.assertNotNull(clientResponse);
-		
+
 		System.out.println("*******************************************");
 		System.out.println(clientResponse.getEntity(String.class));
 		System.out.println("*******************************************");
-		Assert.assertTrue("clientResponse found as " + clientResponse.getStatus(), clientResponse.getStatus()==201);
-		
-	}
+		Assert.assertTrue(
+				"clientResponse found as " + clientResponse.getStatus(),
+				clientResponse.getStatus() == 201);
 
+	}
 
 }

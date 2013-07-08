@@ -2,7 +2,6 @@ package com.travel.agent.restful.service;
 
 import java.io.IOException;
 import java.util.Set;
-import java.util.UUID;
 
 import javax.validation.ConstraintViolation;
 import javax.validation.Validation;
@@ -52,7 +51,6 @@ public class ContactUsRestService {
 		ContactUs created = null; 
 		try {
 			contactUs = mapper.readValue(jsonRequest, ContactUs.class);
-			contactUs.setContactUsId(UUID.randomUUID().toString());
 			Set<ConstraintViolation<ContactUs>> constraintViolations = validator.validate(contactUs);
 			
 			if (constraintViolations != null
