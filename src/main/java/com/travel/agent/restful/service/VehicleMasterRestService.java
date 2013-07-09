@@ -27,109 +27,105 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.travel.agent.dao.service.IVehicleMasterDaoService;
 import com.travel.agent.exception.TASystemException;
 import com.travel.agent.jackson.mapper.HibernateObjectMapper;
+import com.travel.agent.model.UserMaster;
 import com.travel.agent.model.VehicleMaster;
 import com.travel.agent.restful.response.dto.RestResponseCollectionWrapper;
 import com.travel.agent.restful.response.dto.RestResponseConstraintVoilationWrapper;
 import com.travel.agent.restful.response.dto.RestResponseWrapper;
+import com.travel.agent.restful.validation.UserInputValidationService;
 
 @Controller
 @Path("/vehicle")
 public class VehicleMasterRestService {
-	
+
 	@Autowired
 	private HibernateObjectMapper hibernateObjectMapper;
-	
+
 	@Autowired
 	private IVehicleMasterDaoService iVehicleDaoService;
-	 
-	private static Validator validator = Validation.buildDefaultValidatorFactory().getValidator();
-	
+
+	@Autowired
+	private UserInputValidationService<VehicleMaster> userInputValidationService;
+
 	@GET
 	@Path("/{id}")
 	@Produces(MediaType.APPLICATION_JSON)
-	public @ResponseBody Response getById(@PathParam("id") String id) throws TASystemException
-	{
+	public @ResponseBody
+	Response getById(@PathParam("id") String id) throws TASystemException {
 		VehicleMaster vehicle = iVehicleDaoService.getById(id);
 		ObjectMapper mapper = this.hibernateObjectMapper.fetchEagerly(false);
-		
+
 		RestResponseWrapper<VehicleMaster> restResponseWrapper = new RestResponseWrapper.Builder<VehicleMaster>()
-				.data(vehicle).status(Status.CREATED)
-				.build();
-		
+				.data(vehicle).status(Status.CREATED).build();
+
 		String json = this.hibernateObjectMapper.prepareJSON(mapper,
 				restResponseWrapper);
-		
+
 		return Response.status(restResponseWrapper.getStatus())
 				.header("Content-Type", "application/json").entity(json)
 				.build();
 
 	}
-	
+
 	@GET
 	@Path("/getAll")
 	@Produces(MediaType.APPLICATION_JSON)
-	public @ResponseBody Response getAll() throws TASystemException
-	{
+	public @ResponseBody
+	Response getAll() throws TASystemException {
 		Set<VehicleMaster> set = iVehicleDaoService.getAll();
 		ObjectMapper mapper = this.hibernateObjectMapper.fetchEagerly(false);
-		
+
 		RestResponseCollectionWrapper<VehicleMaster> restResponseWrapper = new RestResponseCollectionWrapper.Builder<VehicleMaster>()
-				.collection(set).status(Status.CREATED)
-				.build();
-		
+				.collection(set).status(Status.CREATED).build();
+
 		String json = this.hibernateObjectMapper.prepareJSON(mapper,
 				restResponseWrapper);
-		
+
 		return Response.status(restResponseWrapper.getStatus())
 				.header("Content-Type", "application/json").entity(json)
 				.build();
 
 	}
-	
+
 	@POST
 	@Path("/create")
 	@Produces(MediaType.APPLICATION_JSON)
 	@Consumes(MediaType.APPLICATION_JSON)
-	public @ResponseBody Response create(String jsonRequest) throws TASystemException, JsonParseException, JsonMappingException, IOException
-	{
+	public @ResponseBody
+	Response create(String jsonRequest) throws TASystemException {
 		ObjectMapper mapper = this.hibernateObjectMapper.fetchEagerly(false);
-		VehicleMaster vm = mapper.readValue(jsonRequest, VehicleMaster.class);
-		Set<ConstraintViolation<VehicleMaster>> constraintViolations = validator.validate(vm);
-		
-		if (constraintViolations != null
-				&& constraintViolations.size() > 0) {
+		VehicleMaster vm = null;
 
-			RestResponseConstraintVoilationWrapper<VehicleMaster> constraintVoilationWrapper = new RestResponseConstraintVoilationWrapper.Builder<VehicleMaster>()
-					.voilationSet(new HashSet<String>())
-					.status(Status.NOT_ACCEPTABLE)
-					.build();
+		try {
+			vm = mapper.readValue(jsonRequest, VehicleMaster.class);
+		} catch (IOException e) {
+			throw new TASystemException(e);
+		}
 
+		RestResponseConstraintVoilationWrapper<VehicleMaster> constraintVoilationWrapper = this.userInputValidationService
+				.validateInput(vm);
+		if (constraintVoilationWrapper != null) {
 			String json = this.hibernateObjectMapper.prepareJSON(mapper,
 					constraintVoilationWrapper);
 
-			return Response
-					.status(constraintVoilationWrapper.getStatus())
-					.header("Content-Type", "application/json")
-					.entity(json).build();
+			return Response.status(constraintVoilationWrapper.getStatus())
+					.header("Content-Type", "application/json").entity(json)
+					.build();
 
 		}
-		
+
 		VehicleMaster created = iVehicleDaoService.create(vm);
-		
+
 		RestResponseWrapper<VehicleMaster> restResponseWrapper = new RestResponseWrapper.Builder<VehicleMaster>()
-				.data(created).status(Status.CREATED)
-				.build();
-		
+				.data(created).status(Status.CREATED).build();
+
 		String json = this.hibernateObjectMapper.prepareJSON(mapper,
 				restResponseWrapper);
-		
+
 		return Response.status(restResponseWrapper.getStatus())
 				.header("Content-Type", "application/json").entity(json)
 				.build();
 
 	}
-	
-	
-	
 
 }
