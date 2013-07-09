@@ -48,12 +48,12 @@ public class LocationMasterDaoTest {
 	@Test
 	public void getAll() throws TASystemException {
 		Set<LocationMaster> set = this.iLocationMasterDao.findAll();
-		Assert.assertEquals(60, set.size());
+		Assert.assertEquals(5, set.size());
 	}
 
 	@Test
 	public void shouldGetByID() throws TASystemException {
-		LocationMaster lm = this.iLocationMasterDao.findById("10");
+		LocationMaster lm = this.iLocationMasterDao.findById("1");
 		Assert.assertNotNull(lm);
 	}
 

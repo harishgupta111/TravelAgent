@@ -55,13 +55,13 @@ public class StateMasterDaoTest {
 	@Test
 	public void should2GetAll() throws TASystemException {
 		Set<StateMaster> set = iStateMasterDao.findAll();
-		Assert.assertEquals(35, set.size());
+		Assert.assertEquals(5, set.size());
 	}
 
 	@Test
 	public void should3GetByID() throws TASystemException {
-		StateMaster sm = iStateMasterDao.findById("10");
-		Assert.assertEquals("Jammu & Kashmir", sm.getStateName());
+		StateMaster sm = iStateMasterDao.findById("1");
+		Assert.assertEquals("Andhra Pradesh", sm.getStateName());
 	}
 	
 	@Test
@@ -72,15 +72,15 @@ public class StateMasterDaoTest {
 
 	@Test
 	public void should5GetStateAndLocationByID() throws TASystemException {
-		StateMaster sm = iStateMasterDao.getStateAndLocation("10");
-		Assert.assertEquals("Jammu & Kashmir", sm.getStateName());
+		StateMaster sm = iStateMasterDao.getStateAndLocation("1");
+		Assert.assertEquals("AP", sm.getStateCode());
 		Assert.assertNotNull(sm.getLocationMasterSet());
 	}
 	
 	@Test
 	@Transactional(propagation = Propagation.REQUIRED)
 	public void should6Update() throws TASystemException {
-		StateMaster sm = iStateMasterDao.findById("10");
+		StateMaster sm = iStateMasterDao.findById("1");
 		StateMasterBuilder smb = sm.new StateMasterBuilder(sm);
 		sm = smb.stateCode("J&K").update();
 		StateMaster smUpdated2 = iStateMasterDao.updateEntity(sm);
