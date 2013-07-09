@@ -35,18 +35,13 @@
 						<label for="pick_location">pick up location</label>
 						<p>
 							<select name="pick_location" id="pick_location">
-								<option value="-1">Pick up Location</option>
-								<% 
-	
-								%>
 								
 			          		</select>
 						</p>
 						<label for="drop_location">drop off location</label>
 						<p>
 							<select name="drop_location" id="drop_location">
-								<option> Drop off Location </option>
-							</select>
+									</select>
 						</p>
 						<article id="date">	<!-- date -->
 							<label for="pick_date">pick up date</label>
@@ -118,5 +113,30 @@
 				</article>	
 			</article>	<!-- end content -->
 		</section>	<!-- end reservation -->
+		
+		<script type= "text/javascript">
+		$(document).ready(function(){
+			$.ajax({
+				type: 'GET',
+				cache: false,
+	            contentType: 'application/json',  
+	            dataType: 'json',
+	            url: 'rest/location/getAll',
+	            success: function(data){
+					var str = eval(data);
+	            	for(var i=0;i<str.collection.length;i++){
+	            		$("#pick_location").append($("<option></option>").val(str.collection[i].locationMasterID).html(str.collection[i].locationName) );
+	            		$("#drop_location").append($("<option></option>").val(str.collection[i].locationMasterID).html(str.collection[i].locationName) );
+	            	}
+	            },
+	            error: function(data){
+					alert("Error occured while packaging."+data);
+				}
+			});
+		});
+		
+		
+		</script>
+		
 	</body>
 </html>
