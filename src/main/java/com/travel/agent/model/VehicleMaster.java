@@ -17,6 +17,7 @@ import javax.persistence.UniqueConstraint;
 
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
+import org.hibernate.validator.constraints.NotEmpty;
 
 import com.travel.agent.model.enums.RecordCreatorType;
 import com.travel.agent.model.enums.VehicleType;
@@ -38,6 +39,7 @@ public class VehicleMaster extends SABaseEntity {
 
 	@Enumerated(EnumType.ORDINAL)
 	@Column(name = "vehicleType")
+	@NotEmpty(message = "VehicleType cannot be empty")
 	private VehicleType vehicleType;
 
 	@Column(name = "make")
@@ -49,9 +51,11 @@ public class VehicleMaster extends SABaseEntity {
 	@Column(name = "modelYear")
 	private Integer modelYear;
 
+	@NotEmpty(message = "NoOfSeats cannot be empty")
 	@Column(name = "noOfSeats")
 	private Integer noOfSeats;
-
+	
+	@NotEmpty(message = "PlateNumber cannot be empty")
 	@Column(name = "plateNumber")
 	private String plateNumber;
 
