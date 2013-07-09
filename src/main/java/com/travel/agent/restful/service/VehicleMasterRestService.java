@@ -1,12 +1,8 @@
 package com.travel.agent.restful.service;
 
 import java.io.IOException;
-import java.util.HashSet;
 import java.util.Set;
 
-import javax.validation.ConstraintViolation;
-import javax.validation.Validation;
-import javax.validation.Validator;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
@@ -21,13 +17,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.fasterxml.jackson.core.JsonParseException;
-import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.travel.agent.dao.service.IVehicleMasterDaoService;
 import com.travel.agent.exception.TASystemException;
 import com.travel.agent.jackson.mapper.HibernateObjectMapper;
-import com.travel.agent.model.UserMaster;
 import com.travel.agent.model.VehicleMaster;
 import com.travel.agent.restful.response.dto.RestResponseCollectionWrapper;
 import com.travel.agent.restful.response.dto.RestResponseConstraintVoilationWrapper;
