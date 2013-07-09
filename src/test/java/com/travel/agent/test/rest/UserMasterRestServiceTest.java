@@ -6,6 +6,7 @@ import javax.ws.rs.core.MediaType;
 
 import junit.framework.Assert;
 
+import org.apache.log4j.Logger;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,6 +32,8 @@ import com.travel.agent.model.enums.RecordCreatorType;
 @ContextConfiguration(locations = { "/jerseyApplicationContext-test.xml" })
 @Transactional
 public class UserMasterRestServiceTest extends SpringAwareJerseyTests {
+	
+	private static Logger logger = Logger.getLogger(UserMasterRestServiceTest.class);
 
 	@Autowired
 	private HibernateObjectMapper hibernateObjectMapper;
@@ -41,6 +44,7 @@ public class UserMasterRestServiceTest extends SpringAwareJerseyTests {
 
 	@Test
 	public void shouldCreate() throws Exception, TASystemException {
+		logger.info("Entering shouldCreate");
 		WebResource webResource = resource();
 		UserMaster um = new UserMaster();
 		UserMasterBuilder umb = um.new UserMasterBuilder();
@@ -68,6 +72,60 @@ public class UserMasterRestServiceTest extends SpringAwareJerseyTests {
 		Assert.assertTrue(
 				"clientResponse found as " + clientResponse.getStatus(),
 				clientResponse.getStatus() == 201);
+		logger.info("Closing shouldCreate");
 	}
+	
+	@Test
+	public void shouldLogin() throws Exception {
+		logger.info("Entering shouldLogin");
+		WebResource webResource = resource();
+		ClientResponse clientResponse = (ClientResponse) webResource.path(
+				"/user/login/testUsername1/password").get(ClientResponse.class);
+		Assert.assertNotNull(clientResponse);
+
+		System.out.println("*******************************************");
+		System.out.println(clientResponse.getEntity(String.class));
+		System.out.println("*******************************************");
+		Assert.assertTrue(
+				"clientResponse found as " + clientResponse.getStatus(),
+				clientResponse.getStatus() == 201);
+		logger.info("Closing shouldLogin");
+	}
+	
+	@Test
+	public void shouldNotLogin_WrongPassword() throws Exception {
+		logger.info("Entering shouldNotLogin_WrongPassword");
+		WebResource webResource = resource();
+		ClientResponse clientResponse = (ClientResponse) webResource.path(
+				"/user/login/testUsername1/password1").get(ClientResponse.class);
+		Assert.assertNotNull(clientResponse);
+
+		System.out.println("*******************************************");
+		System.out.println(clientResponse.getEntity(String.class));
+		System.out.println("*******************************************");
+		Assert.assertTrue(
+				"clientResponse found as " + clientResponse.getStatus(),
+				clientResponse.getStatus() == 201);
+		logger.info("Closing shouldNotLogin_WrongPassword");
+	}
+
+	@Test
+	public void shouldNotLogin_NonExistingUser() throws Exception {
+		logger.info("Entering shouldNotLogin_NonExistingUser");
+		WebResource webResource = resource();
+		ClientResponse clientResponse = (ClientResponse) webResource.path(
+				"/user/login/testUsername/password").get(ClientResponse.class);
+		Assert.assertNotNull(clientResponse);
+
+		System.out.println("*******************************************");
+		System.out.println(clientResponse.getEntity(String.class));
+		System.out.println("*******************************************");
+		Assert.assertTrue(
+				"clientResponse found as " + clientResponse.getStatus(),
+				clientResponse.getStatus() == 201);
+		logger.info("Closing shouldNotLogin_NonExistingUser");
+	}
+	
+	
 
 }
