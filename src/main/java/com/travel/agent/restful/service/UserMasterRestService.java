@@ -28,7 +28,7 @@ import com.travel.agent.restful.response.dto.RestResponseWrapper;
 import com.travel.agent.restful.validation.UserInputValidationService;
 
 @Controller
-@Path("/users")
+@Path("/user")
 public class UserMasterRestService implements InitializingBean {
 
 	@Autowired

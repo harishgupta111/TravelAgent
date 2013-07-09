@@ -16,6 +16,7 @@ import javax.persistence.Table;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 import org.hibernate.annotations.Type;
+import org.hibernate.validator.constraints.NotEmpty;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import com.travel.agent.model.enums.RecordCreatorType;
@@ -39,10 +40,12 @@ public class UserMaster extends SABaseEntity implements UserDetails {
 	@Column(name = "userId", insertable = false, updatable = false)
 	private String userId;
 
-	@Column(name = "username")
+	@NotEmpty(message = "Username code cannot be empty")
+	@Column(name = "username", nullable = false)
 	private String username;
 
-	@Column(name = "password")
+	@NotEmpty(message = "Password code cannot be empty")
+	@Column(name = "password", nullable = false)
 	private String password;
 
 	@Column(name = "enabled")
@@ -61,13 +64,15 @@ public class UserMaster extends SABaseEntity implements UserDetails {
 	@Type(type = "yes_no")
 	private Boolean accountNonExpired;
 
-	@Column(name = "email")
+	@NotEmpty(message = "E-mail code cannot be empty")
+	@Column(name = "email", nullable = false)
 	private String email;
 
-	@Column(name = "name")
+	@NotEmpty(message = "Name cannot be empty")
+	@Column(name = "name", nullable = false)
 	private String name;
-	
-	@OneToMany(mappedBy = "userMaster", fetch = FetchType.LAZY, cascade=CascadeType.PERSIST)
+
+	@OneToMany(mappedBy = "userMaster", fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
 	private Set<UserAuthorityMaster> userAuthorityMasterSet;
 
 	public class UserMasterBuilder {
@@ -85,9 +90,15 @@ public class UserMaster extends SABaseEntity implements UserDetails {
 		private Boolean accountNonLocked;
 		private Boolean accountNonExpired;
 		private Set<UserAuthorityMaster> userAuthorityMasterSet;
-		
-		public UserMasterBuilder userAuthorityMasterSet(Set<UserAuthorityMaster> val) {
+
+		public UserMasterBuilder userAuthorityMasterSet(
+				Set<UserAuthorityMaster> val) {
 			this.userAuthorityMasterSet = val;
+			return this;
+		}
+
+		public UserMasterBuilder name(String val) {
+			this.name = val;
 			return this;
 		}
 
@@ -207,7 +218,7 @@ public class UserMaster extends SABaseEntity implements UserDetails {
 		this.userAuthorityMasterSet = userMasterBuilder.userAuthorityMasterSet;
 		return this;
 	}
-	
+
 	@Override
 	public Collection<UserAuthorityMaster> getAuthorities() {
 		return this.userAuthorityMasterSet;
@@ -215,22 +226,22 @@ public class UserMaster extends SABaseEntity implements UserDetails {
 
 	@Override
 	public boolean isAccountNonExpired() {
-		return this.getAccountNonExpired();
+		return this.accountNonExpired;
 	}
 
 	@Override
 	public boolean isAccountNonLocked() {
-		return this.getAccountNonLocked();
+		return this.accountNonLocked;
 	}
 
 	@Override
 	public boolean isCredentialsNonExpired() {
-		return this.getCredentialsNonExpired();
+		return this.credentialsNonExpired;
 	}
 
 	@Override
 	public boolean isEnabled() {
-		return this.getEnabled();
+		return this.enabled;
 	}
 
 	public String getUserId() {
@@ -277,38 +288,22 @@ public class UserMaster extends SABaseEntity implements UserDetails {
 		this.email = email;
 	}
 
-	public Boolean getEnabled() {
-		return enabled;
-	}
-
 	public void setEnabled(Boolean enabled) {
 		this.enabled = enabled;
-	}
-
-	public Boolean getCredentialsNonExpired() {
-		return credentialsNonExpired;
 	}
 
 	public void setCredentialsNonExpired(Boolean credentialsNonExpired) {
 		this.credentialsNonExpired = credentialsNonExpired;
 	}
 
-	public Boolean getAccountNonLocked() {
-		return accountNonLocked;
-	}
-
 	public void setAccountNonLocked(Boolean accountNonLocked) {
 		this.accountNonLocked = accountNonLocked;
-	}
-
-	public Boolean getAccountNonExpired() {
-		return accountNonExpired;
 	}
 
 	public void setAccountNonExpired(Boolean accountNonExpired) {
 		this.accountNonExpired = accountNonExpired;
 	}
-	
+
 	public Set<UserAuthorityMaster> getUserAuthorityMasterSet() {
 		return userAuthorityMasterSet;
 	}
@@ -400,5 +395,5 @@ public class UserMaster extends SABaseEntity implements UserDetails {
 			return false;
 		return true;
 	}
-	
+
 }
