@@ -44,6 +44,21 @@ public class VehicleMasterRestServiceTest  extends SpringAwareJerseyTests {
 				"clientResponse found as " + clientResponse.getStatus(),
 				clientResponse.getStatus() == 201);
 	}
+	
+	@Test
+	public void shouldGetByID() throws Exception {
+		WebResource webResource = resource();
+		ClientResponse clientResponse = (ClientResponse) webResource.path(
+				"/vehicle/1").get(ClientResponse.class);
+		Assert.assertNotNull(clientResponse);
+
+		System.out.println("*******************************************");
+		System.out.println(clientResponse.getEntity(String.class));
+		System.out.println("*******************************************");
+		Assert.assertTrue(
+				"clientResponse found as " + clientResponse.getStatus(),
+				clientResponse.getStatus() == 201);
+	}
 
 
 }
