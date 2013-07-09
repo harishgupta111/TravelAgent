@@ -45,11 +45,14 @@ public class RateMasterRestService {
 	Response getAll() throws TASystemException {
 		Set<RateMaster> set = iRateMasterDaoService.getAll();
 		RestResponseCollectionWrapper<RateMaster> restResponseCollectionWrapper = new RestResponseCollectionWrapper.Builder<RateMaster>()
-				.collection(set).result("success")
-				.resultCode(Status.CREATED.getStatusCode()).build();
+				.collection(set).status(Status.CREATED)
+				.build();
+		
 		ObjectMapper mapper = this.hibernateObjectMapper.fetchEagerly(false);
+		
 		String json = this.hibernateObjectMapper.prepareJSON(mapper, set);
-		return Response.status(restResponseCollectionWrapper.getResultCode())
+		
+		return Response.status(restResponseCollectionWrapper.getStatus())
 				.header("Content-Type", "application/json").entity(json)
 				.build();
 	}
@@ -81,12 +84,14 @@ public class RateMasterRestService {
 
 		RateMaster created = iRateMasterDaoService.create(r);
 		RestResponseWrapper<RateMaster> restResponseWrapper = new RestResponseWrapper.Builder<RateMaster>()
-				.data(created).result("success")
-				.resultCode(Status.CREATED.getStatusCode()).build();
+				.data(created).status(Status.CREATED)
+				.build();
+		
 		ObjectMapper mapper = this.hibernateObjectMapper.fetchEagerly(false);
 		String json = this.hibernateObjectMapper.prepareJSON(mapper,
 				restResponseWrapper);
-		return Response.status(restResponseWrapper.getResultCode())
+		
+		return Response.status(restResponseWrapper.getStatus())
 				.header("Content-Type", "application/json").entity(json)
 				.build();
 	}
@@ -105,12 +110,12 @@ public class RateMasterRestService {
 				origin, destination, RateType.valueOf(rateType),
 				activeIndicator);
 		RestResponseWrapper<RateMaster> restResponseWrapper = new RestResponseWrapper.Builder<RateMaster>()
-				.data(r).result("success")
-				.resultCode(Status.CREATED.getStatusCode()).build();
+				.data(r).status(Status.CREATED)
+				.build();
 		ObjectMapper mapper = this.hibernateObjectMapper.fetchEagerly(false);
 		String json = this.hibernateObjectMapper.prepareJSON(mapper,
 				restResponseWrapper);
-		return Response.status(restResponseWrapper.getResultCode())
+		return Response.status(restResponseWrapper.getStatus())
 				.header("Content-Type", "application/json").entity(json)
 				.build();
 	}

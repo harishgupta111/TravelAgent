@@ -16,6 +16,7 @@ import javax.persistence.UniqueConstraint;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 import org.hibernate.annotations.Type;
+import org.hibernate.validator.constraints.NotEmpty;
 
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.travel.agent.model.enums.RecordCreatorType;
@@ -37,10 +38,12 @@ public class StateMaster extends SABaseEntity {
 	@Column(name = "stateMasterID", insertable = false, updatable = false)
 	private String stateMasterID;
 	
-	@Column(name = "stateName", insertable = false, updatable = false)
+	@NotEmpty(message = "State name cannot be empty")
+	@Column(name = "stateName", nullable = false)
 	private String stateName;
 	
-	@Column(name = "stateCode", insertable = false, updatable = false)
+	@NotEmpty(message = "State code cannot be empty")
+	@Column(name = "stateCode", nullable = false)
 	private String stateCode;
 	
 	@Column(name = "unionTerritory")

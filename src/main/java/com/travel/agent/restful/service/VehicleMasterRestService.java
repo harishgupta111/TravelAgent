@@ -1,6 +1,7 @@
 package com.travel.agent.restful.service;
 
 import java.io.IOException;
+import java.util.HashSet;
 import java.util.Set;
 
 import javax.validation.ConstraintViolation;
@@ -52,13 +53,13 @@ public class VehicleMasterRestService {
 		ObjectMapper mapper = this.hibernateObjectMapper.fetchEagerly(false);
 		
 		RestResponseWrapper<VehicleMaster> restResponseWrapper = new RestResponseWrapper.Builder<VehicleMaster>()
-				.data(vehicle).result(Status.CREATED.name())
-				.resultCode(Status.CREATED.getStatusCode()).build();
+				.data(vehicle).status(Status.CREATED)
+				.build();
 		
 		String json = this.hibernateObjectMapper.prepareJSON(mapper,
 				restResponseWrapper);
 		
-		return Response.status(restResponseWrapper.getResultCode())
+		return Response.status(restResponseWrapper.getStatus())
 				.header("Content-Type", "application/json").entity(json)
 				.build();
 
@@ -73,13 +74,13 @@ public class VehicleMasterRestService {
 		ObjectMapper mapper = this.hibernateObjectMapper.fetchEagerly(false);
 		
 		RestResponseCollectionWrapper<VehicleMaster> restResponseWrapper = new RestResponseCollectionWrapper.Builder<VehicleMaster>()
-				.collection(set).result(Status.CREATED.name())
-				.resultCode(Status.CREATED.getStatusCode()).build();
+				.collection(set).status(Status.CREATED)
+				.build();
 		
 		String json = this.hibernateObjectMapper.prepareJSON(mapper,
 				restResponseWrapper);
 		
-		return Response.status(restResponseWrapper.getResultCode())
+		return Response.status(restResponseWrapper.getStatus())
 				.header("Content-Type", "application/json").entity(json)
 				.build();
 
@@ -99,15 +100,15 @@ public class VehicleMasterRestService {
 				&& constraintViolations.size() > 0) {
 
 			RestResponseConstraintVoilationWrapper<VehicleMaster> constraintVoilationWrapper = new RestResponseConstraintVoilationWrapper.Builder<VehicleMaster>()
-					.collection(constraintViolations)
-					.result(Status.NOT_ACCEPTABLE.name())
-					.resultCode(Status.CREATED.getStatusCode()).build();
+					.voilationSet(new HashSet<String>())
+					.status(Status.NOT_ACCEPTABLE)
+					.build();
 
 			String json = this.hibernateObjectMapper.prepareJSON(mapper,
 					constraintVoilationWrapper);
 
 			return Response
-					.status(constraintVoilationWrapper.getResultCode())
+					.status(constraintVoilationWrapper.getStatus())
 					.header("Content-Type", "application/json")
 					.entity(json).build();
 
@@ -116,13 +117,13 @@ public class VehicleMasterRestService {
 		VehicleMaster created = iVehicleDaoService.create(vm);
 		
 		RestResponseWrapper<VehicleMaster> restResponseWrapper = new RestResponseWrapper.Builder<VehicleMaster>()
-				.data(created).result(Status.CREATED.name())
-				.resultCode(Status.CREATED.getStatusCode()).build();
+				.data(created).status(Status.CREATED)
+				.build();
 		
 		String json = this.hibernateObjectMapper.prepareJSON(mapper,
 				restResponseWrapper);
 		
-		return Response.status(restResponseWrapper.getResultCode())
+		return Response.status(restResponseWrapper.getStatus())
 				.header("Content-Type", "application/json").entity(json)
 				.build();
 

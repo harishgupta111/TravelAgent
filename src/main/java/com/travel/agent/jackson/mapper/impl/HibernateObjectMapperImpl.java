@@ -33,7 +33,7 @@ public class HibernateObjectMapperImpl implements HibernateObjectMapper {
 			json = objectMapper.writerWithDefaultPrettyPrinter()
 					.writeValueAsString(data);
 		} catch (JsonProcessingException jpe) {
-			throw new TASystemException(jpe.getMessage());
+			throw new TASystemException(jpe.getCause());
 		}
 
 		return json;

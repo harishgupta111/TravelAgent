@@ -1,37 +1,30 @@
 package com.travel.agent.restful.response.dto;
 
-import java.util.Collection;
+import java.util.Set;
 
-import javax.validation.ConstraintViolation;
+import javax.ws.rs.core.Response.Status;
 
 import com.travel.agent.model.SABaseEntity;
 
 public class RestResponseConstraintVoilationWrapper<T extends SABaseEntity> {
 	
-	private String result;
-	private Integer resultCode;
-	private Collection<ConstraintViolation<T>> collection;
+	private Status status;
+	private Set<String> voilationSet;
 	
 	public static class Builder<T extends SABaseEntity> {
-		private String result;
-		private Integer resultCode;
-		private Collection<ConstraintViolation<T>> collection;
+		private Status status;
+		private Set<String> voilationSet;
 
 		public Builder() {
 		}
 
-		public Builder<T> result(String val) {
-			result = val;
+		public Builder<T> status(Status val) {
+			status = val;
 			return this;
 		}
 
-		public Builder<T> resultCode(Integer val) {
-			resultCode = val;
-			return this;
-		}
-
-		public Builder<T> collection(Collection<ConstraintViolation<T>> val) {
-			collection = val;
+		public Builder<T> voilationSet(Set<String> val) {
+			voilationSet = val;
 			return this;
 		}
 
@@ -41,41 +34,21 @@ public class RestResponseConstraintVoilationWrapper<T extends SABaseEntity> {
 	}
 
 	private RestResponseConstraintVoilationWrapper(Builder<T> builder) {
-		collection = builder.collection;
-		result = builder.result;
-		resultCode = builder.resultCode;
+		voilationSet = builder.voilationSet;
+		status = builder.status;
 	}
 
-	public String getResult() {
-		return result;
-	}
-	public void setResult(String result) {
-		this.result = result;
-	}
-	public Integer getResultCode() {
-		return resultCode;
-	}
-	public void setResultCode(Integer resultCode) {
-		this.resultCode = resultCode;
-	}
-	public Collection<ConstraintViolation<T>> getCollection() {
-		return collection;
-	}
-	public void setCollection(Collection<ConstraintViolation<T>> collection) {
-		this.collection = collection;
-	}
 	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
+		result = prime * result + ((status == null) ? 0 : status.hashCode());
 		result = prime * result
-				+ ((collection == null) ? 0 : collection.hashCode());
-		result = prime * result
-				+ ((this.result == null) ? 0 : this.result.hashCode());
-		result = prime * result
-				+ ((resultCode == null) ? 0 : resultCode.hashCode());
+				+ ((voilationSet == null) ? 0 : voilationSet.hashCode());
 		return result;
 	}
+
+	@SuppressWarnings("unchecked")
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj)
@@ -84,26 +57,31 @@ public class RestResponseConstraintVoilationWrapper<T extends SABaseEntity> {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		@SuppressWarnings("rawtypes")
-		RestResponseConstraintVoilationWrapper other = (RestResponseConstraintVoilationWrapper) obj;
-		if (collection == null) {
-			if (other.collection != null)
-				return false;
-		} else if (!collection.equals(other.collection))
+		RestResponseConstraintVoilationWrapper<T> other = (RestResponseConstraintVoilationWrapper<T>) obj;
+		if (status != other.status)
 			return false;
-		if (result == null) {
-			if (other.result != null)
+		if (voilationSet == null) {
+			if (other.voilationSet != null)
 				return false;
-		} else if (!result.equals(other.result))
-			return false;
-		if (resultCode == null) {
-			if (other.resultCode != null)
-				return false;
-		} else if (!resultCode.equals(other.resultCode))
+		} else if (!voilationSet.equals(other.voilationSet))
 			return false;
 		return true;
 	}
-	
-	
+
+	public Status getStatus() {
+		return status;
+	}
+
+	public void setStatus(Status status) {
+		this.status = status;
+	}
+
+	public Set<String> getVoilationSet() {
+		return voilationSet;
+	}
+
+	public void setVoilationSet(Set<String> voilationSet) {
+		this.voilationSet = voilationSet;
+	}
 
 }

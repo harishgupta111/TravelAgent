@@ -1,28 +1,30 @@
 package com.travel.agent.restful.response.dto;
 
+import javax.ws.rs.core.Response.Status;
+
 import com.travel.agent.exception.TASystemException;
 
 public class RestResponseExceptionWrapper<T extends TASystemException> {
 	
-	private String result;
-	private Integer resultCode;
+	private Status status;
 	private T exception;
+	private String errorMessage;
 	
 	public static class Builder<T extends TASystemException> {
-		private String result;
-		private Integer resultCode;
+		private Status status;
 		private T exception;
+		private String errorMessage;
 
 		public Builder() {
 		}
-
-		public Builder<T> result(String val) {
-			result = val;
+		
+		public Builder<T> errorMessage(String val) {
+			errorMessage = val;
 			return this;
 		}
 
-		public Builder<T> resultCode(Integer val) {
-			resultCode = val;
+		public Builder<T> status(Status val) {
+			status = val;
 			return this;
 		}
 
@@ -38,29 +40,70 @@ public class RestResponseExceptionWrapper<T extends TASystemException> {
 
 	private RestResponseExceptionWrapper(Builder<T> builder) {
 		exception = builder.exception;
-		result = builder.result;
-		resultCode = builder.resultCode;
+		status = builder.status;
+		errorMessage = builder.errorMessage;
 	}
 	
-	public String getResult() {
-		return result;
-	}
-	public void setResult(String result) {
-		this.result = result;
-	}
-	public Integer getResultCode() {
-		return resultCode;
-	}
-	public void setResultCode(Integer resultCode) {
-		this.resultCode = resultCode;
-	}
 	public T getException() {
 		return exception;
 	}
 	public void setException(T exception) {
 		this.exception = exception;
 	}
-	
-	
 
+	public Status getStatus() {
+		return status;
+	}
+
+	public void setStatus(Status status) {
+		this.status = status;
+	}
+
+	public String getErrorMessage() {
+		return errorMessage;
+	}
+
+	public void setErrorMessage(String errorMessage) {
+		this.errorMessage = errorMessage;
+	}
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result
+				+ ((errorMessage == null) ? 0 : errorMessage.hashCode());
+		result = prime * result
+				+ ((exception == null) ? 0 : exception.hashCode());
+		result = prime * result + ((status == null) ? 0 : status.hashCode());
+		return result;
+	}
+
+	@SuppressWarnings("rawtypes")
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		RestResponseExceptionWrapper other = (RestResponseExceptionWrapper) obj;
+		if (errorMessage == null) {
+			if (other.errorMessage != null)
+				return false;
+		} else if (!errorMessage.equals(other.errorMessage))
+			return false;
+		if (exception == null) {
+			if (other.exception != null)
+				return false;
+		} else if (!exception.equals(other.exception))
+			return false;
+		if (status != other.status)
+			return false;
+		return true;
+	}
+	
+	
+	
 }

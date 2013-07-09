@@ -3,9 +3,6 @@ package com.travel.agent.restful.service;
 import java.io.IOException;
 import java.util.Set;
 
-import javax.validation.ConstraintViolation;
-import javax.validation.Validation;
-import javax.validation.Validator;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
@@ -30,6 +27,7 @@ import com.travel.agent.model.StateMaster;
 import com.travel.agent.restful.response.dto.RestResponseCollectionWrapper;
 import com.travel.agent.restful.response.dto.RestResponseConstraintVoilationWrapper;
 import com.travel.agent.restful.response.dto.RestResponseWrapper;
+import com.travel.agent.restful.validation.UserInputValidationService;
 
 @Controller
 @Path("/state")
@@ -40,9 +38,10 @@ public class StateMasterRestService {
 	
 	@Autowired
 	private IStateMasterDaoService iStateMasterDaoService;
-	 
-	private static Validator validator = Validation.buildDefaultValidatorFactory().getValidator();
 	
+	@Autowired
+	private UserInputValidationService<StateMaster> userInputValidationService;
+	 
 	@GET
 	@Path("/{id}")
 	@Produces(MediaType.APPLICATION_JSON)
@@ -52,13 +51,13 @@ public class StateMasterRestService {
 		ObjectMapper mapper = this.hibernateObjectMapper.fetchEagerly(false);
 		
 		RestResponseWrapper<StateMaster> restResponseWrapper = new RestResponseWrapper.Builder<StateMaster>()
-				.data(stateMaster).result(Status.CREATED.name())
-				.resultCode(Status.CREATED.getStatusCode()).build();
+				.data(stateMaster).status(Status.CREATED)
+				.build();
 		
 		String json = this.hibernateObjectMapper.prepareJSON(mapper,
 				restResponseWrapper);
 		
-		return Response.status(restResponseWrapper.getResultCode())
+		return Response.status(restResponseWrapper.getStatus())
 				.header("Content-Type", "application/json").entity(json)
 				.build();
 
@@ -73,13 +72,13 @@ public class StateMasterRestService {
 		ObjectMapper mapper = this.hibernateObjectMapper.fetchEagerly(false);
 		
 		RestResponseWrapper<StateMaster> restResponseWrapper = new RestResponseWrapper.Builder<StateMaster>()
-				.data(stateMaster).result(Status.CREATED.name())
-				.resultCode(Status.CREATED.getStatusCode()).build();
+				.data(stateMaster).status(Status.CREATED)
+				.build();
 		
 		String json = this.hibernateObjectMapper.prepareJSON(mapper,
 				restResponseWrapper);
 		
-		return Response.status(restResponseWrapper.getResultCode())
+		return Response.status(restResponseWrapper.getStatus())
 				.header("Content-Type", "application/json").entity(json)
 				.build();
 
@@ -94,13 +93,13 @@ public class StateMasterRestService {
 		ObjectMapper mapper = this.hibernateObjectMapper.fetchEagerly(false);
 		
 		RestResponseCollectionWrapper<StateMaster> restResponseWrapper = new RestResponseCollectionWrapper.Builder<StateMaster>()
-				.collection(set).result(Status.CREATED.name())
-				.resultCode(Status.CREATED.getStatusCode()).build();
+				.collection(set).status(Status.CREATED)
+				.build();
 		
 		String json = this.hibernateObjectMapper.prepareJSON(mapper,
 				restResponseWrapper);
 		
-		return Response.status(restResponseWrapper.getResultCode())
+		return Response.status(restResponseWrapper.getStatus())
 				.header("Content-Type", "application/json").entity(json)
 				.build();
 	}
@@ -110,25 +109,29 @@ public class StateMasterRestService {
 	@Path("/create")
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
-	public @ResponseBody Response create(String jsonRequest) throws TASystemException, JsonParseException, JsonMappingException, IOException
+	public @ResponseBody Response create(String jsonRequest) throws TASystemException
 	{
 		ObjectMapper mapper = this.hibernateObjectMapper.fetchEagerly(false);
-		StateMaster sm = mapper.readValue(jsonRequest, StateMaster.class);
-		Set<ConstraintViolation<StateMaster>> constraintViolations = validator.validate(sm);
+		StateMaster sm;
+		try {
+			sm = mapper.readValue(jsonRequest, StateMaster.class);
+		} catch (JsonParseException e) {
+			throw new TASystemException(e);
+		} catch (JsonMappingException e) {
+			throw new TASystemException(e);
+		} catch (IOException e) {
+			throw new TASystemException(e);
+		}
 		
-		if (constraintViolations != null
-				&& constraintViolations.size() > 0) {
+		RestResponseConstraintVoilationWrapper<StateMaster> constraintVoilationWrapper = userInputValidationService.validateInput(sm);
 
-			RestResponseConstraintVoilationWrapper<StateMaster> constraintVoilationWrapper = new RestResponseConstraintVoilationWrapper.Builder<StateMaster>()
-					.collection(constraintViolations)
-					.result(Status.NOT_ACCEPTABLE.name())
-					.resultCode(Status.CREATED.getStatusCode()).build();
-
+		if(constraintVoilationWrapper != null)
+		{
 			String json = this.hibernateObjectMapper.prepareJSON(mapper,
 					constraintVoilationWrapper);
 
 			return Response
-					.status(constraintVoilationWrapper.getResultCode())
+					.status(constraintVoilationWrapper.getStatus())
 					.header("Content-Type", "application/json")
 					.entity(json).build();
 
@@ -137,13 +140,13 @@ public class StateMasterRestService {
 		StateMaster created = iStateMasterDaoService.create(sm);
 		
 		RestResponseWrapper<StateMaster> restResponseWrapper = new RestResponseWrapper.Builder<StateMaster>()
-				.data(created).result(Status.CREATED.name())
-				.resultCode(Status.CREATED.getStatusCode()).build();
+				.data(created).status(Status.CREATED)
+				.build();
 		
 		String json = this.hibernateObjectMapper.prepareJSON(mapper,
 				restResponseWrapper);
 		
-		return Response.status(restResponseWrapper.getResultCode())
+		return Response.status(restResponseWrapper.getStatus())
 				.header("Content-Type", "application/json").entity(json)
 				.build();
 

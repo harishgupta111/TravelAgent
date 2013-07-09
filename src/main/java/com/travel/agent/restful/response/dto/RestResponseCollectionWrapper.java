@@ -2,29 +2,24 @@ package com.travel.agent.restful.response.dto;
 
 import java.util.Collection;
 
+import javax.ws.rs.core.Response.Status;
+
 import com.travel.agent.model.SABaseEntity;
 
 public class RestResponseCollectionWrapper<T extends SABaseEntity> {
 	
-	private String result;
-	private Integer resultCode;
+	private Status status;
 	private Collection<T> collection;
 	
 	public static class Builder<T extends SABaseEntity> {
-		private String result;
-		private Integer resultCode;
+		private Status status;
 		private Collection<T> collection;
 
 		public Builder() {
 		}
 
-		public Builder<T> result(String val) {
-			result = val;
-			return this;
-		}
-
-		public Builder<T> resultCode(Integer val) {
-			resultCode = val;
+		public Builder<T> status(Status val) {
+			status = val;
 			return this;
 		}
 
@@ -40,8 +35,7 @@ public class RestResponseCollectionWrapper<T extends SABaseEntity> {
 
 	private RestResponseCollectionWrapper(Builder<T> builder) {
 		collection = builder.collection;
-		result = builder.result;
-		resultCode = builder.resultCode;
+		status = builder.status;
 	}
 
 
@@ -53,20 +47,14 @@ public class RestResponseCollectionWrapper<T extends SABaseEntity> {
 		this.collection = collection;
 	}
 
-	public String getResult() {
-		return result;
+
+	public Status getStatus() {
+		return status;
 	}
 
-	public void setResult(String result) {
-		this.result = result;
-	}
 
-	public Integer getResultCode() {
-		return resultCode;
+	public void setStatus(Status status) {
+		this.status = status;
 	}
-
-	public void setResultCode(Integer resultCode) {
-		this.resultCode = resultCode;
-	}
-
+	
 }

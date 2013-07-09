@@ -1,11 +1,7 @@
 package com.travel.agent.restful.service;
 
 import java.io.IOException;
-import java.util.Set;
 
-import javax.validation.ConstraintViolation;
-import javax.validation.Validation;
-import javax.validation.Validator;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
@@ -27,68 +23,61 @@ import com.travel.agent.jackson.mapper.HibernateObjectMapper;
 import com.travel.agent.model.ContactUs;
 import com.travel.agent.restful.response.dto.RestResponseConstraintVoilationWrapper;
 import com.travel.agent.restful.response.dto.RestResponseWrapper;
+import com.travel.agent.restful.validation.UserInputValidationService;
 
 @Controller
 @Path("/contactUs")
 public class ContactUsRestService {
-	
+
 	@Autowired
 	private HibernateObjectMapper hibernateObjectMapper;
-	
+
 	@Autowired
 	private IContactUsDaoService iContactUsDaoService;
-	 
-	private static Validator validator = Validation.buildDefaultValidatorFactory().getValidator();
-	
+
+	@Autowired
+	private UserInputValidationService<ContactUs> userInputValidationService;
+
 	@POST
 	@Path("/submit")
 	@Produces(MediaType.APPLICATION_JSON)
 	@Consumes(MediaType.APPLICATION_JSON)
-	public @ResponseBody Response submit(String jsonRequest) throws TASystemException
-	{
+	public @ResponseBody
+	Response submit(String jsonRequest) throws TASystemException {
 		ObjectMapper mapper = this.hibernateObjectMapper.fetchEagerly(false);
 		ContactUs contactUs = null;
-		ContactUs created = null; 
 		try {
 			contactUs = mapper.readValue(jsonRequest, ContactUs.class);
-			Set<ConstraintViolation<ContactUs>> constraintViolations = validator.validate(contactUs);
-			
-			if (constraintViolations != null
-					&& constraintViolations.size() > 0) {
-
-				RestResponseConstraintVoilationWrapper<ContactUs> constraintVoilationWrapper = new RestResponseConstraintVoilationWrapper.Builder<ContactUs>()
-						.collection(constraintViolations)
-						.result(Status.NOT_ACCEPTABLE.name())
-						.resultCode(Status.CREATED.getStatusCode()).build();
-
-				String json = this.hibernateObjectMapper.prepareJSON(mapper,
-						constraintVoilationWrapper);
-
-				return Response
-						.status(constraintVoilationWrapper.getResultCode())
-						.header("Content-Type", "application/json")
-						.entity(json).build();
-
-			}
-			else
-				created = this.iContactUsDaoService.create(contactUs);
-			
 		} catch (JsonParseException e) {
 			throw new TASystemException(e);
 		} catch (JsonMappingException e) {
 			throw new TASystemException(e);
 		} catch (IOException e) {
 			throw new TASystemException(e);
-		};
+		}
+
+		RestResponseConstraintVoilationWrapper<ContactUs> constraintVoilationWrapper = userInputValidationService
+				.validateInput(contactUs);
+
+		if (constraintVoilationWrapper != null) {
+			String json = this.hibernateObjectMapper.prepareJSON(mapper,
+					constraintVoilationWrapper);
+
+			return Response.status(constraintVoilationWrapper.getStatus())
+					.header("Content-Type", "application/json").entity(json)
+					.build();
+
+		}
 		
+		ContactUs created = this.iContactUsDaoService.create(contactUs);
+
 		RestResponseWrapper<ContactUs> restResponseWrapper = new RestResponseWrapper.Builder<ContactUs>()
-				.data(created).result(Status.CREATED.name())
-				.resultCode(Status.CREATED.getStatusCode()).build();
-		
+				.data(created).status(Status.CREATED).build();
+
 		String json = this.hibernateObjectMapper.prepareJSON(mapper,
 				restResponseWrapper);
-		
-		return Response.status(restResponseWrapper.getResultCode())
+
+		return Response.status(restResponseWrapper.getStatus())
 				.header("Content-Type", "application/json").entity(json)
 				.build();
 

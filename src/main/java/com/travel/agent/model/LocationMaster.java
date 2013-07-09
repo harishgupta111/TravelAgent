@@ -35,13 +35,13 @@ public class LocationMaster extends SABaseEntity {
 	@Column(name = "locationMasterID", insertable = false, updatable = false)
 	private String locationMasterID;
 	
-	@Column(name = "locationName", insertable = false, updatable = false)
+	@Column(name = "locationName")
 	private String locationName;
 	
-	@Column(name = "locationCode", insertable = false, updatable = false)
+	@Column(name = "locationCode")
 	private String locationCode;
 	
-	@Column(name = "locationPin", insertable = false, updatable = false)
+	@Column(name = "locationPin")
 	private String locationPin;
 	
 	@JsonBackReference

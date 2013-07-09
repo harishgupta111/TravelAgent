@@ -1,6 +1,7 @@
 package com.travel.agent.test.rest;
 
 import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response.Status;
 
 import org.junit.Assert;
 import org.junit.Test;
@@ -79,5 +80,35 @@ public class StateMasterRestServiceTest extends SpringAwareJerseyTests {
 				clientResponse.getStatus() == 201);
 
 	}
+	
+	@Test
+	public void shouldNotCreate() throws TASystemException {
+		WebResource webResource = resource();
+		StateMaster stateMaster = new StateMaster();
+		StateMasterBuilder smb = stateMaster.new StateMasterBuilder();
+		stateMaster = smb
+				.unionTerritory(false).createdBy(RecordCreatorType.TEST)
+				.updatedBy(RecordCreatorType.TEST).buildNew();
+		ObjectMapper mapper = this.hibernateObjectMapper.fetchEagerly(false);
+
+		String json = this.hibernateObjectMapper.prepareJSON(mapper,
+				stateMaster);
+
+		ClientResponse clientResponse = webResource.path("/state/create")
+				.accept(MediaType.APPLICATION_JSON)
+				.type(MediaType.APPLICATION_JSON)
+				.post(ClientResponse.class, json);
+
+		Assert.assertNotNull(clientResponse);
+
+		System.out.println("*******************************************");
+		System.out.println(clientResponse.getEntity(String.class));
+		System.out.println("*******************************************");
+		Assert.assertTrue(
+				"clientResponse found as " + clientResponse.getStatus(),
+				clientResponse.getStatus() == Status.NOT_ACCEPTABLE.getStatusCode());
+
+	}
+
 
 }

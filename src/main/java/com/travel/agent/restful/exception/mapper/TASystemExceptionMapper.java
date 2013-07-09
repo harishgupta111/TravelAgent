@@ -7,6 +7,7 @@ import javax.ws.rs.core.Response.Status;
 import javax.ws.rs.ext.ExceptionMapper;
 import javax.ws.rs.ext.Provider;
 
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -20,25 +21,29 @@ import com.travel.agent.restful.response.dto.RestResponseExceptionWrapper;
 @Component
 public class TASystemExceptionMapper implements
 		ExceptionMapper<TASystemException> {
-	
+
 	@Autowired
 	private HibernateObjectMapper hibernateObjectMapper;
+	
+	private static Logger logger = Logger.getLogger(TASystemExceptionMapper.class); 
 
 	@Override
 	@Produces(MediaType.APPLICATION_JSON)
-	public  @ResponseBody Response toResponse(TASystemException arg0) {
-		
-		RestResponseExceptionWrapper<TASystemException> restResponseExceptionWrapper = new RestResponseExceptionWrapper.Builder<TASystemException>().exception(arg0)
-		.result(arg0.getMessage()).resultCode(Status.INTERNAL_SERVER_ERROR
-				.getStatusCode()).build();
+	public @ResponseBody
+	Response toResponse(TASystemException exception) {
+
+		exception.printStackTrace();
+		RestResponseExceptionWrapper<TASystemException> restResponseExceptionWrapper = new RestResponseExceptionWrapper.Builder<TASystemException>()
+				.status(Status.INTERNAL_SERVER_ERROR).exception(exception).errorMessage(exception.getMessage()).build();
 		ObjectMapper mapper = this.hibernateObjectMapper.fetchEagerly(false);
 		String json = null;
 		try {
-			json = this.hibernateObjectMapper.prepareJSON(mapper, restResponseExceptionWrapper);
+			json = this.hibernateObjectMapper.prepareJSON(mapper,
+					restResponseExceptionWrapper);
 		} catch (TASystemException e) {
 			e.printStackTrace();
 		}
-		return Response.status(restResponseExceptionWrapper.getResultCode())
+		return Response.status(restResponseExceptionWrapper.getStatus())
 				.header("Content-Type", "application/json").entity(json)
 				.build();
 	}
