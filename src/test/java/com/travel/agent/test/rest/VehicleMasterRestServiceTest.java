@@ -19,8 +19,6 @@ import com.sun.jersey.api.client.ClientResponse;
 import com.sun.jersey.api.client.WebResource;
 import com.travel.agent.exception.TASystemException;
 import com.travel.agent.jackson.mapper.HibernateObjectMapper;
-import com.travel.agent.model.StateMaster;
-import com.travel.agent.model.StateMaster.StateMasterBuilder;
 import com.travel.agent.model.VehicleMaster;
 import com.travel.agent.model.VehicleMaster.VehicleMasterBuilder;
 import com.travel.agent.model.enums.RecordCreatorType;
