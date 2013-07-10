@@ -107,15 +107,13 @@ public class RateMasterDaoHibernateImpl extends
 	@Cacheable(value = "entity.ta_rateMaster")
 	public RateMaster findByLocationPairRateTypeAndEffStartDate(
 			String originLocationCode, String destinationLocationCode,
-			RateType rateType, Date effectiveStartDate,
-			Boolean activeIndicator) {
-		String strSQL = "Select c from RateMaster c where c.originLocationCode = :originLocationCode and c.destinationLocationCode = :destinationLocationCode and c.rateType = :rateType and c.effectiveStartDate = :effectiveStartDate and c.activeIndicator = :activeIndicator";
+			RateType rateType, Date effectiveStartDate) {
+		String strSQL = "Select c from RateMaster c where c.originLocationCode = :originLocationCode and c.destinationLocationCode = :destinationLocationCode and c.rateType = :rateType and c.effectiveStartDate = :effectiveStartDate";
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("originLocationCode", originLocationCode);
 		map.put("destinationLocationCode", destinationLocationCode);
 		map.put("rateType", rateType);
 		map.put("effectiveStartDate", effectiveStartDate);
-		map.put("activeIndicator", activeIndicator);
 		
 		List<RateMaster> list = null;
 		try {

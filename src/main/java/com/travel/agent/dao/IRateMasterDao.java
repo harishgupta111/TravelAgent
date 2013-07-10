@@ -13,7 +13,6 @@ public interface IRateMasterDao extends IBaseDao<RateMaster, String> {
 
 	public RateMaster findByLocationPairRateTypeAndEffStartDate(
 			String originLocationCode, String destinationLocationCode,
-			RateType rateType, Date effectiveStartDate,
-			Boolean activeIndicator);
+			RateType rateType, Date effectiveStartDate);
 
 }

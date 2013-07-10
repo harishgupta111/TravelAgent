@@ -14,5 +14,5 @@ public interface IRateMasterDaoService extends
 
 	public RateMaster findByLocationPairRateTypeAndEffStartDate(
 			String originLocationCode, String destinationLocationCode,
-			RateType rateType, Date effectiveStartDate, Boolean activeIndicator);
+			RateType rateType, Date effectiveStartDate);
 }

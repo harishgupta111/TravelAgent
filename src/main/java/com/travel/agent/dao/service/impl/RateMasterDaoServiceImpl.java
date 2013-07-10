@@ -31,10 +31,14 @@ public class RateMasterDaoServiceImpl implements IRateMasterDaoService {
 	public RateMaster create(RateMaster newRate) throws TASystemException {
 		RateMaster existing = this.findByLocationPairRateTypeAndEffStartDate(
 				newRate.getOriginLocationCode(),
-				newRate.getDestinationLocationCode(), newRate.getRateType(),
-				newRate.getEffectiveStartDate(), true);
-		if ((existing != null && !existing.getRate().equals(newRate.getRate())) || existing == null) {
-			
+				newRate.getDestinationLocationCode(), newRate.getRateType(), newRate.getEffectiveStartDate());
+		if ((existing != null && 
+				!existing.getRate().equals(newRate.getRate())
+				&& newRate.getEffectiveStartDate().after(new Date()) 
+				&& !existing.getEffectiveStartDate().equals(newRate.getEffectiveStartDate())
+				|| (existing == null 
+				&& newRate.getEffectiveStartDate().after(new Date())))) {
+
 			RateMaster created = this.iRateMasterDao.createEntity(newRate);
 			logger.debug("Created new with ID " + created.getRateMasterID());
 			return created;
@@ -56,7 +60,7 @@ public class RateMasterDaoServiceImpl implements IRateMasterDaoService {
 
 	@Override
 	public RateMaster getById(String id) throws TASystemException {
-		
+
 		return this.iRateMasterDao.findById(id);
 	}
 
@@ -64,7 +68,7 @@ public class RateMasterDaoServiceImpl implements IRateMasterDaoService {
 	public RateMaster findByLocationPairAndRateType(String originLocationCode,
 			String destinationLocationCode, RateType rateType,
 			Boolean activeIndicator) {
-		
+
 		return this.iRateMasterDao.findByLocationPairAndRateType(
 				originLocationCode, destinationLocationCode, rateType,
 				activeIndicator);
@@ -72,18 +76,18 @@ public class RateMasterDaoServiceImpl implements IRateMasterDaoService {
 
 	@Override
 	public RateMaster updateEntity(RateMaster t) throws TASystemException {
-		
+
 		return this.iRateMasterDao.updateEntity(t);
 	}
 
 	@Override
 	public RateMaster findByLocationPairRateTypeAndEffStartDate(
 			String originLocationCode, String destinationLocationCode,
-			RateType rateType, Date effectiveStartDate, Boolean activeIndicator) {
-		
+			RateType rateType, Date effectiveStartDate) {
+
 		return this.iRateMasterDao.findByLocationPairRateTypeAndEffStartDate(
 				originLocationCode, destinationLocationCode, rateType,
-				effectiveStartDate, activeIndicator);
+				effectiveStartDate);
 	}
 
 }

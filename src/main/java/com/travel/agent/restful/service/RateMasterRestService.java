@@ -75,8 +75,9 @@ public class RateMasterRestService {
 				.effectiveStartDate(sdf.parse(effectiveDate))
 				.originLocationCode(origin)
 				.destinationLocationCode(destination)
+				.activeIndicator(false)
 				.effectiveEndDate(sdf.parse("31.12.2099"))
-				.createdBy(RecordCreatorType.ADMIN)
+				.createdBy(RecordCreatorType.ADMIN) 
 				.updatedBy(RecordCreatorType.ADMIN)
 				.buildNew();
 		
@@ -86,6 +87,13 @@ public class RateMasterRestService {
 		RestResponseWrapper<RateMaster> restResponseWrapper = new RestResponseWrapper.Builder<RateMaster>()
 				.data(created).status(Status.CREATED)
 				.build();
+		
+		if(created == null)
+		{
+			restResponseWrapper = new RestResponseWrapper.Builder<RateMaster>()
+					.data(created).status(Status.NOT_ACCEPTABLE)
+					.build();
+		}
 		
 		ObjectMapper mapper = this.hibernateObjectMapper.fetchEagerly(false);
 		String json = this.hibernateObjectMapper.prepareJSON(mapper,

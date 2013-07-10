@@ -70,7 +70,7 @@ public class RateMasterDaoTest {
 	{
 
 		RateMaster r = this.iRateMasterDao.findByLocationPairRateTypeAndEffStartDate("LKO",
-				"NDLS", RateType.FROM_TO, sdf.parse("01.06.2013"), true);
+				"NDLS", RateType.FROM_TO, sdf.parse("01.06.2013"));
 		Assert.assertEquals(r.getRate(), 200.00);
 	}
 
