@@ -1,5 +1,7 @@
 package com.travel.agent.test.dao;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Set;
 
@@ -31,6 +33,8 @@ public class RateMasterDaoTest {
 
 	@Autowired
 	private IRateMasterDao iRateMasterDao;
+	
+	private static SimpleDateFormat sdf = new SimpleDateFormat("dd.MM.yyyy");
 
 	@Test
 	@Transactional(propagation = Propagation.REQUIRED)
@@ -58,6 +62,15 @@ public class RateMasterDaoTest {
 
 		RateMaster r = this.iRateMasterDao.findByLocationPairAndRateType("LKO",
 				"NDLS", RateType.FROM_TO, true);
+		Assert.assertEquals(r.getRate(), 200.00);
+	}
+	
+	@Test
+	public void shouldFindByLocationPairRateTypeAndEffStartDate() throws ParseException
+	{
+
+		RateMaster r = this.iRateMasterDao.findByLocationPairRateTypeAndEffStartDate("LKO",
+				"NDLS", RateType.FROM_TO, sdf.parse("01.06.2013"), true);
 		Assert.assertEquals(r.getRate(), 200.00);
 	}
 

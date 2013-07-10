@@ -58,7 +58,7 @@ public class RateMasterRestService {
 	}
 
 	@GET
-	@Path("/create/{rateType}/{rate}/{effectiveDate}/{origin}/{destination}/{activeIndicator}")
+	@Path("/create/{rateType}/{rate}/{effectiveDate}/{origin}/{destination}")
 	@Produces(MediaType.APPLICATION_JSON)
 	public @ResponseBody
 	Response create(@PathParam("rateType") String rateType,

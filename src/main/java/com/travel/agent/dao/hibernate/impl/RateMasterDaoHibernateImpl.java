@@ -1,5 +1,6 @@
 package com.travel.agent.dao.hibernate.impl;
 
+import java.util.Date;
 import java.util.HashMap;
 import java.util.LinkedHashSet;
 import java.util.LinkedList;
@@ -33,7 +34,8 @@ public class RateMasterDaoHibernateImpl extends
 	@Override
 	@CacheEvict(value = { "entity.ta_rateMaster", "entity.ta_rateMaster" }, allEntries = true, beforeInvocation = false)
 	@Transactional(readOnly = false, propagation = Propagation.MANDATORY, rollbackFor = TASystemException.class, isolation = Isolation.DEFAULT)
-	public RateMaster createEntity(RateMaster rateMaster) throws TASystemException {
+	public RateMaster createEntity(RateMaster rateMaster)
+			throws TASystemException {
 		RateMaster created = null;
 		try {
 			rateMaster.setRateMasterID(UUID.randomUUID().toString());
@@ -98,6 +100,33 @@ public class RateMasterDaoHibernateImpl extends
 	@Override
 	public RateMaster updateEntity(RateMaster t) throws TASystemException {
 		return super.update(t, true);
+	}
+
+	@SuppressWarnings("unchecked")
+	@Override
+	@Cacheable(value = "entity.ta_rateMaster")
+	public RateMaster findByLocationPairRateTypeAndEffStartDate(
+			String originLocationCode, String destinationLocationCode,
+			RateType rateType, Date effectiveStartDate,
+			Boolean activeIndicator) {
+		String strSQL = "Select c from RateMaster c where c.originLocationCode = :originLocationCode and c.destinationLocationCode = :destinationLocationCode and c.rateType = :rateType and c.effectiveStartDate = :effectiveStartDate and c.activeIndicator = :activeIndicator";
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("originLocationCode", originLocationCode);
+		map.put("destinationLocationCode", destinationLocationCode);
+		map.put("rateType", rateType);
+		map.put("effectiveStartDate", effectiveStartDate);
+		map.put("activeIndicator", activeIndicator);
+		
+		List<RateMaster> list = null;
+		try {
+			list = (List<RateMaster>) this.executeQuery(strSQL, map);
+		} catch (HibernateException e) {
+			throw new TASystemException(e);
+		}
+		if (list != null && list.size() > 0) {
+			return list.get(0);
+		}
+		return null;
 	}
 
 }

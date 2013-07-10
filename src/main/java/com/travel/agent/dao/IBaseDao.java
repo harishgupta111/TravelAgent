@@ -6,7 +6,7 @@ import java.util.Set;
 import com.travel.agent.exception.TASystemException;
 import com.travel.agent.model.SABaseEntity;
 
-public interface IBaseDao<T extends SABaseEntity, P extends Serializable> {
+interface IBaseDao<T extends SABaseEntity, P extends Serializable> {
 
 	public T createEntity(T t) throws TASystemException;
 
