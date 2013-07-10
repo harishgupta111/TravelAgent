@@ -16,6 +16,7 @@ import org.hibernate.annotations.CacheConcurrencyStrategy;
 import org.hibernate.annotations.Fetch;
 import org.springframework.security.core.GrantedAuthority;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.travel.agent.model.enums.RecordCreatorType;
 
 @Entity
@@ -33,6 +34,7 @@ public class UserAuthorityMaster extends SABaseEntity implements GrantedAuthorit
 	@Column(name = "userAuthorityMasterId", insertable = false, updatable = false)
 	private String userAuthorityMasterId;
 	
+	@JsonBackReference
 	@Fetch(org.hibernate.annotations.FetchMode.JOIN)
 	@JoinColumn(name = "userID", referencedColumnName = "userID")
 	@ManyToOne(targetEntity = UserMaster.class, fetch = FetchType.LAZY)
@@ -46,6 +48,12 @@ public class UserAuthorityMaster extends SABaseEntity implements GrantedAuthorit
 		return this.authority;
 	}
 	
+	public UserAuthorityMaster() {
+		super();
+	}
+
+
+
 	public class UserAuthorityMasterBuilder
 	{
 		private String userAuthorityMasterId;

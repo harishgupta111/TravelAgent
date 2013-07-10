@@ -19,6 +19,7 @@ import org.hibernate.annotations.Type;
 import org.hibernate.validator.constraints.NotEmpty;
 import org.springframework.security.core.userdetails.UserDetails;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.travel.agent.model.enums.RecordCreatorType;
 
 @Entity
@@ -72,6 +73,7 @@ public class UserMaster extends SABaseEntity implements UserDetails {
 	@Column(name = "name", nullable = false)
 	private String name;
 
+	@JsonManagedReference
 	@OneToMany(mappedBy = "userMaster", fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
 	private Set<UserAuthorityMaster> userAuthorityMasterSet;
 
