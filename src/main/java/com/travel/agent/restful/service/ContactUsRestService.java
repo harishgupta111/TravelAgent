@@ -23,7 +23,7 @@ import com.travel.agent.jackson.mapper.HibernateObjectMapper;
 import com.travel.agent.model.ContactUs;
 import com.travel.agent.restful.response.dto.RestResponseConstraintVoilationWrapper;
 import com.travel.agent.restful.response.dto.RestResponseWrapper;
-import com.travel.agent.restful.validation.UserInputValidationService;
+import com.travel.agent.restful.validation.IUserInputValidationService;
 
 @Controller
 @Path("/contactUs")
@@ -36,7 +36,7 @@ public class ContactUsRestService {
 	private IContactUsDaoService iContactUsDaoService;
 
 	@Autowired
-	private UserInputValidationService<ContactUs> userInputValidationService;
+	private IUserInputValidationService<ContactUs> userInputValidationService;
 
 	@POST
 	@Path("/submit")

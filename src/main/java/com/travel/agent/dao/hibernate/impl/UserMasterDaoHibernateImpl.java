@@ -14,6 +14,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.security.authentication.encoding.ShaPasswordEncoder;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Isolation;
 import org.springframework.transaction.annotation.Propagation;
@@ -27,14 +30,13 @@ import com.travel.agent.model.enums.UserRole;
 @Transactional(readOnly=true)
 @Repository("iUserMasterDao")
 public class UserMasterDaoHibernateImpl extends BaseDaoHibernateSupport<UserMaster, Long>
-		implements IUserMasterDao {
+		implements IUserMasterDao, UserDetailsService {
 
 	Logger logger = Logger.getLogger(UserMasterDaoHibernateImpl.class);
 	
 	@Autowired 
 	private ShaPasswordEncoder shaPasswordEncoder;
 	
-
 	@Override
 	@Transactional(readOnly = false, propagation = Propagation.MANDATORY, rollbackFor=TASystemException.class, isolation=Isolation.DEFAULT)
 	@CacheEvict(value = "entity.ta_UserMaster", allEntries = true, beforeInvocation = false)
@@ -131,6 +133,29 @@ public class UserMasterDaoHibernateImpl extends BaseDaoHibernateSupport<UserMast
 			throw new TASystemException(e);
 		}
 		return user;
+	}
+	
+	@Override
+	public UserDetails loadUserByUsername(String username)
+			throws UsernameNotFoundException {
+		if (username != null && !username.equals("")) {
+			UserMaster user = null;
+
+				try {
+					user = this.loadUserByName(username);
+				} catch (TASystemException e) {
+					logger.error(e.getCause());
+					throw new UsernameNotFoundException("User with username " + username + " not found!", e);
+				}
+			
+			if (user == null) {
+				return null;
+			}
+
+			return user;
+		} else {
+			return null;
+		}
 	}
 
 }

@@ -1,6 +1,6 @@
 package com.travel.agent.exception;
 
-public class OQException extends Throwable {
+public class OQException extends RuntimeException {
 
 	/**
 	 * 

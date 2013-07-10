@@ -11,5 +11,5 @@ public interface IUserMasterDao extends IBaseDao<UserMaster, String> {
 	public UserMaster loadUserByName(String name) throws TASystemException;
 
 	public Set<UserMaster> getAllUsersByRole(UserRole userRole) throws TASystemException;
-
+	
 }

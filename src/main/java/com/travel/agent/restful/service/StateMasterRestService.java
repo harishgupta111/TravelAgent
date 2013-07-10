@@ -27,7 +27,7 @@ import com.travel.agent.model.StateMaster;
 import com.travel.agent.restful.response.dto.RestResponseCollectionWrapper;
 import com.travel.agent.restful.response.dto.RestResponseConstraintVoilationWrapper;
 import com.travel.agent.restful.response.dto.RestResponseWrapper;
-import com.travel.agent.restful.validation.UserInputValidationService;
+import com.travel.agent.restful.validation.IUserInputValidationService;
 
 @Controller
 @Path("/state")
@@ -40,7 +40,7 @@ public class StateMasterRestService {
 	private IStateMasterDaoService iStateMasterDaoService;
 	
 	@Autowired
-	private UserInputValidationService<StateMaster> userInputValidationService;
+	private IUserInputValidationService<StateMaster> userInputValidationService;
 	 
 	@GET
 	@Path("/{id}")

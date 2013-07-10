@@ -12,11 +12,11 @@ import org.springframework.stereotype.Component;
 
 import com.travel.agent.model.SABaseEntity;
 import com.travel.agent.restful.response.dto.RestResponseConstraintVoilationWrapper;
-import com.travel.agent.restful.validation.UserInputValidationService;
+import com.travel.agent.restful.validation.IUserInputValidationService;
 
 @Component("userInputValidationService")
 public class UserInputValidationServiceImpl<T extends SABaseEntity> implements
-		UserInputValidationService<T> {
+		IUserInputValidationService<T> {
 
 	private static Validator validator = Validation
 			.buildDefaultValidatorFactory().getValidator();

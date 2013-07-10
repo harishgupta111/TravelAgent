@@ -25,7 +25,7 @@ import com.travel.agent.model.VehicleMaster;
 import com.travel.agent.restful.response.dto.RestResponseCollectionWrapper;
 import com.travel.agent.restful.response.dto.RestResponseConstraintVoilationWrapper;
 import com.travel.agent.restful.response.dto.RestResponseWrapper;
-import com.travel.agent.restful.validation.UserInputValidationService;
+import com.travel.agent.restful.validation.IUserInputValidationService;
 
 @Controller
 @Path("/vehicle")
@@ -38,7 +38,7 @@ public class VehicleMasterRestService {
 	private IVehicleMasterDaoService iVehicleDaoService;
 
 	@Autowired
-	private UserInputValidationService<VehicleMaster> userInputValidationService;
+	private IUserInputValidationService<VehicleMaster> userInputValidationService;
 
 	@GET
 	@Path("/{id}")

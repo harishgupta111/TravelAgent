@@ -3,15 +3,13 @@ package com.travel.agent.dao.service;
 import java.io.IOException;
 import java.util.Set;
 
-import org.springframework.security.core.userdetails.UserDetailsService;
-
 import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.travel.agent.exception.TASystemException;
 import com.travel.agent.model.UserMaster;
 import com.travel.agent.model.enums.UserRole;
 
-public interface IUserMasterDaoService extends UserDetailsService, IBaseDaoService<UserMaster, String> {
+public interface IUserMasterDaoService extends IBaseDaoService<UserMaster, String> {
 
 	/**
 	 * 
@@ -28,7 +26,6 @@ public interface IUserMasterDaoService extends UserDetailsService, IBaseDaoServi
 	 * 
 	 * @param userRole
 	 * @return
-	 * @throws OQSystemException
 	 */
 	public Set<UserMaster> getAllUsersByRole(UserRole userRole) throws TASystemException;
 	
@@ -37,8 +34,8 @@ public interface IUserMasterDaoService extends UserDetailsService, IBaseDaoServi
 	 * @param userName
 	 * @param password
 	 * @return
-	 * @throws OQSystemException 
+	 * @throws TASystemException 
 	 */
-	public UserMaster login(String userName, String password);
-
+	public UserMaster login(String userName, String password) throws TASystemException;
+	
 }

@@ -24,7 +24,7 @@ import com.travel.agent.model.LocationMaster;
 import com.travel.agent.restful.response.dto.RestResponseCollectionWrapper;
 import com.travel.agent.restful.response.dto.RestResponseConstraintVoilationWrapper;
 import com.travel.agent.restful.response.dto.RestResponseWrapper;
-import com.travel.agent.restful.validation.UserInputValidationService;
+import com.travel.agent.restful.validation.IUserInputValidationService;
 
 @Controller
 @Path("/location")
@@ -37,7 +37,7 @@ public class LocationMasterRestService {
 	private ILocationMasterDaoService iLocationMasterDaoService;
 
 	@Autowired
-	private UserInputValidationService<LocationMaster> userInputValidationService;
+	private IUserInputValidationService<LocationMaster> userInputValidationService;
 
 	@GET
 	@Path("/{id}")

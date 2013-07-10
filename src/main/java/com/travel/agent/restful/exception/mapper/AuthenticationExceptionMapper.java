@@ -9,6 +9,7 @@ import javax.ws.rs.ext.Provider;
 
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.AuthenticationException;
 import org.springframework.stereotype.Component;
 import org.springframework.web.bind.annotation.ResponseBody;
 
@@ -19,23 +20,23 @@ import com.travel.agent.restful.response.dto.RestResponseExceptionWrapper;
 
 @Provider
 @Component
-public class TASystemExceptionMapper implements
-		ExceptionMapper<TASystemException> {
+public class AuthenticationExceptionMapper implements
+		ExceptionMapper<AuthenticationException> {
 
 	@Autowired
 	private HibernateObjectMapper hibernateObjectMapper;
 
 	private static Logger logger = Logger
-			.getLogger(TASystemExceptionMapper.class);
+			.getLogger(AuthenticationExceptionMapper.class);
 
 	@Override
 	@Produces(MediaType.APPLICATION_JSON)
 	public @ResponseBody
-	Response toResponse(TASystemException exception) {
+	Response toResponse(AuthenticationException exception) {
 
-		exception.printStackTrace();
-		RestResponseExceptionWrapper<TASystemException> restResponseExceptionWrapper = new RestResponseExceptionWrapper.Builder<TASystemException>()
-				.status(Status.INTERNAL_SERVER_ERROR).exception(exception)
+		logger.error(exception.getMessage());
+		RestResponseExceptionWrapper<AuthenticationException> restResponseExceptionWrapper = new RestResponseExceptionWrapper.Builder<AuthenticationException>()
+				.status(Status.UNAUTHORIZED).exception(null)
 				.errorMessage(exception.getMessage()).build();
 		ObjectMapper mapper = this.hibernateObjectMapper.fetchEagerly(false);
 		String json = null;

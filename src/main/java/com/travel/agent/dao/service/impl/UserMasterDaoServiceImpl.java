@@ -11,15 +11,11 @@ import org.apache.log4j.Logger;
 import org.hibernate.HibernateException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
-import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.context.SecurityContextImpl;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
@@ -28,6 +24,7 @@ import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.travel.agent.auth.manager.IAuthenticationManagerService;
 import com.travel.agent.dao.IUserMasterDao;
 import com.travel.agent.dao.hibernate.impl.BaseDaoHibernateSupport;
 import com.travel.agent.dao.service.IUserMasterDaoService;
@@ -43,15 +40,15 @@ public class UserMasterDaoServiceImpl extends BaseDaoHibernateSupport<UserMaster
 	private static Logger logger = Logger.getLogger(UserMasterDaoServiceImpl.class);
 
 	@Autowired
+	@Qualifier("iUserMasterDao")
 	private IUserMasterDao iUserMasterDao;
 
 	@Autowired
 	private HibernateObjectMapper hibernateObjectMapper;
 	
 	@Autowired
-	@Qualifier("authenticationManager")
-	private AuthenticationManager authenticationManager;
-
+	private IAuthenticationManagerService iAuthenticationManagerService;
+	
 	/**
 	 * 
 	 */
@@ -101,42 +98,18 @@ public class UserMasterDaoServiceImpl extends BaseDaoHibernateSupport<UserMaster
 	}
 
 	@Override
-	public UserDetails loadUserByUsername(String username)
-			throws UsernameNotFoundException {
-		if (username != null && !username.equals("")) {
-			UserMaster user = null;
-
-				try {
-					user = iUserMasterDao.loadUserByName(username);
-				} catch (TASystemException e) {
-					logger.error(e.getCause());
-					throw new UsernameNotFoundException("User with username " + username + " not found!", e);
-				}
-			
-			if (user == null) {
-				return null;
-			}
-
-			return user;
-		} else {
-			return null;
-		}
-	}
-
-	@Override
 	public Set<UserMaster> getAllUsersByRole(UserRole userRole) throws TASystemException {
 		return iUserMasterDao.getAllUsersByRole(userRole);
 	}
 
 	@Override
-	public UserMaster login(String userName, String password) {
+	public UserMaster login(String userName, String password) throws TASystemException {
 		boolean boo = false;
 		UserMaster userMaster= null; 
 	       UsernamePasswordAuthenticationToken token =
 			new UsernamePasswordAuthenticationToken(userName, password);
 
-		try {
-			Authentication auth = authenticationManager.authenticate(token);
+			Authentication auth = this.iAuthenticationManagerService.authenticateToken(token);
 			SecurityContext securityContext = new SecurityContextImpl();
 
 			//Places in ThredLocal for future retrieval
@@ -146,12 +119,6 @@ public class UserMasterDaoServiceImpl extends BaseDaoHibernateSupport<UserMaster
 			if(boo){
 				userMaster = loadUserByName(userName);
 			}				
-
-		} catch (AuthenticationException e) {
-			logger.error(e.getMessage());
-		}catch (TASystemException e) {
-			logger.error(e.getMessage());
-		}
 
 		return userMaster;
 	}

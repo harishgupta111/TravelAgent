@@ -25,7 +25,7 @@ import com.travel.agent.jackson.mapper.HibernateObjectMapper;
 import com.travel.agent.model.UserMaster;
 import com.travel.agent.restful.response.dto.RestResponseConstraintVoilationWrapper;
 import com.travel.agent.restful.response.dto.RestResponseWrapper;
-import com.travel.agent.restful.validation.UserInputValidationService;
+import com.travel.agent.restful.validation.IUserInputValidationService;
 
 @Controller
 @Path("/user")
@@ -38,7 +38,7 @@ public class UserMasterRestService implements InitializingBean {
 	private HibernateObjectMapper hibernateObjectMapper;
 
 	@Autowired
-	private UserInputValidationService<UserMaster> userInputValidationService;
+	private IUserInputValidationService<UserMaster> userInputValidationService;
 
 	@POST
 	@Path("/create")
@@ -88,10 +88,10 @@ public class UserMasterRestService implements InitializingBean {
 	Response login(@PathParam("userName") String userName,
 			@PathParam("password") String password) throws TASystemException {
 		ObjectMapper mapper = this.hibernateObjectMapper.fetchEagerly(false);
-		UserMaster userMaster = this.iUserMasterDaoService.login(userName,
-				password);
+		UserMaster um = this.iUserMasterDaoService.login(userName,password);
+
 		RestResponseWrapper<UserMaster> restResponseWrapper = new RestResponseWrapper.Builder<UserMaster>()
-				.data(userMaster).status(Status.CREATED).build();
+				.data(um).status(Status.CREATED).build();
 
 		String json = this.hibernateObjectMapper.prepareJSON(mapper,
 				restResponseWrapper);

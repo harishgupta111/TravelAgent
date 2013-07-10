@@ -105,7 +105,7 @@ public class UserMasterRestServiceTest extends SpringAwareJerseyTests {
 		System.out.println("*******************************************");
 		Assert.assertTrue(
 				"clientResponse found as " + clientResponse.getStatus(),
-				clientResponse.getStatus() == 201);
+				clientResponse.getStatus() == 401);
 		logger.info("Closing shouldNotLogin_WrongPassword");
 	}
 
@@ -122,7 +122,7 @@ public class UserMasterRestServiceTest extends SpringAwareJerseyTests {
 		System.out.println("*******************************************");
 		Assert.assertTrue(
 				"clientResponse found as " + clientResponse.getStatus(),
-				clientResponse.getStatus() == 201);
+				clientResponse.getStatus() == 401);
 		logger.info("Closing shouldNotLogin_NonExistingUser");
 	}
 	

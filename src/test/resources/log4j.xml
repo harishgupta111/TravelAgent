@@ -65,6 +65,10 @@
 	<logger name="com.sun.jersey">
 		<level value="error" />
 	</logger>
+	
+	<logger name="com.sun.jersey.test">
+		<level value="error" />
+	</logger>
 
 	<logger name="com.travel.agent.test">
 		<level value="info" />

@@ -30,8 +30,8 @@
 
 	</http>
 
-	<authentication-manager alias="authenticationManager">
-		<authentication-provider user-service-ref="iUserMasterDaoService">
+	<authentication-manager alias="authenticationManager" >
+		<authentication-provider user-service-ref="iUserMasterDao">
 			<password-encoder hash="sha-256">
 				<salt-source user-property="username" />
 			</password-encoder>

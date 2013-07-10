@@ -2,15 +2,13 @@ package com.travel.agent.restful.response.dto;
 
 import javax.ws.rs.core.Response.Status;
 
-import com.travel.agent.exception.TASystemException;
-
-public class RestResponseExceptionWrapper<T extends TASystemException> {
+public class RestResponseExceptionWrapper<T extends RuntimeException> {
 	
 	private Status status;
 	private T exception;
 	private String errorMessage;
 	
-	public static class Builder<T extends TASystemException> {
+	public static class Builder<T extends RuntimeException> {
 		private Status status;
 		private T exception;
 		private String errorMessage;
