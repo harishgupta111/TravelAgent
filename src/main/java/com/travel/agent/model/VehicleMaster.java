@@ -14,6 +14,8 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotNull;
 
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
@@ -39,7 +41,6 @@ public class VehicleMaster extends SABaseEntity {
 
 	@Enumerated(EnumType.ORDINAL)
 	@Column(name = "vehicleType")
-	@NotEmpty(message = "VehicleType cannot be empty")
 	private VehicleType vehicleType;
 
 	@Column(name = "make")
@@ -47,18 +48,20 @@ public class VehicleMaster extends SABaseEntity {
 
 	@Column(name = "modelName")
 	private String modelName;
-
+	
 	@Column(name = "modelYear")
 	private Integer modelYear;
 
-	@NotEmpty(message = "NoOfSeats cannot be empty")
+	@Min(value=3,message = "Number of seats should greater be than 3")
+	@NotNull(message="Number of seats cannot be null")
 	@Column(name = "noOfSeats")
 	private Integer noOfSeats;
 	
 	@NotEmpty(message = "PlateNumber cannot be empty")
 	@Column(name = "plateNumber")
 	private String plateNumber;
-
+	
+	@NotNull(message="Vehicle Count cannot be null")
 	@Column(name = "vehicleCount")
 	private Integer vehicleCount;
 
