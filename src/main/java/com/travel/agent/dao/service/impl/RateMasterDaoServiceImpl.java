@@ -1,10 +1,13 @@
 package com.travel.agent.dao.service.impl;
 
+import java.text.ParseException;
 import java.util.Date;
 import java.util.Set;
 
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.scheduling.annotation.EnableScheduling;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Isolation;
 import org.springframework.transaction.annotation.Propagation;
@@ -18,6 +21,7 @@ import com.travel.agent.model.enums.RateType;
 
 @Transactional(readOnly = true)
 @Component("iRateMasterDaoService")
+@EnableScheduling
 public class RateMasterDaoServiceImpl implements IRateMasterDaoService {
 
 	private static Logger logger = Logger
@@ -76,6 +80,13 @@ public class RateMasterDaoServiceImpl implements IRateMasterDaoService {
 		return this.iRateMasterDao.findByLocationPairRateTypeAndEffStartDate(
 				originLocationCode, destinationLocationCode, rateType,
 				effectiveStartDate);
+	}
+
+	@Override
+	@Transactional(readOnly = false, propagation = Propagation.REQUIRED, rollbackFor=TASystemException.class, isolation=Isolation.DEFAULT)
+	@Scheduled(cron="0 55 20 * * ?")
+	public void updateEligibleRates() throws ParseException {
+		this.iRateMasterDao.updateEligibleRates();
 	}
 
 }

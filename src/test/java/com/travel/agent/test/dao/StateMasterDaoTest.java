@@ -37,6 +37,12 @@ public class StateMasterDaoTest {
 	private IStateMasterDao iStateMasterDao;
 
 	@Test
+	public void should2GetAll() throws TASystemException {
+		Set<StateMaster> set = iStateMasterDao.findAll();
+		Assert.assertEquals(5, set.size());
+	}
+
+	@Test
 	@Transactional(propagation = Propagation.REQUIRED)
 	public void should1Create() throws TASystemException {
 		StateMaster stateMaster = new StateMaster();
@@ -52,12 +58,6 @@ public class StateMasterDaoTest {
 		Assert.assertEquals(created, stateMaster);
 	}
 	
-	@Test
-	public void should2GetAll() throws TASystemException {
-		Set<StateMaster> set = iStateMasterDao.findAll();
-		Assert.assertEquals(5, set.size());
-	}
-
 	@Test
 	public void should3GetByID() throws TASystemException {
 		StateMaster sm = iStateMasterDao.findById("1");

@@ -1,5 +1,7 @@
 package com.travel.agent.dao.hibernate.impl;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.LinkedHashSet;
@@ -125,5 +127,39 @@ public class RateMasterDaoHibernateImpl extends
 		}
 		return null;
 	}
+
+	@Override
+	@CacheEvict(value = { "entity.ta_rateMaster", "entity.ta_rateMaster" }, allEntries = true, beforeInvocation = false)
+	@Transactional(readOnly = false, propagation = Propagation.MANDATORY, rollbackFor = TASystemException.class, isolation = Isolation.DEFAULT)
+	public Boolean updateEligibleRates() throws ParseException {
+		SimpleDateFormat sdf = new SimpleDateFormat("dd.MM.yyyy");
+		Date now = sdf.parse(sdf.format((new Date())));
+		String strSQL = "Select c from RateMaster c where c.effectiveStartDate = :effectiveStartDate and c.activeIndicator = :activeIndicator";
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("effectiveStartDate", now);
+		map.put("activeIndicator", false);
+		Boolean status = false;
+		try {
+			@SuppressWarnings("unchecked")
+			List<RateMaster> list = (List<RateMaster>) this.executeQuery(strSQL, map);
+			if (list != null && list.size() > 0) {
+				for(RateMaster newRate : list)
+				{
+					// find active rate for same orig, destination, ratetype and active = y to be updated
+					RateMaster oldRate = findByLocationPairAndRateType(newRate.getOriginLocationCode(), newRate.getDestinationLocationCode(), newRate.getRateType(), true);
+					newRate.setActiveIndicator(true);
+					oldRate.setActiveIndicator(false);
+					oldRate.setUpdateDate(new Date());
+					this.update(oldRate, true);
+					this.update(newRate, true);
+					status = true;
+				}
+			}	
+		} catch (HibernateException e) {
+			throw new TASystemException(e);
+		}
+		
+		return status;
+	} 
 
 }
