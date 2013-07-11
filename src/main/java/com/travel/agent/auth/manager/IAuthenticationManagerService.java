@@ -6,5 +6,5 @@ import org.springframework.security.core.Authentication;
 public interface IAuthenticationManagerService {
 	
 	public Authentication authenticateToken(UsernamePasswordAuthenticationToken token);
-
+	
 }

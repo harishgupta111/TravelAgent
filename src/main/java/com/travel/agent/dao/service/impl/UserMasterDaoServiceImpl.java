@@ -25,6 +25,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.travel.agent.auth.manager.IAuthenticationManagerService;
+import com.travel.agent.auth.manager.IUserAuthenticationDTOService;
 import com.travel.agent.dao.IUserMasterDao;
 import com.travel.agent.dao.hibernate.impl.BaseDaoHibernateSupport;
 import com.travel.agent.dao.service.IUserMasterDaoService;
@@ -48,6 +49,9 @@ public class UserMasterDaoServiceImpl extends BaseDaoHibernateSupport<UserMaster
 	
 	@Autowired
 	private IAuthenticationManagerService iAuthenticationManagerService;
+	
+	@Autowired
+	private IUserAuthenticationDTOService iUserAuthenticationDTOService;
 	
 	/**
 	 * 
@@ -117,6 +121,8 @@ public class UserMasterDaoServiceImpl extends BaseDaoHibernateSupport<UserMaster
 			SecurityContextHolder.getContext().setAuthentication(auth);
 			boo =  true;
 			if(boo){
+				logger.info("User Authenticated " + auth.isAuthenticated());
+				this.iUserAuthenticationDTOService.setAuthenticate(auth);
 				userMaster = loadUserByName(userName);
 			}				
 

@@ -33,7 +33,7 @@ public class TASystemExceptionMapper implements
 	public @ResponseBody
 	Response toResponse(TASystemException exception) {
 
-		//exception.printStackTrace();
+		logger.error(exception.getMessage());
 		RestResponseExceptionWrapper<TASystemException> restResponseExceptionWrapper = new RestResponseExceptionWrapper.Builder<TASystemException>()
 				.status(Status.INTERNAL_SERVER_ERROR).exception(null)
 				.errorMessage(exception.getMessage()).build();

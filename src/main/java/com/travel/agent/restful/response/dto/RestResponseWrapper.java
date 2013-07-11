@@ -1,15 +1,15 @@
 package com.travel.agent.restful.response.dto;
 
+import java.io.Serializable;
+
 import javax.ws.rs.core.Response.Status;
 
-import com.travel.agent.model.SABaseEntity;
-
-public class RestResponseWrapper<T extends SABaseEntity> {
+public class RestResponseWrapper<T extends Serializable> {
 
 	private Status status;
 	private T data;
 	
-	public static class Builder<T extends SABaseEntity> {
+	public static class Builder<T extends Serializable> {
 		private Status status;
 		private T data;
 
