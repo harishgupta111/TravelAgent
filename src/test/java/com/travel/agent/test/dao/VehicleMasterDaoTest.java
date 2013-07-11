@@ -35,7 +35,6 @@ public class VehicleMasterDaoTest {
 	@Autowired
 	private IVehicleMasterDao iVehicleMasterDao;
 
-	@Rollback(false)
 	@Test
 	@Transactional(propagation = Propagation.REQUIRES_NEW)
 	public void shouldCreate() throws TASystemException {
@@ -56,7 +55,7 @@ public class VehicleMasterDaoTest {
 	@Test
 	public void getAllVehicles() throws TASystemException {
 		Set<VehicleMaster> set = iVehicleMasterDao.findAll();
-		Assert.assertEquals(5, set.size());
+		Assert.assertEquals(4, set.size());
 	}
 
 	@Test
