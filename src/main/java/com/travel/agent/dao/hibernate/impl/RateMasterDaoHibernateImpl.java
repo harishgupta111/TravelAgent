@@ -34,8 +34,7 @@ public class RateMasterDaoHibernateImpl extends
 	@Override
 	@CacheEvict(value = { "entity.ta_rateMaster", "entity.ta_rateMaster" }, allEntries = true, beforeInvocation = false)
 	@Transactional(readOnly = false, propagation = Propagation.MANDATORY, rollbackFor = TASystemException.class, isolation = Isolation.DEFAULT)
-	public RateMaster createEntity(RateMaster rateMaster)
-			throws TASystemException {
+	public RateMaster createEntity(RateMaster rateMaster) {
 		RateMaster created = null;
 		try {
 			rateMaster.setRateMasterID(UUID.randomUUID().toString());

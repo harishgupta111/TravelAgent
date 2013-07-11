@@ -30,7 +30,7 @@ public class StateMasterHibernateImpl extends BaseDaoHibernateSupport<StateMaste
 	@Override
 	@CacheEvict(value = "entity.ta_vehicleMaster", key="{#root.methodName,#t.stateMasterID}")
 	@Transactional(readOnly = false, propagation = Propagation.MANDATORY, rollbackFor = TASystemException.class, isolation = Isolation.DEFAULT)
-	public StateMaster createEntity(StateMaster t) throws TASystemException {
+	public StateMaster createEntity(StateMaster t) {
 		StateMaster created = null;
 		try {
 			t.setStateMasterID(UUID.randomUUID().toString());

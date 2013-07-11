@@ -23,7 +23,7 @@ import com.travel.agent.model.enums.RecordCreatorType;
 @Entity
 @Table(name = "ta_RateMaster", uniqueConstraints = @UniqueConstraint(columnNames = {
 		"rateType", "originLocationCode", "destinationLocationCode",
-		"effectiveStartDate", "rate", "activeIndicator" }))
+		"effectiveStartDate"}))
 @Cache(region = "entity.ta_rateMaster", usage = CacheConcurrencyStrategy.READ_WRITE)
 @Cacheable
 public class RateMaster extends SABaseEntity {

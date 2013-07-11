@@ -1,6 +1,6 @@
 package com.travel.agent.exception;
 
-public class TASystemException extends OQException {
+public class TASystemException extends RuntimeException {
 
 	/**
 	 * 

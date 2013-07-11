@@ -2,17 +2,17 @@ package com.travel.agent.restful.response.dto;
 
 import javax.ws.rs.core.Response.Status;
 
-public class RestResponseExceptionWrapper<T extends RuntimeException> {
+public class RestResponseExceptionWrapper<T extends Throwable> {
 	
 	private Status status;
 	private T exception;
 	private String errorMessage;
 	
-	public static class Builder<T extends RuntimeException> {
+	public static class Builder<T extends Throwable> {
 		private Status status;
 		private T exception;
 		private String errorMessage;
-
+		
 		public Builder() {
 		}
 		

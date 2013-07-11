@@ -29,25 +29,13 @@ public class RateMasterDaoServiceImpl implements IRateMasterDaoService {
 	@Override
 	@Transactional(readOnly = false, propagation = Propagation.REQUIRED, rollbackFor = TASystemException.class, isolation = Isolation.DEFAULT)
 	public RateMaster create(RateMaster newRate) throws TASystemException {
-		RateMaster existing = this.findByLocationPairRateTypeAndEffStartDate(
-				newRate.getOriginLocationCode(),
-				newRate.getDestinationLocationCode(), newRate.getRateType(), newRate.getEffectiveStartDate());
-		if ((existing != null && 
-				!existing.getRate().equals(newRate.getRate())
-				&& newRate.getEffectiveStartDate().after(new Date()) 
-				&& !existing.getEffectiveStartDate().equals(newRate.getEffectiveStartDate())
-				|| (existing == null 
-				&& newRate.getEffectiveStartDate().after(new Date())))) {
+		if (newRate.getEffectiveStartDate().after(new Date())) {
 
 			RateMaster created = this.iRateMasterDao.createEntity(newRate);
 			logger.debug("Created new with ID " + created.getRateMasterID());
 			return created;
 		} else {
-			logger.debug("Same Rate found for origin "
-					+ newRate.getOriginLocationCode() + " destination "
-					+ newRate.getDestinationLocationCode() + " rate type "
-					+ newRate.getRateType()
-					+ ". No need to create new rate in this case.");
+			logger.debug("Back dated rate setup not permissible.");
 			return null;
 		}
 

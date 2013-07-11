@@ -33,9 +33,9 @@ public class TASystemExceptionMapper implements
 	public @ResponseBody
 	Response toResponse(TASystemException exception) {
 
-		exception.printStackTrace();
+		//exception.printStackTrace();
 		RestResponseExceptionWrapper<TASystemException> restResponseExceptionWrapper = new RestResponseExceptionWrapper.Builder<TASystemException>()
-				.status(Status.INTERNAL_SERVER_ERROR).exception(exception)
+				.status(Status.INTERNAL_SERVER_ERROR).exception(null)
 				.errorMessage(exception.getMessage()).build();
 		ObjectMapper mapper = this.hibernateObjectMapper.fetchEagerly(false);
 		String json = null;
