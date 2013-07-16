@@ -15,6 +15,28 @@
 		<title>Header</title>
 	</head>
 	<body>
+		<div class="header1">
+			<div id="top_links">
+				<ul id="top_quicklinks">						
+					<li id="sign_in"><a id="sign_in" href="#">Sign In <span>|</span></a></li>
+					<li id="register"><a id="register" href="index.jsp?targetPage=registration.jsp">Register</a></li>				
+				</ul> 
+		    </div>
+		</div>
+		<section class="signin_form">
+			<form method="post" name="validationForm" onsubmit="return validateForm()">
+				<div class="sign_in_box">
+					<p>
+					<input class="input email" name="email" type="email" placeholder="E-mail">
+					</p>
+					<p>
+					<input class="input password" name="password" type="password" placeholder="Password">
+					</p>
+					<input class="sign_in" type="submit" value="">
+				</div>
+			</form>	
+				   <p class="pforget"><a href="#">FORGOT YOUR PASSWORD?</a></p>
+		</section>	
 		<header class="wrapper clear">
 			<section class="name">
 				<span class="first"><img src="images/logo.png" alt="logo"/> </span>	 

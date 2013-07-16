@@ -28,7 +28,17 @@
 			</article>
 			<article id="heading" class="clear wrapper">
 				<h1>Make a Reservation!</h1>
-			</article>
+				<article id="trip_ways">
+					<p class="trip_way">
+ 						<input type="radio" id="one_way" name="trip_type" >
+ 						<label for="trip_type">One Way</label>
+ 					</p>	
+ 					<p class="trip_way">
+ 						<input type="radio" id="two_way" name="trip_type"  checked="checked">
+ 						<label for="trip_type">Round Trip</label>
+ 					</p>
+	  			</article>
+  			</article>
 			<article id="content" class="clear">	<!-- content -->
 				<article id="reservation">
 					<form name="reservation_form">
@@ -46,7 +56,7 @@
 						<article id="date">	<!-- date -->
 							<label for="pick_date">pick up date</label>
 							<p>
-								<input type="text" id="pick_date" name="pick_date" class="tcal pick"/>
+								<input type="text" id="pick_date" name="pick_date" class="datepicker pick"/>
 								<select name="pick_time" id="pick_time">
 									<%int i=0;
 										for(i=0;i<=24;i++)
@@ -67,7 +77,7 @@
 							</p>
 							<label for="drop_date">drop off date</label>
 							<p>
-								<input type="text" id="drop_date" name="drop_date" class="tcal drop" />
+								<input type="text" id="drop_date" name="drop_date" class="datepicker drop" />
 								<select name="drop_time" id="drop_time">
 									<%
 										i=0;
@@ -88,11 +98,56 @@
 								</select>
 							</p>
 						</article>	<!-- end date -->
-						<input type="submit" value="SUBMIT" class="submit">
+						<article id="travelInfo">
+							 <label for="adultInfo">Adults</label>
+						     <select id="adultInfo">
+									<%
+										i=0;
+										for(i=0;i<=20;i++)
+										{
+											if(i<=20){					
+										%>
+											<option><%=i%></option>
+										<%
+											}
+										}
+									%>
+								</select>
+							 <label for="childrenInfo">Children</label>
+						     <select id="childrenInfo">
+									<%
+										i=0;
+										for(i=0;i<=20;i++)
+										{
+											if(i<=20){					
+										%>
+											<option><%=i%></option>
+										<%
+											}
+										}
+									%>
+								</select>
+							 <label for="infantsInfo">Infants</label>
+						     <select id="infantsInfo">
+									<%
+										i=0;
+										for(i=0;i<=10;i++)
+										{
+											if(i<=10){					
+										%>
+											<option><%=i%></option>
+										<%
+											}
+										}
+									%>
+								</select>						      
+						</article>
+						<a id="search_vehicle" href="index.jsp?targetPage=vehicles.jsp">Search Vehicle</a>
+<!-- 						<input type="submit" value="SUBMIT" class="submit">
 						<label for="code">promo code</label>
 						<p>
 							<input type="text" id="code" placeholder="Ex:123" />
-						</p>
+						</p> -->
 					</form>
 				</article>
 				<article id="modifyReservation">
@@ -116,6 +171,7 @@
 		
 		<script type= "text/javascript">
 		$(document).ready(function(){
+			
 			$.ajax({
 				type: 'GET',
 				cache: false,
