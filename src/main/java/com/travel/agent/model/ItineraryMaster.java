@@ -2,13 +2,22 @@ package com.travel.agent.model;
 
 import java.util.Date;
 
+import javax.persistence.Cacheable;
 import javax.persistence.Column;
+import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.Table;
 
+import org.hibernate.annotations.Cache;
+import org.hibernate.annotations.CacheConcurrencyStrategy;
 import org.hibernate.annotations.Type;
 
 import com.travel.agent.model.enums.RecordCreatorType;
 
+@Entity
+@Table(name = "ta_ItineraryMaster")
+@Cache(region = "entity.ta_ItineraryMaster", usage = CacheConcurrencyStrategy.READ_WRITE)
+@Cacheable
 public class ItineraryMaster extends SABaseEntity {
 
 	/**

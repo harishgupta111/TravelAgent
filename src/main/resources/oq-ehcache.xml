@@ -62,4 +62,9 @@
 		maxElementsInMemory="10000" overflowToDisk="true" diskPersistent="true"
 		timeToIdleSeconds="0" timeToLiveSeconds="300"
 		memoryStoreEvictionPolicy="LRU" />
+		
+	<cache name="entity.ta_ItineraryMaster" eternal="false"
+		maxElementsInMemory="10000" overflowToDisk="true" diskPersistent="true"
+		timeToIdleSeconds="0" timeToLiveSeconds="300"
+		memoryStoreEvictionPolicy="LRU" />
 </ehcache>

@@ -25,14 +25,15 @@
 		<constructor-arg>
 			<list>
 				<value>com.travel.agent.model.Booking</value>
+				<value>com.travel.agent.model.ContactUs</value>
+				<value>com.travel.agent.model.ItineraryMaster</value>
+				<value>com.travel.agent.model.LocationMaster</value>
 				<value>com.travel.agent.model.PassengerDetail</value>
 				<value>com.travel.agent.model.RateMaster</value>
-				<value>com.travel.agent.model.VehicleMaster</value>
-				<value>com.travel.agent.model.LocationMaster</value>
-				<value>com.travel.agent.model.ContactUs</value>
 				<value>com.travel.agent.model.StateMaster</value>
 				<value>com.travel.agent.model.UserMaster</value>
 				<value>com.travel.agent.model.UserAuthorityMaster</value>
+				<value>com.travel.agent.model.VehicleMaster</value>
 			</list>
 		</constructor-arg>
 	</bean>
