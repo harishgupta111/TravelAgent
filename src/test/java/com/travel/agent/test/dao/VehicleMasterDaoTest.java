@@ -39,7 +39,7 @@ public class VehicleMasterDaoTest {
 	public void shouldCreate() throws TASystemException {
 		VehicleMaster vm = new VehicleMaster();
 		VehicleMasterBuilder vmb = vm.new VehicleMasterBuilder();
-		vm = vmb.availableVehicleCount(3).bookingSet(null)
+		vm = vmb.bookingSet(null)
 				.createDate(new Date()).make("Tata").modelName("Indica")
 				.modelYear(2012).noOfSeats(4)
 				.plateNumber("ABC 1788").vehicleCount(6)

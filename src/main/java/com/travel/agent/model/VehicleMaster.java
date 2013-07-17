@@ -65,9 +65,6 @@ public class VehicleMaster extends SABaseEntity {
 	@Column(name = "vehicleCount")
 	private Integer vehicleCount;
 
-	@Column(name = "availableVehicleCount")
-	private Integer availableVehicleCount;
-
 	@OneToMany(mappedBy = "vehicleMaster", fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
 	private Set<Booking> bookingSet;
 
@@ -81,7 +78,6 @@ public class VehicleMaster extends SABaseEntity {
 		private Integer noOfSeats;
 		private String plateNumber;
 		private Integer vehicleCount;
-		private Integer availableVehicleCount;
 		private Set<Booking> bookingSet;
 		private RecordCreatorType createdBy;
 		private RecordCreatorType updatedBy;
@@ -143,11 +139,6 @@ public class VehicleMaster extends SABaseEntity {
 			return this;
 		}
 
-		public VehicleMasterBuilder availableVehicleCount(Integer val) {
-			this.availableVehicleCount = val;
-			return this;
-		}
-
 		public VehicleMasterBuilder bookingSet(Set<Booking> val) {
 			this.bookingSet = val;
 			return this;
@@ -172,7 +163,6 @@ public class VehicleMaster extends SABaseEntity {
 			this.noOfSeats = vehicleMaster.noOfSeats;
 			this.plateNumber = vehicleMaster.plateNumber;
 			this.vehicleCount = vehicleMaster.vehicleCount;
-			this.availableVehicleCount = vehicleMaster.availableVehicleCount;
 			this.bookingSet = vehicleMaster.bookingSet;
 			this.createdBy = vehicleMaster.getCreatedBy();
 			this.updatedBy = vehicleMaster.getUpdatedBy();
@@ -195,7 +185,6 @@ public class VehicleMaster extends SABaseEntity {
 		this.noOfSeats = vehicleMasterBuilder.noOfSeats;
 		this.plateNumber = vehicleMasterBuilder.plateNumber;
 		this.vehicleCount = vehicleMasterBuilder.vehicleCount;
-		this.availableVehicleCount = vehicleMasterBuilder.availableVehicleCount;
 		this.bookingSet = vehicleMasterBuilder.bookingSet;
 		super.setCreatedBy(vehicleMasterBuilder.createdBy);
 		super.setUpdatedBy(vehicleMasterBuilder.updatedBy);
@@ -212,7 +201,6 @@ public class VehicleMaster extends SABaseEntity {
 		this.noOfSeats = builder.noOfSeats;
 		this.plateNumber = builder.plateNumber;
 		this.vehicleCount = builder.vehicleCount;
-		this.availableVehicleCount = builder.availableVehicleCount;
 		this.bookingSet = builder.bookingSet;
 		super.setCreateDate(builder.createDate);
 		super.setCreatedBy(builder.createdBy);
@@ -224,10 +212,6 @@ public class VehicleMaster extends SABaseEntity {
 	public int hashCode() {
 		final int prime = 31;
 		int result = super.hashCode();
-		result = prime
-				* result
-				+ ((availableVehicleCount == null) ? 0 : availableVehicleCount
-						.hashCode());
 		result = prime * result + ((make == null) ? 0 : make.hashCode());
 		result = prime * result
 				+ ((modelName == null) ? 0 : modelName.hashCode());
@@ -255,11 +239,6 @@ public class VehicleMaster extends SABaseEntity {
 		if (getClass() != obj.getClass())
 			return false;
 		VehicleMaster other = (VehicleMaster) obj;
-		if (availableVehicleCount == null) {
-			if (other.availableVehicleCount != null)
-				return false;
-		} else if (!availableVehicleCount.equals(other.availableVehicleCount))
-			return false;
 		if (make == null) {
 			if (other.make != null)
 				return false;
@@ -362,14 +341,6 @@ public class VehicleMaster extends SABaseEntity {
 
 	public void setVehicleCount(Integer vehicleCount) {
 		this.vehicleCount = vehicleCount;
-	}
-
-	public Integer getAvailableVehicleCount() {
-		return availableVehicleCount;
-	}
-
-	public void setAvailableVehicleCount(Integer availableVehicleCount) {
-		this.availableVehicleCount = availableVehicleCount;
 	}
 
 	public Set<Booking> getBookingSet() {

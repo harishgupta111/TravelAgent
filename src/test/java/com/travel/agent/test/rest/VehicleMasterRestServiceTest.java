@@ -83,7 +83,7 @@ public class VehicleMasterRestServiceTest extends SpringAwareJerseyTests {
 		vehicleMaster = vmb.vehicleType(VehicleType.BUS).make("Maruti")
 				.modelName("A-Star").modelYear(2010).noOfSeats(4)
 				.plateNumber("JK-21 2419").vehicleCount(1)
-				.availableVehicleCount(1).bookingSet(null)
+				.bookingSet(null)
 				.createdBy(RecordCreatorType.TEST)
 				.updatedBy(RecordCreatorType.TEST).buildNew();
 		ObjectMapper mapper = this.hibernateObjectMapper.fetchEagerly(false);
