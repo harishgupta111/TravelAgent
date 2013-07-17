@@ -1,5 +1,14 @@
 $(document).ready(function(){
-	
+	 $(".datepicker").datepicker({
+			minDate: 'today',
+			maxDate: "+90D",
+		    showOn: "button",
+		    buttonImage:"images/calender.jpg",
+		    buttonImageOnly: true,
+		    onClose: function( selectedDate ) {
+		    $( "#drop_date" ).datepicker( "option", "minDate", selectedDate );
+		    }
+	});
 //	script for handling reservation widget view and modify tab	
 	$("#view_res a").on('click',function(){
 		$('#reservation').hide();

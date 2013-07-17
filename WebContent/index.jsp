@@ -19,12 +19,29 @@
 	<head>
 		<!--[if lt IE 9]>
 		<script src="js/html5shiv.js"></script>
+		<script src='js/css3-mediaqueries.js'></script>
 		<![endif]-->
 		<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 		<title>Index</title>
+		<!-- stylesheets -->
 		<link rel="stylesheet" type="text/css" href="css/indexStyle.css"></link>
+		<link rel="stylesheet" href="css/globalStyle.css"/>
+		<link rel="stylesheet" href="css/careersStyle.css"/>
+		<link rel="stylesheet" href="css/contactUsStyle.css" />
+		<link rel="stylesheet" href="css/footerStyle.css"/>
+		<link rel="stylesheet" href="css/headerStyle.css" />
+		<link rel="stylesheet" href="css/locationsStyle.css"/>
+		<link rel="stylesheet" href="css/privacyStyle.css" />
+		<link rel="stylesheet" href="css/termsStyle.css" />
+		<link rel="stylesheet" href="css/reservationWidgetStyle.css" />
+		<link rel="stylesheet" href="css/vehiclesStyle.css" />
+		<link rel="stylesheet" href="css/jquery-ui-1.10.0.custom.css" />
 		<link rel="stylesheet" type="text/css" href="css/registrationStyle.css"></link>
-		
+		<!-- scripts -->
+		<script src="js/jquery-1.9.1.min.js"></script>
+		<script src="js/jquery-ui-1.10.0.custom.js"></script>
+	 	<script type='text/javascript' src='js/modernizr.js'></script>
+	 	<script src='js/script.js'></script>	 	
 	</head>
 	<body>
 		<section class="container">
