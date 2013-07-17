@@ -33,7 +33,7 @@
 		<ul>
 			<li><a class="<%if(pageName.contains("reservation")) {%>bottom-border<%}else{ %>no-bottom-border<%} %>" href="index.jsp?targetPage=reservation.jsp">home</a></li>
 			<li><a class="<%if(pageName.contains("locations")) {%>bottom-border<%}else{ %>no-bottom-border<%} %>" href="index.jsp?targetPage=locations.jsp">locations</a></li>
-			<li><a class="<%if(pageName.contains("careers")) {%>bottom-border<%}else{ %>no-bottom-border<%} %>" href="index.jsp?targetPage=careers.jsp">careers</a></li>
+			<li><a class="<%if(pageName.contains("offers")) {%>bottom-border<%}else{ %>no-bottom-border<%} %>" href="index.jsp?targetPage=offers.jsp">offers</a></li>
 			<li  id="lastLi"><a class="<%if(pageName.contains("customerSupport")) {%>bottom-border<%}else{ %>no-bottom-border<%} %>" href="index.jsp?targetPage=customerSupport.jsp">customer support</a></li>				
 		</ul>
 	</nav>
@@ -41,7 +41,7 @@
 		<ul>
 			<li><a href="index.jsp?targetPage=reservation.jsp">Home<span> ></span></a></li>
 			<li><a href="index.jsp?targetPage=locations.jsp">Locations<span> ></span></a></li>
-			<li><a href="index.jsp?targetPage=careers.jsp">Careers<span> ></span></a></li>
+			<li><a href="index.jsp?targetPage=offers.jsp">Offers<span> ></span></a></li>
 			<li><a href="index.jsp?targetPage=customerSupport.jsp">Customer Support<span> ></span></a></li>				
 		</ul>
 	</nav>

@@ -27,13 +27,8 @@
 		<link rel="stylesheet" type="text/css" href="css/indexStyle.css"></link>
 		<link rel="stylesheet" href="css/globalStyle.css"/>
 		<link rel="stylesheet" href="css/careersStyle.css"/>
-		<link rel="stylesheet" href="css/contactUsStyle.css" />
-		<link rel="stylesheet" href="css/footerStyle.css"/>
-		<link rel="stylesheet" href="css/headerStyle.css" />
+		<link rel="stylesheet" href="css/innerpagesStyle.css" />
 		<link rel="stylesheet" href="css/locationsStyle.css"/>
-		<link rel="stylesheet" href="css/privacyStyle.css" />
-		<link rel="stylesheet" href="css/termsStyle.css" />
-		<link rel="stylesheet" href="css/reservationWidgetStyle.css" />
 		<link rel="stylesheet" href="css/vehiclesStyle.css" />
 		<link rel="stylesheet" href="css/jquery-ui-1.10.0.custom.css" />
 		<link rel="stylesheet" type="text/css" href="css/registrationStyle.css"></link>

@@ -8,7 +8,7 @@
 				<li><a href="index.jsp?targetPage=contactUs.jsp">contact</a></li>
 				<li><a href="index.jsp?targetPage=reservation.jsp">existing reservations</a></li>
 				<li><a href="index.jsp?targetPage=locations.jsp">locations</a></li>
-				<li><a href="index.jsp?targetPage=careers.jsp">careers</a></li>
+				<li><a href="index.jsp?targetPage=offers.jsp">offers</a></li>
 			</ul>
 		</nav>
 	</footer>
@@ -20,7 +20,7 @@
 				<li><a href="index.jsp?targetPage=contactUs.jsp">contact<span> ></span></a></li>
 				<li><a href="index.jsp?targetPage=reservation.jsp">existing reservations<span> ></span></a></li>
 				<li><a href="index.jsp?targetPage=locations.jsp">locations<span> ></span></a></li>
-				<li><a href="index.jsp?targetPage=careers.jsp">careers<span> ></span></a></li>
+				<li><a href="index.jsp?targetPage=offers.jsp">offers<span> ></span></a></li>
 			</ul>
 		</nav>
 	</footer>
