@@ -1,0 +1,16 @@
+.innerContent .innerHeading2{color:#0073D4;font-size:1em}
+.innerContent .innerHeading4{width:100%;font-size:0.7em;font-weight:bold;margin-top:5px}
+.innerContent .innerHeading3{font-size:0.8em;color:#D95B00}
+.innerContent article{margin-bottom:10px;border-bottom:2px solid #f4f4f4}
+.innerContent p.subText{width:100%;padding-top:15px;font-size:0.8em;padding-bottom:10px}
+.innerContent select{width:30%;margin-bottom:10px}
+.innerContent span{font-weight:bold;text-transform:none}
+.innerContent span.phno{font-weight:normal;font-size:0.8em}
+.confirmation,.information,.acceptance{display:none}
+
+@media only screen and (min-width:600px){
+	.confirmation,.information{display:block}
+}
+@media only screen and (min-width:768px){
+	.acceptance{display:block}
+}
