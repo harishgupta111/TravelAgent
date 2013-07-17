@@ -15,6 +15,10 @@
 		maxElementsInMemory="10000" eternal="true">
 	</cache>
 
+	<cache name="entity.ta_AvailableVehicle" eternal="false" maxElementsInMemory="10000"
+		overflowToDisk="true" diskPersistent="true" timeToIdleSeconds="0"
+		timeToLiveSeconds="300" memoryStoreEvictionPolicy="LRU" />
+
 	<cache name="entity.ta_vehicleMaster" eternal="false" maxElementsInMemory="10000"
 		overflowToDisk="true" diskPersistent="true" timeToIdleSeconds="0"
 		timeToLiveSeconds="300" memoryStoreEvictionPolicy="LRU" />

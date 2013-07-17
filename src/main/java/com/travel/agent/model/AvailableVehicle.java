@@ -5,8 +5,6 @@ import java.util.Date;
 import javax.persistence.Cacheable;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
 import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
@@ -20,7 +18,6 @@ import org.hibernate.annotations.Fetch;
 import org.hibernate.annotations.Type;
 
 import com.travel.agent.model.enums.RecordCreatorType;
-import com.travel.agent.model.enums.VehicleType;
 
 @Entity
 @Table(name = "ta_AvailableVehicle", uniqueConstraints = @UniqueConstraint(columnNames = {"plateNumber"}))
@@ -34,12 +31,8 @@ public class AvailableVehicle extends SABaseEntity {
 	private static final long serialVersionUID = -949426332114853193L;
 
 	@Id
-	@Column(name = "vehicleMasterID", insertable = false, updatable = false)
-	private String vehicleMasterID;
-
-	@Enumerated(EnumType.ORDINAL)
-	@Column(name = "vehicleType")
-	private VehicleType vehicleType;
+	@Column(name = "availableVehicleID", insertable = false, updatable = false)
+	private String availableVehicleID;
 
 	@Column(name = "dateOfRunning")
 	private Date dateOfRunning;
@@ -59,8 +52,7 @@ public class AvailableVehicle extends SABaseEntity {
 
 	public class AvailableVehicleBuilder {
 
-		private String vehicleMasterID;
-		private VehicleType vehicleType;
+		private String availableVehicleID;
 		private Date dateOfRunning;
 		private Integer availableVehicleCount;
 		private RecordCreatorType createdBy;
@@ -80,13 +72,8 @@ public class AvailableVehicle extends SABaseEntity {
 			return this;
 		}
 
-		public AvailableVehicleBuilder vehicleMasterID(String val) {
-			this.vehicleMasterID = val;
-			return this;
-		}
-
-		public AvailableVehicleBuilder vehicleType(VehicleType val) {
-			this.vehicleType = val;
+		public AvailableVehicleBuilder availableVehicleID(String val) {
+			this.availableVehicleID = val;
 			return this;
 		}
 
@@ -117,8 +104,7 @@ public class AvailableVehicle extends SABaseEntity {
 		public AvailableVehicleBuilder(){}
 		
 		public AvailableVehicleBuilder(AvailableVehicle availableVehicle) {
-			this.vehicleMasterID = availableVehicle.vehicleMasterID;
-			this.vehicleType = availableVehicle.vehicleType;
+			this.availableVehicleID = availableVehicle.availableVehicleID;
 			this.availableVehicleCount = availableVehicle.availableVehicleCount;
 			this.dateOfRunning = availableVehicle.dateOfRunning;
 			this.createdBy = availableVehicle.getCreatedBy();
@@ -135,8 +121,7 @@ public class AvailableVehicle extends SABaseEntity {
 
 	public AvailableVehicle updateAvailableVehicle(
 			AvailableVehicleBuilder availableVehicleBuilder) {
-		this.vehicleMasterID = availableVehicleBuilder.vehicleMasterID;
-		this.vehicleType = availableVehicleBuilder.vehicleType;
+		this.availableVehicleID = availableVehicleBuilder.availableVehicleID;
 		this.availableVehicleCount = availableVehicleBuilder.availableVehicleCount;
 		this.dateOfRunning = availableVehicleBuilder.dateOfRunning;
 		this.activeIndicator = availableVehicleBuilder.activeIndicator;
@@ -148,8 +133,7 @@ public class AvailableVehicle extends SABaseEntity {
 	}
 
 	public AvailableVehicle(AvailableVehicleBuilder builder) {
-		this.vehicleMasterID = builder.vehicleMasterID;
-		this.vehicleType = builder.vehicleType;
+		this.availableVehicleID = builder.availableVehicleID;
 		this.availableVehicleCount = builder.availableVehicleCount;
 		this.dateOfRunning = builder.dateOfRunning;
 		this.activeIndicator = builder.activeIndicator;
@@ -159,21 +143,56 @@ public class AvailableVehicle extends SABaseEntity {
 		super.setUpdatedBy(builder.updatedBy);
 		
 	}
-
-	public String getVehicleMasterID() {
-		return vehicleMasterID;
+	
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = super.hashCode();
+		result = prime * result
+				+ ((activeIndicator == null) ? 0 : activeIndicator.hashCode());
+		result = prime
+				* result
+				+ ((availableVehicleCount == null) ? 0 : availableVehicleCount
+						.hashCode());
+		result = prime
+				* result
+				+ ((availableVehicleID == null) ? 0 : availableVehicleID
+						.hashCode());
+		result = prime * result
+				+ ((dateOfRunning == null) ? 0 : dateOfRunning.hashCode());
+		return result;
 	}
 
-	public void setVehicleMasterID(String vehicleMasterID) {
-		this.vehicleMasterID = vehicleMasterID;
-	}
-
-	public VehicleType getVehicleType() {
-		return vehicleType;
-	}
-
-	public void setVehicleType(VehicleType vehicleType) {
-		this.vehicleType = vehicleType;
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (!super.equals(obj))
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		AvailableVehicle other = (AvailableVehicle) obj;
+		if (activeIndicator == null) {
+			if (other.activeIndicator != null)
+				return false;
+		} else if (!activeIndicator.equals(other.activeIndicator))
+			return false;
+		if (availableVehicleCount == null) {
+			if (other.availableVehicleCount != null)
+				return false;
+		} else if (!availableVehicleCount.equals(other.availableVehicleCount))
+			return false;
+		if (availableVehicleID == null) {
+			if (other.availableVehicleID != null)
+				return false;
+		} else if (!availableVehicleID.equals(other.availableVehicleID))
+			return false;
+		if (dateOfRunning == null) {
+			if (other.dateOfRunning != null)
+				return false;
+		} else if (!dateOfRunning.equals(other.dateOfRunning))
+			return false;
+		return true;
 	}
 
 	public Date getDateOfRunning() {
@@ -212,4 +231,12 @@ public class AvailableVehicle extends SABaseEntity {
 		return serialVersionUID;
 	}
 
+	public String getAvailableVehicleID() {
+		return availableVehicleID;
+	}
+
+	public void setAvailableVehicleID(String availableVehicleID) {
+		this.availableVehicleID = availableVehicleID;
+	}
+	
 }
