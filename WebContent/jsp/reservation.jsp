@@ -20,9 +20,20 @@
 					<img src="images/car1.jpg" alt="scene"/>
 			</section>
 			<section class="bottomLinks clear">
-				<article id="location">
+				<article id="services"> 
+					<h2>CUSTOMER SERVICES</h2>
+					<ul class="servicesList">
+						<li><span id="printTicket"></span><a href="" >Print E-Ticket</a></li>
+				 		<li><span  id="packages"></span><a href="">Packages</a></li>
+				  		<li><span id="cancellation"></span><a href="" >Cancellation</a></li>
+				 		<li><span id="refundStatus"></span><a href="">Check Refund Status</a></li>
+				 	</ul>
+				 	<div class="customerSupportImage">
+						<img src="images/atUrService.jpg" alt="At Ur Service"/>
+					</div>	
+				<!-- <article id="location">
 					<h2>FIND YOUR LOCATION</h2>
-					<a href="index.jsp?targetPage=locations.jsp"><img src="images/location1.jpg" alt="search locations"/></a>	
+					<a href="index.jsp?targetPage=locations.jsp"><img src="images/location1.jpg" alt="search locations"/></a>	 -->
 				</article>
 				<article id="offers">
 					<h2>OFFERS AT JAMMU&KASHMIR</h2>
