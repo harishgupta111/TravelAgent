@@ -10,7 +10,6 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
-import javax.persistence.UniqueConstraint;
 
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
@@ -20,7 +19,7 @@ import org.hibernate.annotations.Type;
 import com.travel.agent.model.enums.RecordCreatorType;
 
 @Entity
-@Table(name = "ta_AvailableVehicle", uniqueConstraints = @UniqueConstraint(columnNames = {"plateNumber"}))
+@Table(name = "ta_AvailableVehicle")
 @Cache(region = "entity.ta_AvailableVehicle", usage = CacheConcurrencyStrategy.READ_WRITE)
 @Cacheable
 public class AvailableVehicle extends SABaseEntity {
@@ -49,7 +48,6 @@ public class AvailableVehicle extends SABaseEntity {
 	@ManyToOne(targetEntity = VehicleMaster.class, fetch = FetchType.LAZY)
 	private VehicleMaster vehicleMaster;
 
-
 	public class AvailableVehicleBuilder {
 
 		private String availableVehicleID;
@@ -60,7 +58,6 @@ public class AvailableVehicle extends SABaseEntity {
 		private Date createDate;
 		private Boolean activeIndicator;
 		private VehicleMaster vehicleMaster;
-		
 		
 		public AvailableVehicleBuilder createdBy(RecordCreatorType val) {
 			this.createdBy = val;
