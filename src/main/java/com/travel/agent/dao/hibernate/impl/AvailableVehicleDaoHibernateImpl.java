@@ -6,6 +6,7 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.UUID;
 
 import org.apache.log4j.Logger;
 import org.hibernate.HibernateException;
@@ -36,6 +37,7 @@ public class AvailableVehicleDaoHibernateImpl extends
 			throws TASystemException {
 		AvailableVehicle created = null;
 		try {
+			availableVehicle.setAvailableVehicleID(UUID.randomUUID().toString());
 			created = this.insert(availableVehicle, true);
 			logger.debug("created entity with ID"
 					+ availableVehicle.getAvailableVehicleID());
@@ -66,7 +68,7 @@ public class AvailableVehicleDaoHibernateImpl extends
 	@Override
 	@Cacheable(value = "entity.ta_AvailableVehicle", key="{#root.methodName,#id}")
 	public AvailableVehicle findById(String id) throws TASystemException {
-		String strSQL = "Select c from AvailableVehicle c where c.vehicleMasterID = :id";
+		String strSQL = "Select c from AvailableVehicle c where c.availableVehicleID = :id";
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("id", id);
 		try {

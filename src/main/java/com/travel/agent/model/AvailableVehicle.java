@@ -58,6 +58,11 @@ public class AvailableVehicle extends SABaseEntity {
 		private Date createDate;
 		private Boolean activeIndicator;
 		private VehicleMaster vehicleMaster;
+
+		public AvailableVehicleBuilder vehicleMaster(VehicleMaster val) {
+			this.vehicleMaster = val;
+			return this;
+		}
 		
 		public AvailableVehicleBuilder createdBy(RecordCreatorType val) {
 			this.createdBy = val;
