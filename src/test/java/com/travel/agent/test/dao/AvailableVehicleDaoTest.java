@@ -46,7 +46,7 @@ public class AvailableVehicleDaoTest {
 	@Test
 	public void shouldFindByID() throws TASystemException {
 		AvailableVehicle a = this.iAvailableVehicleDao.findById("1");
-		Assert.assertSame(a.getAvailableVehicleCount(), 3);
+		Assert.assertEquals(a.getAvailableVehicleCount().intValue(), 3);
 	}
 
 	@Test
