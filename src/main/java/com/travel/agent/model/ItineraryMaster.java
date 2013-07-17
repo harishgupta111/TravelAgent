@@ -5,11 +5,15 @@ import java.util.Date;
 import javax.persistence.Cacheable;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
+import org.hibernate.annotations.Fetch;
 import org.hibernate.annotations.Type;
 
 import com.travel.agent.model.enums.RecordCreatorType;
@@ -55,6 +59,11 @@ public class ItineraryMaster extends SABaseEntity {
 	@Column(name = "nonStopStatus")
 	@Type(type = "yes_no")
 	private Boolean nonStopStatus;
+	
+	@Fetch(org.hibernate.annotations.FetchMode.JOIN)
+	@JoinColumn(name = "vehicleMasterID", referencedColumnName = "vehicleMasterID")
+	@ManyToOne(targetEntity = VehicleMaster.class, fetch = FetchType.LAZY)
+	private VehicleMaster vehicleMaster;
 
 	public class ItineraryMasterBuilder {
 
@@ -67,10 +76,16 @@ public class ItineraryMaster extends SABaseEntity {
 		private Integer itinerarySeqId;
 		private Boolean cancelStatus;
 		private Boolean nonStopStatus;
+		private VehicleMaster vehicleMaster;
 		private RecordCreatorType createdBy;
 		private RecordCreatorType updatedBy;
 		private Date createDate;
 
+		public ItineraryMasterBuilder vehicleMaster(VehicleMaster val) {
+			this.vehicleMaster = val;
+			return this;
+		}
+		
 		public ItineraryMasterBuilder itineraryRecID(String val) {
 			this.itineraryRecID = val;
 			return this;
@@ -152,6 +167,7 @@ public class ItineraryMaster extends SABaseEntity {
 			this.itinerarySeqId = itineraryMaster.itinerarySeqId;
 			this.cancelStatus = itineraryMaster.cancelStatus;
 			this.nonStopStatus = itineraryMaster.nonStopStatus;
+			this.vehicleMaster = itineraryMaster.vehicleMaster;
 			this.createdBy = itineraryMaster.getCreatedBy();
 			this.updatedBy = itineraryMaster.getUpdatedBy();
 			this.createDate = itineraryMaster.getCreateDate();
@@ -174,6 +190,7 @@ public class ItineraryMaster extends SABaseEntity {
 		this.itinerarySeqId = itineraryMasterBuilder.itinerarySeqId;
 		this.cancelStatus = itineraryMasterBuilder.cancelStatus;
 		this.nonStopStatus = itineraryMasterBuilder.nonStopStatus;
+		this.vehicleMaster = itineraryMasterBuilder.vehicleMaster;
 		super.setCreatedBy(itineraryMasterBuilder.createdBy);
 		super.setUpdatedBy(itineraryMasterBuilder.updatedBy);
 		super.setCreateDate(itineraryMasterBuilder.createDate);
@@ -191,6 +208,7 @@ public class ItineraryMaster extends SABaseEntity {
 		this.itinerarySeqId = builder.itinerarySeqId;
 		this.cancelStatus = builder.cancelStatus;
 		this.nonStopStatus = builder.nonStopStatus;
+		this.vehicleMaster = builder.vehicleMaster;
 		super.setCreatedBy(builder.createdBy);
 		super.setUpdatedBy(builder.updatedBy);
 		super.setCreateDate(builder.createDate);
@@ -358,5 +376,12 @@ public class ItineraryMaster extends SABaseEntity {
 	public void setNonStopStatus(Boolean nonStopStatus) {
 		this.nonStopStatus = nonStopStatus;
 	}
-	
+
+	public VehicleMaster getVehicleMaster() {
+		return vehicleMaster;
+	}
+
+	public void setVehicleMaster(VehicleMaster vehicleMaster) {
+		this.vehicleMaster = vehicleMaster;
+	}
 }
