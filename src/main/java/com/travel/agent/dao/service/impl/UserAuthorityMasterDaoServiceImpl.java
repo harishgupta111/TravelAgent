@@ -5,6 +5,8 @@ import java.util.Set;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Isolation;
+import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.travel.agent.dao.IUserAuthorityMasterDao;
@@ -23,6 +25,7 @@ public class UserAuthorityMasterDaoServiceImpl  implements IUserAuthorityMasterD
 	private IUserAuthorityMasterDao iUserAuthorityMasterDao;
 
 	@Override
+	@Transactional(readOnly = false, propagation = Propagation.REQUIRED, rollbackFor=TASystemException.class, isolation=Isolation.DEFAULT)
 	public UserAuthorityMaster create(UserAuthorityMaster t)
 			throws TASystemException {
 		logger.debug("Before persisting object");
@@ -40,6 +43,7 @@ public class UserAuthorityMasterDaoServiceImpl  implements IUserAuthorityMasterD
 	}
 
 	@Override
+	@Transactional(readOnly = false, propagation = Propagation.REQUIRED, rollbackFor=TASystemException.class, isolation=Isolation.DEFAULT)
 	public UserAuthorityMaster updateEntity(UserAuthorityMaster t)
 			throws TASystemException {
 		return this.iUserAuthorityMasterDao.updateEntity(t);

@@ -43,6 +43,7 @@ public class StateMasterDaoServiceImpl implements IStateMasterDaoService {
 	}
 
 	@Override
+	@Transactional(readOnly = false, propagation = Propagation.REQUIRED, rollbackFor=TASystemException.class, isolation=Isolation.DEFAULT)
 	public StateMaster updateEntity(StateMaster t) throws TASystemException {
 		return this.iStateMasterDao.updateEntity(t);
 	}

@@ -27,13 +27,15 @@ public class LocationDaoHibernateImpl extends
 		BaseDaoHibernateSupport<LocationMaster, String> implements
 		ILocationMasterDao {
 
-	private static Logger logger = Logger.getLogger(LocationDaoHibernateImpl.class);
+	private static Logger logger = Logger
+			.getLogger(LocationDaoHibernateImpl.class);
 
 	@Override
 	@CacheEvict(value = { "entity.ta_LocationMaster",
 			"entity.ta_LocationMaster" }, allEntries = true, beforeInvocation = false)
-	@Transactional(readOnly = false, propagation = Propagation.REQUIRED, rollbackFor = TASystemException.class, isolation = Isolation.DEFAULT)
-	public LocationMaster createEntity(LocationMaster t) throws TASystemException {
+	@Transactional(readOnly = false, propagation = Propagation.MANDATORY, rollbackFor = TASystemException.class, isolation = Isolation.DEFAULT)
+	public LocationMaster createEntity(LocationMaster t)
+			throws TASystemException {
 		LocationMaster created = null;
 		try {
 			t.setLocationMasterID(UUID.randomUUID().toString());
@@ -46,7 +48,7 @@ public class LocationDaoHibernateImpl extends
 	}
 
 	@Override
-	@Cacheable(value = "entity.ta_LocationMaster", key="{#root.methodName,#id}")
+	@Cacheable(value = "entity.ta_LocationMaster", key = "{#root.methodName,#id}")
 	public Set<LocationMaster> findAll() throws TASystemException {
 		String strSQL = "Select c from LocationMaster c";
 		LinkedHashSet<LocationMaster> set = null;
@@ -64,7 +66,7 @@ public class LocationDaoHibernateImpl extends
 	}
 
 	@Override
-	@Cacheable(value = "entity.ta_LocationMaster", key="{#root.methodName,#id}")
+	@Cacheable(value = "entity.ta_LocationMaster", key = "{#root.methodName,#id}")
 	public LocationMaster findById(String id) throws TASystemException {
 		String strSQL = "Select c from LocationMaster c where c.locationMasterID = :id";
 		Map<String, Object> map = new HashMap<String, Object>();
@@ -83,7 +85,7 @@ public class LocationDaoHibernateImpl extends
 	}
 
 	@Override
-	@Cacheable(value = "entity.ta_LocationMaster", key="{#root.methodName,#locationCode}")
+	@Cacheable(value = "entity.ta_LocationMaster", key = "{#root.methodName,#locationCode}")
 	public LocationMaster getLocationByCode(String locationCode)
 			throws TASystemException {
 		String strSQL = "Select c from LocationMaster c where c.locationCode = :locationCode";
@@ -104,6 +106,9 @@ public class LocationDaoHibernateImpl extends
 	}
 
 	@Override
+	@CacheEvict(value = { "entity.ta_LocationMaster",
+			"entity.ta_LocationMaster" }, allEntries = true, beforeInvocation = false)
+	@Transactional(readOnly = false, propagation = Propagation.MANDATORY, rollbackFor = TASystemException.class, isolation = Isolation.DEFAULT)
 	public LocationMaster updateEntity(LocationMaster t)
 			throws TASystemException {
 		return super.update(t, true);

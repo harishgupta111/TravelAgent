@@ -105,6 +105,7 @@ public class UserAuthorityMasterDaoHibernateImpl extends
 	}
 
 	@Override
+	@Cacheable(value = "entity.ta_UserAuthorityMaster")
 	public Set<UserAuthorityMaster> findByUserMaster(UserMaster userMaster)
 			throws TASystemException {
 		Set<UserAuthorityMaster> set = null;

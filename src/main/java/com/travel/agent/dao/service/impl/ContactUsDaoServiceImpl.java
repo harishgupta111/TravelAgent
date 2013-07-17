@@ -5,6 +5,8 @@ import java.util.Set;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Isolation;
+import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.travel.agent.dao.IContactUsDao;
@@ -22,6 +24,7 @@ public class ContactUsDaoServiceImpl implements IContactUsDaoService {
 	private IContactUsDao iContactUsDao;
 
 	@Override
+	@Transactional(readOnly = false, propagation = Propagation.REQUIRED, rollbackFor=TASystemException.class, isolation=Isolation.DEFAULT)
 	public ContactUs create(ContactUs t) throws TASystemException {
 		logger.debug("Before persisting object");
 		return this.iContactUsDao.createEntity(t);
@@ -38,6 +41,7 @@ public class ContactUsDaoServiceImpl implements IContactUsDaoService {
 	}
 
 	@Override
+	@Transactional(readOnly = false, propagation = Propagation.REQUIRED, rollbackFor=TASystemException.class, isolation=Isolation.DEFAULT)
 	public ContactUs updateEntity(ContactUs t) throws TASystemException {
 		return this.iContactUsDao.updateEntity(t);
 	}

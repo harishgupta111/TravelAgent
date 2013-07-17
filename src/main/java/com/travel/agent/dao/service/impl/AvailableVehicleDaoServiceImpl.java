@@ -41,6 +41,7 @@ public class AvailableVehicleDaoServiceImpl implements IAvailableVehicleDaoServi
 	}
 
 	@Override
+	@Transactional(readOnly = false, propagation = Propagation.REQUIRED, rollbackFor=TASystemException.class, isolation=Isolation.DEFAULT)
 	public AvailableVehicle updateEntity(AvailableVehicle t) throws TASystemException {
 		return this.iAvailableVehicleDao.updateEntity(t);
 	}

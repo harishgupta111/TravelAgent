@@ -52,7 +52,6 @@ public class RateMasterDaoServiceImpl implements IRateMasterDaoService {
 
 	@Override
 	public RateMaster getById(String id) throws TASystemException {
-
 		return this.iRateMasterDao.findById(id);
 	}
 
@@ -67,8 +66,8 @@ public class RateMasterDaoServiceImpl implements IRateMasterDaoService {
 	}
 
 	@Override
+	@Transactional(readOnly = false, propagation = Propagation.REQUIRED, rollbackFor = TASystemException.class, isolation = Isolation.DEFAULT)
 	public RateMaster updateEntity(RateMaster t) throws TASystemException {
-
 		return this.iRateMasterDao.updateEntity(t);
 	}
 
@@ -83,8 +82,8 @@ public class RateMasterDaoServiceImpl implements IRateMasterDaoService {
 	}
 
 	@Override
-	@Transactional(readOnly = false, propagation = Propagation.REQUIRED, rollbackFor=TASystemException.class, isolation=Isolation.DEFAULT)
-	@Scheduled(cron="0 55 20 * * ?")
+	@Transactional(readOnly = false, propagation = Propagation.REQUIRED, rollbackFor = TASystemException.class, isolation = Isolation.DEFAULT)
+	@Scheduled(cron = "0 55 20 * * ?")
 	public void updateEligibleRates() throws ParseException {
 		this.iRateMasterDao.updateEligibleRates();
 	}

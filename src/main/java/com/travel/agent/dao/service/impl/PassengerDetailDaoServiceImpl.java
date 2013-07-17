@@ -41,6 +41,7 @@ public class PassengerDetailDaoServiceImpl implements IPassengerDetailDaoService
 	}
 
 	@Override
+	@Transactional(readOnly = false, propagation = Propagation.REQUIRED, rollbackFor=TASystemException.class, isolation=Isolation.DEFAULT)
 	public PassengerDetail updateEntity(PassengerDetail t)
 			throws TASystemException {
 		return this.iPassengerDetailDao.updateEntity(t);
