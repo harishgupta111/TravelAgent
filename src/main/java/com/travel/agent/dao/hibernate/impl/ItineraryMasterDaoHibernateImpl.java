@@ -45,7 +45,21 @@ public class ItineraryMasterDaoHibernateImpl extends
 			throw new TASystemException(e);
 		}
 		return created;
+	}
 
+	@Override
+	@CacheEvict(value = { "entity.ta_ItineraryMaster",
+			"entity.ta_ItineraryMaster" }, allEntries = true, beforeInvocation = false)
+	@Transactional(readOnly = false, propagation = Propagation.MANDATORY, rollbackFor = TASystemException.class, isolation = Isolation.DEFAULT)
+	public int createUsingSet(Set<ItineraryMaster> set)
+			throws TASystemException {
+		logger.debug("found " + set.size() + " elements in the supplied set");
+		int count = 0;
+		for (ItineraryMaster itineraryMaster : set) {
+			this.createEntity(itineraryMaster);
+			count++;
+		}
+		return count;
 	}
 
 	@Override
