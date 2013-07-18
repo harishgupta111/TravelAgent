@@ -38,7 +38,16 @@ $(document).ready(function(){
   });
   $(".wrapper").on('click',function(){
 	  $('.signin_form').hide();
-   });      
+   }); 
+//script for offline payment
+  $(".payment :radio:eq(0)").on('click',function(){
+	  $("div.offlinePayment").hide();
+	  $("form.paymentForm").show();
+  });
+  $(".payment :radio:eq(1)").on('click',function(){
+	  $("div.offlinePayment").show();
+	  $("form.paymentForm").hide();
+  });
 //	modernizr test for placeholder	
 	Modernizr.load(
 		{

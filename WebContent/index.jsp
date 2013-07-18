@@ -18,14 +18,15 @@
 <html>
 	<head>
 		<!--[if lt IE 9]>
-		<script src="js/html5shiv.js"></script>
-		<script src='js/css3-mediaqueries.js'></script>
+			<script src="js/html5shiv.js"></script>
+			<script src='js/css3-mediaqueries.js'></script>
+			<link rel="stylesheet" href="css/ie7-fix.css"/>
 		<![endif]-->
-		<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 		<title>Index</title>
 		<!-- stylesheets -->
-		<link rel="stylesheet" type="text/css" href="css/indexStyle.css"></link>
+		<link rel="stylesheet" href="css/indexStyle.css"></link>
 		<link rel="stylesheet" href="css/globalStyle.css"/>
+		<link rel="stylesheet" href="css/reservationStyle.css" />
 		<link rel="stylesheet" href="css/careersStyle.css"/>
 		<link rel="stylesheet" href="css/innerpagesStyle.css" />
 		<link rel="stylesheet" href="css/locationsStyle.css"/>

@@ -1,0 +1,7 @@
+/* Footer fixes */
+.footer{line-height:10px}
+.footerMobile li{line-height:15px;}
+.footerMobile span{display:none;}
+/* Header fixes */
+.navMobile li{line-height:15px}
+.navMobile li span{display:none}
