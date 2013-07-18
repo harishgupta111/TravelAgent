@@ -35,4 +35,10 @@
                 </article>                         
 		</article>
 	</section> 
+	<section class="printForm">
+		<h2>Want to view/Print your ticket ?</h2>
+		<input type="text" name="confirmationNumber" placeholder="enter your confirmation number">
+		<button class="button print" onclick="window.location.href='printTicket.jsp'">View</button>
+		<button class="button cancelPrint">Cancel</a>
+	</section>
 </section>
