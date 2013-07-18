@@ -5,7 +5,9 @@ import java.util.Set;
 import junit.framework.Assert;
 
 import org.junit.FixMethodOrder;
+import org.junit.Rule;
 import org.junit.Test;
+import org.junit.rules.ExpectedException;
 import org.junit.runner.RunWith;
 import org.junit.runners.MethodSorters;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,8 +38,11 @@ public class StateMasterDaoTest {
 	@Autowired
 	private IStateMasterDao iStateMasterDao;
 	
-	public static String junkString = "gugiuhdgugiuhduiyhshdxiuhx9wyshx9ydhci8dwygcuygdwkuchoudwychgdiuwhciudwhciuhdwuigciuwdgciudwgcigdwycgudyw ciuhdwcoiihwdoihciouwdhciukhgwdiycgiwdchpnwdic[0dwicoidwhciuwdgcgdwugcuywgdcdiuy9q7d98q87gibiubxy8ug8yhx0ju9yd897e2ydhioeqndiehwbiuiwhed9uhwecibx2eiugc9ewhd0ie2hjc9doeh2ouchweiuhcbiuw2bc"
-+ "uiyhshdxiuhx9wyshx9ydhci8dwygcuygdwkuchoudwychgdiuwhciudwhciuhdwuigciuwdgciudwgcigdwycgudyw ciuhdwcoiihwdoihciouwdhciukhgwdiycgiwdchpnwdic[0dwicoidwhciuwdgcgdwugcuywgdcdiuy9q7d98q";
+	@Rule
+	public ExpectedException exception = ExpectedException.none();
+	
+	public static String junkString = "gugiuhdgugiuhduiyhshdxiuhx9wyshx9ydhci8dwygcuygdwkuchoudwychgdiuwhciudwhciuhdwuigciuwdgciudwgcigdwycgudywciuhdwcoiihwdoihciouwdhciukhgwdiycgiwdchpnwdic[0dwicoidwhciuwdgcgdwugcuywgdcdiuy9q7d98q87gibiubxy8ug8yhx0ju9yd897e2ydhioeqndiehwbiuiwhed9uhwecibx2eiugc9ewhd0ie2hjc9doeh2ouchweiuhcbiuw2bc"
++ "uiyhshdxiuhx9wyshx9ydhci8dwygcuygdwkuchoudwychgdiuwhciudwhciuhdwuigciuwdgciudwgcigdwycgudywciuhdwcoiihwdoihciouwdhciukhgwdiycgiwdchpnwdic[0dwicoidwhciuwdgcgdwugcuywgdcdiuy9q7d98q";
 
 	@Test
 	public void should2GetAll() throws TASystemException {
@@ -45,7 +50,7 @@ public class StateMasterDaoTest {
 		Assert.assertEquals(5, set.size());
 	}
 
-	@Test
+	@Test(timeout=90)
 	@Transactional(propagation = Propagation.REQUIRED)
 	public void should1Create() throws TASystemException {
 		StateMaster stateMaster = new StateMaster();
@@ -61,7 +66,7 @@ public class StateMasterDaoTest {
 		Assert.assertEquals(created, stateMaster);
 	}
 	
-	@Test(expected=TASystemException.class)
+	@Test(timeout=15)
 	@Transactional(propagation = Propagation.REQUIRED)
 	public void should10NotCreate() throws TASystemException {
 		StateMaster stateMaster = new StateMaster();
@@ -73,7 +78,9 @@ public class StateMasterDaoTest {
 				.createdBy(RecordCreatorType.TEST)
 				.updatedBy(RecordCreatorType.TEST)
 				.buildNew();
+        exception.expect(TASystemException.class);
 		StateMaster created = iStateMasterDao.createEntity(stateMaster);
+        exception = ExpectedException.none();
 		Assert.assertEquals(created, stateMaster);
 	}
 	

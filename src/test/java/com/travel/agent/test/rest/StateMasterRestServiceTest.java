@@ -81,14 +81,15 @@ public class StateMasterRestServiceTest extends SpringAwareJerseyTests {
 				clientResponse.getStatus() == 201);
 
 	}
-	
+
 	@Test
 	public void shouldNotCreate1() throws TASystemException {
 		WebResource webResource = resource();
 		StateMaster stateMaster = new StateMaster();
 		StateMasterBuilder smb = stateMaster.new StateMasterBuilder();
-		stateMaster = smb.stateCode("NJ").stateName(StateMasterDaoTest.junkString)
-				.unionTerritory(false).createdBy(RecordCreatorType.TEST)
+		stateMaster = smb.stateCode("NJ")
+				.stateName(StateMasterDaoTest.junkString).unionTerritory(false)
+				.createdBy(RecordCreatorType.TEST)
 				.updatedBy(RecordCreatorType.TEST).buildNew();
 		ObjectMapper mapper = this.hibernateObjectMapper.fetchEagerly(false);
 
@@ -111,14 +112,13 @@ public class StateMasterRestServiceTest extends SpringAwareJerseyTests {
 
 	}
 
-	
 	@Test
 	public void shouldNotCreate() throws TASystemException {
 		WebResource webResource = resource();
 		StateMaster stateMaster = new StateMaster();
 		StateMasterBuilder smb = stateMaster.new StateMasterBuilder();
-		stateMaster = smb
-				.unionTerritory(false).createdBy(RecordCreatorType.TEST)
+		stateMaster = smb.unionTerritory(false)
+				.createdBy(RecordCreatorType.TEST)
 				.updatedBy(RecordCreatorType.TEST).buildNew();
 		ObjectMapper mapper = this.hibernateObjectMapper.fetchEagerly(false);
 
@@ -137,9 +137,9 @@ public class StateMasterRestServiceTest extends SpringAwareJerseyTests {
 		System.out.println("*******************************************");
 		Assert.assertTrue(
 				"clientResponse found as " + clientResponse.getStatus(),
-				clientResponse.getStatus() == Status.NOT_ACCEPTABLE.getStatusCode());
+				clientResponse.getStatus() == Status.NOT_ACCEPTABLE
+						.getStatusCode());
 
 	}
-
 
 }
