@@ -22,6 +22,7 @@ import com.travel.agent.jackson.mapper.HibernateObjectMapper;
 import com.travel.agent.model.StateMaster;
 import com.travel.agent.model.StateMaster.StateMasterBuilder;
 import com.travel.agent.model.enums.RecordCreatorType;
+import com.travel.agent.test.dao.StateMasterDaoTest;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @TestExecutionListeners({ DependencyInjectionTestExecutionListener.class,
@@ -80,6 +81,36 @@ public class StateMasterRestServiceTest extends SpringAwareJerseyTests {
 				clientResponse.getStatus() == 201);
 
 	}
+	
+	@Test
+	public void shouldNotCreate1() throws TASystemException {
+		WebResource webResource = resource();
+		StateMaster stateMaster = new StateMaster();
+		StateMasterBuilder smb = stateMaster.new StateMasterBuilder();
+		stateMaster = smb.stateCode("NJ").stateName(StateMasterDaoTest.junkString)
+				.unionTerritory(false).createdBy(RecordCreatorType.TEST)
+				.updatedBy(RecordCreatorType.TEST).buildNew();
+		ObjectMapper mapper = this.hibernateObjectMapper.fetchEagerly(false);
+
+		String json = this.hibernateObjectMapper.prepareJSON(mapper,
+				stateMaster);
+
+		ClientResponse clientResponse = webResource.path("/state/create")
+				.accept(MediaType.APPLICATION_JSON)
+				.type(MediaType.APPLICATION_JSON)
+				.post(ClientResponse.class, json);
+
+		Assert.assertNotNull(clientResponse);
+
+		System.out.println("*******************************************");
+		System.out.println(clientResponse.getEntity(String.class));
+		System.out.println("*******************************************");
+		Assert.assertTrue(
+				"clientResponse found as " + clientResponse.getStatus(),
+				clientResponse.getStatus() == 500);
+
+	}
+
 	
 	@Test
 	public void shouldNotCreate() throws TASystemException {

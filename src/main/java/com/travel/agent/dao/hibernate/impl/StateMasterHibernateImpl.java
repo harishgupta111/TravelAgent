@@ -37,10 +37,10 @@ public class StateMasterHibernateImpl extends BaseDaoHibernateSupport<StateMaste
 			created = this.insert(t, true);
 			logger.debug("created entity with ID" + t.getStateMasterID());
 		} catch (HibernateException e) {
+			logger.error("caught exception " + e.getMessage());
 			throw new TASystemException(e);
 		}
 		return created;
-
 	}
 
 	@Override

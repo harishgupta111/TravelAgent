@@ -35,6 +35,9 @@ public class StateMasterDaoTest {
 
 	@Autowired
 	private IStateMasterDao iStateMasterDao;
+	
+	public static String junkString = "gugiuhdgugiuhduiyhshdxiuhx9wyshx9ydhci8dwygcuygdwkuchoudwychgdiuwhciudwhciuhdwuigciuwdgciudwgcigdwycgudyw ciuhdwcoiihwdoihciouwdhciukhgwdiycgiwdchpnwdic[0dwicoidwhciuwdgcgdwugcuywgdcdiuy9q7d98q87gibiubxy8ug8yhx0ju9yd897e2ydhioeqndiehwbiuiwhed9uhwecibx2eiugc9ewhd0ie2hjc9doeh2ouchweiuhcbiuw2bc"
++ "uiyhshdxiuhx9wyshx9ydhci8dwygcuygdwkuchoudwychgdiuwhciudwhciuhdwuigciuwdgciudwgcigdwycgudyw ciuhdwcoiihwdoihciouwdhciukhgwdiycgiwdchpnwdic[0dwicoidwhciuwdgcgdwugcuywgdcdiuy9q7d98q";
 
 	@Test
 	public void should2GetAll() throws TASystemException {
@@ -57,6 +60,23 @@ public class StateMasterDaoTest {
 		StateMaster created = iStateMasterDao.createEntity(stateMaster);
 		Assert.assertEquals(created, stateMaster);
 	}
+	
+	@Test(expected=TASystemException.class)
+	@Transactional(propagation = Propagation.REQUIRED)
+	public void should10NotCreate() throws TASystemException {
+		StateMaster stateMaster = new StateMaster();
+		StateMasterBuilder smb = stateMaster.new StateMasterBuilder();
+		stateMaster = smb
+				.stateCode("NJ")
+				.stateName(junkString)
+				.unionTerritory(false)
+				.createdBy(RecordCreatorType.TEST)
+				.updatedBy(RecordCreatorType.TEST)
+				.buildNew();
+		StateMaster created = iStateMasterDao.createEntity(stateMaster);
+		Assert.assertEquals(created, stateMaster);
+	}
+	
 	
 	@Test
 	public void should3GetByID() throws TASystemException {
