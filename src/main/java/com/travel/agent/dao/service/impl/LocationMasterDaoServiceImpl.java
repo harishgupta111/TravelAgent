@@ -47,6 +47,7 @@ public class LocationMasterDaoServiceImpl implements ILocationMasterDaoService {
 	}
 
 	@Override
+	@Transactional(readOnly = false, propagation = Propagation.REQUIRED, rollbackFor=TASystemException.class, isolation=Isolation.DEFAULT)
 	public LocationMaster updateEntity(LocationMaster t)
 			throws TASystemException {
 		return this.iLocationMasterDao.updateEntity(t);

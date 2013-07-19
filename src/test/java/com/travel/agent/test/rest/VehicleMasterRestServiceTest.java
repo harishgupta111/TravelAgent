@@ -83,7 +83,6 @@ public class VehicleMasterRestServiceTest extends SpringAwareJerseyTests {
 		vehicleMaster = vmb.vehicleType(VehicleType.BUS).make("Maruti")
 				.modelName("A-Star").modelYear(2010).noOfSeats(4)
 				.plateNumber("JK-21 2419").vehicleCount(1)
-				.bookingSet(null)
 				.createdBy(RecordCreatorType.TEST)
 				.updatedBy(RecordCreatorType.TEST).buildNew();
 		ObjectMapper mapper = this.hibernateObjectMapper.fetchEagerly(false);
@@ -113,7 +112,7 @@ public class VehicleMasterRestServiceTest extends SpringAwareJerseyTests {
 		WebResource webResource = resource();
 		VehicleMaster vehicleMaster = new VehicleMaster();
 		VehicleMasterBuilder vmb = vehicleMaster.new VehicleMasterBuilder();
-		vehicleMaster = vmb.bookingSet(null).createdBy(RecordCreatorType.TEST)
+		vehicleMaster = vmb.createdBy(RecordCreatorType.TEST)
 				.updatedBy(RecordCreatorType.TEST).buildNew();
 		ObjectMapper mapper = this.hibernateObjectMapper.fetchEagerly(false);
 

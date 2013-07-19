@@ -9,14 +9,11 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
-import org.hibernate.annotations.Fetch;
 
 import com.travel.agent.model.enums.RecordCreatorType;
 
@@ -53,11 +50,6 @@ public class Booking extends SABaseEntity {
 	@Column(name = "dateOfBooking")
 	private Date dateOfBooking;
 
-	@Fetch(org.hibernate.annotations.FetchMode.JOIN)
-	@JoinColumn(name = "vehicleMasterID", referencedColumnName = "vehicleMasterID")
-	@ManyToOne(targetEntity = VehicleMaster.class, fetch = FetchType.LAZY)
-	private VehicleMaster vehicleMaster;
-
 	@OneToMany(mappedBy = "booking", fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
 	private Set<PassengerDetail> passengerDetailSet;
 
@@ -70,7 +62,6 @@ public class Booking extends SABaseEntity {
 		private Integer noOfPassenger;
 		private Double totalCollectable;
 		private Date dateOfBooking;
-		private VehicleMaster vehicleMaster;
 		private Set<PassengerDetail> passengerDetailSet;
 		private RecordCreatorType createdBy;
 		private RecordCreatorType updatedBy;
@@ -126,11 +117,6 @@ public class Booking extends SABaseEntity {
 			return this;
 		}
 
-		public BookingBuilder vehicleMaster(VehicleMaster val) {
-			this.vehicleMaster = val;
-			return this;
-		}
-
 		public BookingBuilder passengerDetailSet(Set<PassengerDetail> val) {
 			this.passengerDetailSet = val;
 			return this;
@@ -155,7 +141,6 @@ public class Booking extends SABaseEntity {
 			this.noOfPassenger = booking.noOfPassenger;
 			this.totalCollectable = booking.totalCollectable;
 			this.dateOfBooking = booking.dateOfBooking;
-			this.vehicleMaster = booking.vehicleMaster;
 			this.passengerDetailSet = booking.passengerDetailSet;
 			this.createDate = booking.getCreateDate();
 			this.createdBy = booking.getCreatedBy();
@@ -176,7 +161,6 @@ public class Booking extends SABaseEntity {
 		this.noOfPassenger = bookingBuilder.noOfPassenger;
 		this.totalCollectable = bookingBuilder.totalCollectable;
 		this.dateOfBooking = bookingBuilder.dateOfBooking;
-		this.vehicleMaster = bookingBuilder.vehicleMaster;
 		this.passengerDetailSet = bookingBuilder.passengerDetailSet;
 		super.setCreatedBy(bookingBuilder.createdBy);
 		super.setUpdatedBy(bookingBuilder.updatedBy);
@@ -193,7 +177,6 @@ public class Booking extends SABaseEntity {
 		this.noOfPassenger = builder.noOfPassenger;
 		this.passengerDetailSet = builder.passengerDetailSet;
 		this.totalCollectable = builder.totalCollectable;
-		this.vehicleMaster = builder.vehicleMaster;
 		super.setCreatedBy(builder.createdBy);
 		super.setUpdatedBy(builder.updatedBy);
 		super.setCreateDate(builder.createDate);
@@ -223,8 +206,6 @@ public class Booking extends SABaseEntity {
 		result = prime
 				* result
 				+ ((totalCollectable == null) ? 0 : totalCollectable.hashCode());
-		result = prime * result
-				+ ((vehicleMaster == null) ? 0 : vehicleMaster.hashCode());
 		return result;
 	}
 
@@ -273,11 +254,6 @@ public class Booking extends SABaseEntity {
 				return false;
 		} else if (!totalCollectable.equals(other.totalCollectable))
 			return false;
-		if (vehicleMaster == null) {
-			if (other.vehicleMaster != null)
-				return false;
-		} else if (!vehicleMaster.equals(other.vehicleMaster))
-			return false;
 		return true;
 	}
 
@@ -319,14 +295,6 @@ public class Booking extends SABaseEntity {
 
 	public void setDateOfBooking(Date dateOfBooking) {
 		this.dateOfBooking = dateOfBooking;
-	}
-
-	public VehicleMaster getVehicleMaster() {
-		return vehicleMaster;
-	}
-
-	public void setVehicleMaster(VehicleMaster vehicleMaster) {
-		this.vehicleMaster = vehicleMaster;
 	}
 
 	public Set<PassengerDetail> getPassengerDetailSet() {

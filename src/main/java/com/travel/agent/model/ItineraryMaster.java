@@ -10,6 +10,8 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
@@ -30,12 +32,11 @@ public class ItineraryMaster extends SABaseEntity {
 	private static final long serialVersionUID = 5521478831401054188L;
 
 	@Id
-	@Column(name = "itineraryRecID", insertable = false, updatable = false)
-	private String itineraryRecID;
-
-	@Id
 	@Column(name = "itineraryMasterID", insertable = false, updatable = false)
 	private String itineraryMasterID;
+
+	@Column(name = "itineraryID", insertable = false, updatable = false)
+	private String itineraryID;
 
 	@Column(name = "originLocationCode")
 	private String originLocationCode;
@@ -43,9 +44,11 @@ public class ItineraryMaster extends SABaseEntity {
 	@Column(name = "destinationLocationCode")
 	private String destinationLocationCode;
 
+	@Temporal(TemporalType.TIME)
 	@Column(name = "timeAtOrigin")
 	private Date timeAtOrigin;
 
+	@Temporal(TemporalType.TIME)
 	@Column(name = "timeAtDestination")
 	private Date timeAtDestination;
 
@@ -67,8 +70,8 @@ public class ItineraryMaster extends SABaseEntity {
 
 	public class ItineraryMasterBuilder {
 
-		private String itineraryRecID;
 		private String itineraryMasterID;
+		private String itineraryID;
 		private String originLocationCode;
 		private String destinationLocationCode;
 		private Date timeAtOrigin;
@@ -86,8 +89,8 @@ public class ItineraryMaster extends SABaseEntity {
 			return this;
 		}
 		
-		public ItineraryMasterBuilder itineraryRecID(String val) {
-			this.itineraryRecID = val;
+		public ItineraryMasterBuilder itineraryID(String val) {
+			this.itineraryID = val;
 			return this;
 		}
 		
@@ -160,6 +163,7 @@ public class ItineraryMaster extends SABaseEntity {
 		public ItineraryMasterBuilder(ItineraryMaster itineraryMaster) {
 
 			this.itineraryMasterID = itineraryMaster.itineraryMasterID;
+			this.itineraryID = itineraryMaster.itineraryID;
 			this.originLocationCode = itineraryMaster.originLocationCode;
 			this.destinationLocationCode = itineraryMaster.destinationLocationCode;
 			this.timeAtOrigin = itineraryMaster.timeAtOrigin;
@@ -181,8 +185,8 @@ public class ItineraryMaster extends SABaseEntity {
 
 	public ItineraryMaster updateItineraryMaster(
 			ItineraryMasterBuilder itineraryMasterBuilder) {
-		this.itineraryRecID = itineraryMasterBuilder.itineraryRecID;
 		this.itineraryMasterID = itineraryMasterBuilder.itineraryMasterID;
+		this.itineraryID = itineraryMasterBuilder.itineraryID;
 		this.originLocationCode = itineraryMasterBuilder.originLocationCode;
 		this.destinationLocationCode = itineraryMasterBuilder.destinationLocationCode;
 		this.timeAtOrigin = itineraryMasterBuilder.timeAtOrigin;
@@ -199,8 +203,9 @@ public class ItineraryMaster extends SABaseEntity {
 	}
 
 	private ItineraryMaster(ItineraryMasterBuilder builder) {
-		this.itineraryRecID = builder.itineraryRecID;
+
 		this.itineraryMasterID = builder.itineraryMasterID;
+		this.itineraryID = builder.itineraryID;
 		this.originLocationCode = builder.originLocationCode;
 		this.destinationLocationCode = builder.destinationLocationCode;
 		this.timeAtOrigin = builder.timeAtOrigin;
@@ -229,7 +234,7 @@ public class ItineraryMaster extends SABaseEntity {
 				+ ((itineraryMasterID == null) ? 0 : itineraryMasterID
 						.hashCode());
 		result = prime * result
-				+ ((itineraryRecID == null) ? 0 : itineraryRecID.hashCode());
+				+ ((itineraryID == null) ? 0 : itineraryID.hashCode());
 		result = prime * result
 				+ ((itinerarySeqId == null) ? 0 : itinerarySeqId.hashCode());
 		result = prime * result
@@ -272,10 +277,10 @@ public class ItineraryMaster extends SABaseEntity {
 				return false;
 		} else if (!itineraryMasterID.equals(other.itineraryMasterID))
 			return false;
-		if (itineraryRecID == null) {
-			if (other.itineraryRecID != null)
+		if (itineraryID == null) {
+			if (other.itineraryID != null)
 				return false;
-		} else if (!itineraryRecID.equals(other.itineraryRecID))
+		} else if (!itineraryID.equals(other.itineraryID))
 			return false;
 		if (itinerarySeqId == null) {
 			if (other.itinerarySeqId != null)
@@ -305,12 +310,12 @@ public class ItineraryMaster extends SABaseEntity {
 		return true;
 	}
 
-	public String getItineraryRecID() {
-		return itineraryRecID;
+	public String getItineraryID() {
+		return itineraryID;
 	}
 
-	public void setItineraryRecID(String itineraryRecID) {
-		this.itineraryRecID = itineraryRecID;
+	public void setItineraryID(String itineraryID) {
+		this.itineraryID = itineraryID;
 	}
 
 	public String getItineraryMasterID() {

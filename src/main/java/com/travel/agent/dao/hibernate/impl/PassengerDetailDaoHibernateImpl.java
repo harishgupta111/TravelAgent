@@ -71,6 +71,8 @@ public class PassengerDetailDaoHibernateImpl extends
 	}
 
 	@Override
+	@CacheEvict(value = { "entity.ta_passengerDetail", "entity.ta_passengerDetail" }, allEntries = true, beforeInvocation = false)
+	@Transactional(readOnly = false, propagation = Propagation.MANDATORY, rollbackFor = TASystemException.class, isolation = Isolation.DEFAULT)
 	public PassengerDetail updateEntity(PassengerDetail t)
 			throws TASystemException {
 		return super.update(t, true);

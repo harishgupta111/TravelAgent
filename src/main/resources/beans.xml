@@ -24,6 +24,7 @@
 	<bean id="hibernateManagedEntities" class="java.util.ArrayList">
 		<constructor-arg>
 			<list>
+			    <value>com.travel.agent.model.AvailableVehicle</value>
 				<value>com.travel.agent.model.Booking</value>
 				<value>com.travel.agent.model.ContactUs</value>
 				<value>com.travel.agent.model.ItineraryMaster</value>

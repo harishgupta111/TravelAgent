@@ -41,6 +41,7 @@ public class BookingDaoServiceImpl implements IBookingDaoService {
 	}
 
 	@Override
+	@Transactional(readOnly = false, propagation = Propagation.REQUIRED, rollbackFor=TASystemException.class, isolation=Isolation.DEFAULT)
 	public Booking updateEntity(Booking t) throws TASystemException {
 		return this.iBookingDao.updateEntity(t);
 	}
