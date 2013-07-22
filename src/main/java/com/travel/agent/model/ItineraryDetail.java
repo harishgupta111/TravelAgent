@@ -17,21 +17,23 @@ import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 import org.hibernate.annotations.Fetch;
 
+import com.travel.agent.model.enums.RecordCreatorType;
+
 @Entity
 @Table(name = "ta_ItineraryDetail")
 @Cache(region = "entity.ta_ItineraryDetail", usage = CacheConcurrencyStrategy.READ_WRITE)
 @Cacheable
-public class ItineraryDetail  extends SABaseEntity {
+public class ItineraryDetail extends SABaseEntity {
 
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = -5191730072836458126L;
-	
+
 	@Id
 	@Column(name = "itineraryDetailID", insertable = false, updatable = false)
 	private String itineraryDetailID;
-	
+
 	@Temporal(TemporalType.TIME)
 	@Column(name = "scheduleStartTime")
 	private Date scheduleStartTime;
@@ -39,7 +41,7 @@ public class ItineraryDetail  extends SABaseEntity {
 	@Temporal(TemporalType.TIME)
 	@Column(name = "scheduleEndTime")
 	private Date scheduleEndTime;
-	
+
 	@Column(name = "itinerarySeqId")
 	private Integer itinerarySeqId;
 
@@ -51,14 +53,154 @@ public class ItineraryDetail  extends SABaseEntity {
 
 	@Column(name = "minStopTime")
 	private Integer minStopTime;
-	
+
 	@Column(name = "minEstimatedTime")
 	private Integer minEstimatedTime;
-	
+
 	@Fetch(org.hibernate.annotations.FetchMode.JOIN)
 	@JoinColumn(name = "itineraryMasterID", referencedColumnName = "itineraryMasterID")
 	@ManyToOne(targetEntity = ItineraryMaster.class, fetch = FetchType.LAZY)
 	private ItineraryMaster itineraryMaster;
+
+	public class ItineraryDetailBuilder {
+		private String itineraryDetailID;
+		private Date scheduleStartTime;
+		private Date scheduleEndTime;
+		private Integer itinerarySeqId;
+		private String fromLocationCode;
+		private String toLocationCode;
+		private Integer minStopTime;
+		private Integer minEstimatedTime;
+		private ItineraryMaster itineraryMaster;
+		private RecordCreatorType createdBy;
+		private RecordCreatorType updatedBy;
+		private Date createDate;
+
+		public ItineraryDetailBuilder itineraryDetailID(String val) {
+			this.itineraryDetailID = val;
+			return this;
+		}
+
+		public ItineraryDetailBuilder scheduleStartTime(Date val) {
+			this.scheduleStartTime = val;
+			return this;
+		}
+
+		public ItineraryDetailBuilder scheduleEndTime(Date val) {
+			this.scheduleEndTime = val;
+			return this;
+		}
+
+		public ItineraryDetailBuilder itinerarySeqId(Integer val) {
+			this.itinerarySeqId = val;
+			return this;
+		}
+
+		public ItineraryDetailBuilder fromLocationCode(String val) {
+			this.fromLocationCode = val;
+			return this;
+		}
+
+		public ItineraryDetailBuilder toLocationCode(String val) {
+			this.toLocationCode = val;
+			return this;
+		}
+
+		public ItineraryDetailBuilder minStopTime(Integer val) {
+			this.minStopTime = val;
+			return this;
+		}
+
+		public ItineraryDetailBuilder minEstimatedTime(Integer val) {
+			this.minEstimatedTime = val;
+			return this;
+		}
+
+		public ItineraryDetailBuilder itineraryMaster(ItineraryMaster val) {
+			this.itineraryMaster = val;
+			return this;
+		}
+
+		public ItineraryDetailBuilder createDate(Date val) {
+			this.createDate = val;
+			return this;
+		}
+
+		public ItineraryDetailBuilder createdBy(RecordCreatorType val) {
+			this.createdBy = val;
+			return this;
+		}
+
+		public ItineraryDetailBuilder updatedBy(RecordCreatorType val) {
+			this.updatedBy = val;
+			return this;
+		}
+
+		public ItineraryDetail buildNew() {
+			return new ItineraryDetail(this);
+		}
+
+		public ItineraryDetail update() {
+			return updateItineraryDetail(this);
+		}
+
+		public ItineraryDetailBuilder(ItineraryDetail itineraryDetail) {
+			this.fromLocationCode = itineraryDetail.fromLocationCode;
+			this.itineraryDetailID = itineraryDetail.itineraryDetailID;
+			this.itineraryMaster = itineraryDetail.itineraryMaster;
+			this.itinerarySeqId = itineraryDetail.itinerarySeqId;
+			this.minEstimatedTime = itineraryDetail.minEstimatedTime;
+			this.minStopTime = itineraryDetail.minStopTime;
+			this.scheduleEndTime = itineraryDetail.scheduleEndTime;
+			this.scheduleStartTime = itineraryDetail.scheduleStartTime;
+			this.createdBy = itineraryDetail.getCreatedBy();
+			this.updatedBy = itineraryDetail.getUpdatedBy();
+			this.createDate = itineraryDetail.getCreateDate();
+			this.toLocationCode = itineraryDetail.toLocationCode;
+		}
+
+		public ItineraryDetailBuilder() {
+		}
+
+	}
+
+	public ItineraryDetail() {
+		super();
+	}
+
+	
+	public ItineraryDetail(ItineraryDetailBuilder itineraryDetailBuilder) {
+		this.fromLocationCode = itineraryDetailBuilder.fromLocationCode;
+		this.itineraryDetailID = itineraryDetailBuilder.itineraryDetailID;
+		this.itineraryMaster = itineraryDetailBuilder.itineraryMaster;
+		this.itinerarySeqId = itineraryDetailBuilder.itinerarySeqId;
+		this.minEstimatedTime = itineraryDetailBuilder.minEstimatedTime;
+		this.minStopTime = itineraryDetailBuilder.minStopTime;
+		this.scheduleEndTime = itineraryDetailBuilder.scheduleEndTime;
+		this.scheduleStartTime = itineraryDetailBuilder.scheduleStartTime;
+		this.toLocationCode = itineraryDetailBuilder.toLocationCode;
+		super.setCreatedBy(itineraryDetailBuilder.createdBy);
+		super.setUpdatedBy(itineraryDetailBuilder.updatedBy);
+		super.setCreateDate(itineraryDetailBuilder.createDate);
+		
+	}
+
+	public ItineraryDetail updateItineraryDetail(
+			ItineraryDetailBuilder itineraryDetailBuilder) {
+		this.fromLocationCode = itineraryDetailBuilder.fromLocationCode;
+		this.itineraryDetailID = itineraryDetailBuilder.itineraryDetailID;
+		this.itineraryMaster = itineraryDetailBuilder.itineraryMaster;
+		this.itinerarySeqId = itineraryDetailBuilder.itinerarySeqId;
+		this.minEstimatedTime = itineraryDetailBuilder.minEstimatedTime;
+		this.minStopTime = itineraryDetailBuilder.minStopTime;
+		this.scheduleEndTime = itineraryDetailBuilder.scheduleEndTime;
+		this.scheduleStartTime = itineraryDetailBuilder.scheduleStartTime;
+		this.toLocationCode = itineraryDetailBuilder.toLocationCode;
+		super.setCreatedBy(itineraryDetailBuilder.createdBy);
+		super.setUpdatedBy(itineraryDetailBuilder.updatedBy);
+		super.setCreateDate(itineraryDetailBuilder.createDate);
+		return this;
+	}
 
 	@Override
 	public int hashCode() {
@@ -212,7 +354,5 @@ public class ItineraryDetail  extends SABaseEntity {
 	public void setItineraryMaster(ItineraryMaster itineraryMaster) {
 		this.itineraryMaster = itineraryMaster;
 	}
-	
-	
 
 }

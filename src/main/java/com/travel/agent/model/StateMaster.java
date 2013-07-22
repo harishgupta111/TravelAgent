@@ -22,9 +22,9 @@ import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.travel.agent.model.enums.RecordCreatorType;
 
 @Entity
-@Table(name = "ta_StateMaster", 
-uniqueConstraints = @UniqueConstraint(columnNames = {"stateName", "stateCode"}))
-@Cache(region="entity.ta_StateMaster", usage = CacheConcurrencyStrategy.READ_WRITE)
+@Table(name = "ta_StateMaster", uniqueConstraints = @UniqueConstraint(columnNames = {
+		"stateName", "stateCode" }))
+@Cache(region = "entity.ta_StateMaster", usage = CacheConcurrencyStrategy.READ_WRITE)
 @Cacheable
 public class StateMaster extends SABaseEntity {
 
@@ -32,30 +32,29 @@ public class StateMaster extends SABaseEntity {
 	 * 
 	 */
 	private static final long serialVersionUID = 8295791436096988607L;
-	
-	
+
 	@Id
 	@Column(name = "stateMasterID", insertable = false, updatable = false)
 	private String stateMasterID;
-	
+
 	@NotEmpty(message = "State name cannot be empty")
 	@Column(name = "stateName", nullable = false)
 	private String stateName;
-	
+
 	@NotEmpty(message = "State code cannot be empty")
 	@Column(name = "stateCode", nullable = false)
 	private String stateCode;
-	
+
 	@Column(name = "unionTerritory")
 	@Type(type = "yes_no")
 	private Boolean unionTerritory;
-	
+
 	@JsonManagedReference
-	@OneToMany(mappedBy = "stateMaster", fetch = FetchType.LAZY, cascade=CascadeType.PERSIST)
+	@OneToMany(mappedBy = "stateMaster", fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
 	private Set<LocationMaster> locationMasterSet;
-	
+
 	public class StateMasterBuilder {
-		
+
 		private String stateMasterID;
 		private String stateName;
 		private String stateCode;
@@ -64,12 +63,12 @@ public class StateMaster extends SABaseEntity {
 		private RecordCreatorType createdBy;
 		private RecordCreatorType updatedBy;
 		private Date createDate;
-		
+
 		public StateMasterBuilder createDate(Date val) {
 			this.createDate = val;
 			return this;
 		}
-		
+
 		public StateMasterBuilder createdBy(RecordCreatorType val) {
 			this.createdBy = val;
 			return this;
@@ -79,12 +78,11 @@ public class StateMaster extends SABaseEntity {
 			this.updatedBy = val;
 			return this;
 		}
-		
+
 		public StateMasterBuilder stateMasterId(String val) {
 			this.stateMasterID = val;
 			return this;
 		}
-
 
 		public StateMasterBuilder stateName(String val) {
 			this.stateName = val;
@@ -95,14 +93,13 @@ public class StateMaster extends SABaseEntity {
 			this.stateCode = val;
 			return this;
 		}
-		
+
 		public StateMasterBuilder unionTerritory(Boolean val) {
 			this.unionTerritory = val;
 			return this;
 		}
-		
-		public StateMasterBuilder locationMasterSet(Set<LocationMaster> val)
-		{
+
+		public StateMasterBuilder locationMasterSet(Set<LocationMaster> val) {
 			this.locationMasterSet = val;
 			return this;
 		}
@@ -110,13 +107,12 @@ public class StateMaster extends SABaseEntity {
 		public StateMaster buildNew() {
 			return new StateMaster(this);
 		}
-		
+
 		public StateMaster update() {
 			return updateStateMaster(this);
 		}
-		
-		public StateMasterBuilder(StateMaster stateMaster)
-		{
+
+		public StateMasterBuilder(StateMaster stateMaster) {
 			this.stateMasterID = stateMaster.getStateMasterID();
 			this.stateCode = stateMaster.stateCode;
 			this.stateName = stateMaster.stateName;
@@ -127,9 +123,10 @@ public class StateMaster extends SABaseEntity {
 			this.createDate = stateMaster.getCreateDate();
 		}
 
-		public StateMasterBuilder() {		}
+		public StateMasterBuilder() {
+		}
 	}
-	
+
 	public StateMaster() {
 		super();
 	}
@@ -155,7 +152,7 @@ public class StateMaster extends SABaseEntity {
 		super.setCreatedBy(builder.createdBy);
 		super.setUpdatedBy(builder.updatedBy);
 		super.setCreateDate(builder.createDate);
-	}	
+	}
 
 	@Override
 	public int hashCode() {
@@ -163,7 +160,8 @@ public class StateMaster extends SABaseEntity {
 		int result = 1;
 		result = prime * result
 				+ ((stateCode == null) ? 0 : stateCode.hashCode());
-		result = prime * result + ((stateMasterID == null) ? 0 : stateMasterID.hashCode());
+		result = prime * result
+				+ ((stateMasterID == null) ? 0 : stateMasterID.hashCode());
 		result = prime * result
 				+ ((stateName == null) ? 0 : stateName.hashCode());
 		result = prime * result
@@ -226,7 +224,7 @@ public class StateMaster extends SABaseEntity {
 	public void setStateCode(String stateCode) {
 		this.stateCode = stateCode;
 	}
-	
+
 	public Boolean getUnionTerritory() {
 		return unionTerritory;
 	}
@@ -242,5 +240,5 @@ public class StateMaster extends SABaseEntity {
 	public void setLocationMasterSet(Set<LocationMaster> locationMasterSet) {
 		this.locationMasterSet = locationMasterSet;
 	}
-	
+
 }

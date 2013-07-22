@@ -16,9 +16,9 @@ import com.travel.agent.model.ItineraryMaster;
 
 @Transactional(readOnly=true)
 @Component("iItineraryMasterDaoService")
-public class ItineraryDaoServiceImpl implements IItineraryMasterDaoService {
+public class ItineraryMasterDaoServiceImpl implements IItineraryMasterDaoService {
 	
-	private static Logger logger = Logger.getLogger(ItineraryDaoServiceImpl.class);
+	private static Logger logger = Logger.getLogger(ItineraryMasterDaoServiceImpl.class);
 
 	@Autowired
 	private IItineraryMasterDao iItineraryMasterDao;
