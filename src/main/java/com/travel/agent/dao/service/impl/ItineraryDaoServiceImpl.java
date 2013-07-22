@@ -10,13 +10,13 @@ import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.travel.agent.dao.IItineraryMasterDao;
-import com.travel.agent.dao.service.IItineraryDaoService;
+import com.travel.agent.dao.service.IItineraryMasterDaoService;
 import com.travel.agent.exception.TASystemException;
 import com.travel.agent.model.ItineraryMaster;
 
 @Transactional(readOnly=true)
-@Component("iItineraryDaoService")
-public class ItineraryDaoServiceImpl implements IItineraryDaoService {
+@Component("iItineraryMasterDaoService")
+public class ItineraryDaoServiceImpl implements IItineraryMasterDaoService {
 	
 	private static Logger logger = Logger.getLogger(ItineraryDaoServiceImpl.class);
 
