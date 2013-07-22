@@ -18,10 +18,14 @@
 		<level value="error" />
 	</logger>
 
+	<logger name="org.hibernate.tool.hbm2ddl">
+		<level value="fatal" />
+	</logger>
+
 	<logger name="org.hibernate">
 		<level value="error" />
 	</logger>
-	
+
 	<logger name="org.hibernate.cache">
 		<level value="error" />
 	</logger>
@@ -33,7 +37,7 @@
 	<logger name="com.googlecode">
 		<level value="error" />
 	</logger>
-		
+
 	<logger name="org.springframework.jdbc">
 		<level value="error" />
 	</logger>
@@ -65,7 +69,7 @@
 	<logger name="com.sun.jersey">
 		<level value="error" />
 	</logger>
-	
+
 	<logger name="com.sun.jersey.test">
 		<level value="error" />
 	</logger>

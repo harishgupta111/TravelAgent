@@ -35,6 +35,8 @@
 				<value>com.travel.agent.model.UserMaster</value>
 				<value>com.travel.agent.model.UserAuthorityMaster</value>
 				<value>com.travel.agent.model.VehicleMaster</value>
+				<value>com.travel.agent.model.ItineraryDetail</value>
+				<value>com.travel.agent.model.JourneyMaster</value>
 			</list>
 		</constructor-arg>
 	</bean>

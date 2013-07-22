@@ -28,7 +28,7 @@ public class ItineraryMasterDaoHibernateImpl extends
 		IItineraryMasterDao {
 
 	private static Logger logger = Logger
-			.getLogger(LocationDaoHibernateImpl.class);
+			.getLogger(ItineraryMasterDaoHibernateImpl.class);
 
 	@Override
 	@CacheEvict(value = { "entity.ta_ItineraryMaster",

@@ -66,10 +66,10 @@ public class VehicleMaster extends SABaseEntity {
 	private Integer vehicleCount;
 	
 	@OneToMany(mappedBy = "vehicleMaster", fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
-	private Set<ItineraryMaster> itineraryMasterSet;
+	private Set<AvailableVehicle> availableVehicleSet;
 	
 	@OneToMany(mappedBy = "vehicleMaster", fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
-	private Set<AvailableVehicle> availableVehicleSet;
+	private Set<JourneyMaster> journeyMasterSet;
 
 	public class VehicleMasterBuilder {
 
@@ -81,7 +81,6 @@ public class VehicleMaster extends SABaseEntity {
 		private Integer noOfSeats;
 		private String plateNumber;
 		private Integer vehicleCount;
-		private Set<ItineraryMaster> itineraryMasterSet;
 		private Set<AvailableVehicle> availableVehicleSet;
 		private RecordCreatorType createdBy;
 		private RecordCreatorType updatedBy;
@@ -89,11 +88,6 @@ public class VehicleMaster extends SABaseEntity {
 		
 		public VehicleMasterBuilder availableVehicleSet(Set<AvailableVehicle> val) {
 			this.availableVehicleSet = val;
-			return this;
-		}
-
-		public VehicleMasterBuilder itineraryMasterSet(Set<ItineraryMaster> val) {
-			this.itineraryMasterSet = val;
 			return this;
 		}
 		
@@ -172,7 +166,6 @@ public class VehicleMaster extends SABaseEntity {
 			this.noOfSeats = vehicleMaster.noOfSeats;
 			this.plateNumber = vehicleMaster.plateNumber;
 			this.vehicleCount = vehicleMaster.vehicleCount;
-			this.itineraryMasterSet = vehicleMaster.itineraryMasterSet;
 			this.availableVehicleSet = vehicleMaster.availableVehicleSet;
 			this.createdBy = vehicleMaster.getCreatedBy();
 			this.updatedBy = vehicleMaster.getUpdatedBy();
@@ -195,7 +188,6 @@ public class VehicleMaster extends SABaseEntity {
 		this.noOfSeats = vehicleMasterBuilder.noOfSeats;
 		this.plateNumber = vehicleMasterBuilder.plateNumber;
 		this.vehicleCount = vehicleMasterBuilder.vehicleCount;
-		this.itineraryMasterSet = vehicleMasterBuilder.itineraryMasterSet;
 		this.availableVehicleSet = vehicleMasterBuilder.availableVehicleSet;
 		super.setCreatedBy(vehicleMasterBuilder.createdBy);
 		super.setUpdatedBy(vehicleMasterBuilder.updatedBy);
@@ -212,7 +204,6 @@ public class VehicleMaster extends SABaseEntity {
 		this.noOfSeats = builder.noOfSeats;
 		this.plateNumber = builder.plateNumber;
 		this.vehicleCount = builder.vehicleCount;
-		this.itineraryMasterSet = builder.itineraryMasterSet;
 		this.availableVehicleSet = builder.availableVehicleSet;
 		super.setCreateDate(builder.createDate);
 		super.setCreatedBy(builder.createdBy);
@@ -359,20 +350,20 @@ public class VehicleMaster extends SABaseEntity {
 		return serialVersionUID;
 	}
 
-	public Set<ItineraryMaster> getItineraryMasterSet() {
-		return itineraryMasterSet;
-	}
-
-	public void setItineraryMasterSet(Set<ItineraryMaster> itineraryMasterSet) {
-		this.itineraryMasterSet = itineraryMasterSet;
-	}
-
 	public Set<AvailableVehicle> getAvailableVehicleSet() {
 		return availableVehicleSet;
 	}
 
 	public void setAvailableVehicleSet(Set<AvailableVehicle> availableVehicleSet) {
 		this.availableVehicleSet = availableVehicleSet;
+	}
+
+	public Set<JourneyMaster> getJourneyMasterSet() {
+		return journeyMasterSet;
+	}
+
+	public void setJourneyMasterSet(Set<JourneyMaster> journeyMasterSet) {
+		this.journeyMasterSet = journeyMasterSet;
 	}
 	
 }

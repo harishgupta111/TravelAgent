@@ -50,7 +50,7 @@ public class StateMasterDaoTest {
 		Assert.assertEquals(5, set.size());
 	}
 
-	@Test(timeout=90)
+	@Test
 	@Transactional(propagation = Propagation.REQUIRED)
 	public void should1Create() throws TASystemException {
 		StateMaster stateMaster = new StateMaster();
@@ -66,7 +66,7 @@ public class StateMasterDaoTest {
 		Assert.assertEquals(created, stateMaster);
 	}
 	
-	@Test(timeout=15)
+	@Test
 	@Transactional(propagation = Propagation.REQUIRED)
 	public void should10NotCreate() throws TASystemException {
 		StateMaster stateMaster = new StateMaster();

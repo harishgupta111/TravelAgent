@@ -1,21 +1,19 @@
 package com.travel.agent.model;
 
 import java.util.Date;
+import java.util.Set;
 
 import javax.persistence.Cacheable;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
 
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
-import org.hibernate.annotations.Fetch;
 import org.hibernate.annotations.Type;
 
 import com.travel.agent.model.enums.RecordCreatorType;
@@ -35,65 +33,50 @@ public class ItineraryMaster extends SABaseEntity {
 	@Column(name = "itineraryMasterID", insertable = false, updatable = false)
 	private String itineraryMasterID;
 
-	@Column(name = "itineraryID", insertable = false, updatable = false)
-	private String itineraryID;
-
 	@Column(name = "originLocationCode")
 	private String originLocationCode;
 
 	@Column(name = "destinationLocationCode")
 	private String destinationLocationCode;
 
-	@Temporal(TemporalType.TIME)
-	@Column(name = "timeAtOrigin")
-	private Date timeAtOrigin;
-
-	@Temporal(TemporalType.TIME)
-	@Column(name = "timeAtDestination")
-	private Date timeAtDestination;
-
-	@Column(name = "itinerarySeqId")
-	private Integer itinerarySeqId;
-
-	@Column(name = "cancelStatus")
-	@Type(type = "yes_no")
-	private Boolean cancelStatus;
-
 	@Column(name = "nonStopStatus")
 	@Type(type = "yes_no")
 	private Boolean nonStopStatus;
+
+	@Column(name = "dayOfWeek")
+	private Integer dayOfWeek;
+
+	@Column(name = "weekOfMonth")
+	private String weekOfMonth;
 	
-	@Fetch(org.hibernate.annotations.FetchMode.JOIN)
-	@JoinColumn(name = "vehicleMasterID", referencedColumnName = "vehicleMasterID")
-	@ManyToOne(targetEntity = VehicleMaster.class, fetch = FetchType.LAZY)
-	private VehicleMaster vehicleMaster;
+	@OneToMany(mappedBy = "itineraryMaster", fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
+	private Set<ItineraryDetail> itineraryDetailSet;
+	
+	@OneToMany(mappedBy = "itineraryMaster", fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
+	private Set<JourneyMaster> journeyMasterSet;
 
 	public class ItineraryMasterBuilder {
 
 		private String itineraryMasterID;
-		private String itineraryID;
 		private String originLocationCode;
 		private String destinationLocationCode;
-		private Date timeAtOrigin;
-		private Date timeAtDestination;
-		private Integer itinerarySeqId;
-		private Boolean cancelStatus;
 		private Boolean nonStopStatus;
-		private VehicleMaster vehicleMaster;
+		private Integer dayOfWeek;
+		private String weekOfMonth;
 		private RecordCreatorType createdBy;
 		private RecordCreatorType updatedBy;
 		private Date createDate;
 
-		public ItineraryMasterBuilder vehicleMaster(VehicleMaster val) {
-			this.vehicleMaster = val;
+		public ItineraryMasterBuilder weekOfMonth(String val) {
+			this.weekOfMonth = val;
 			return this;
 		}
-		
-		public ItineraryMasterBuilder itineraryID(String val) {
-			this.itineraryID = val;
+
+		public ItineraryMasterBuilder dayOfWeek(Integer val) {
+			this.dayOfWeek = val;
 			return this;
 		}
-		
+				
 		public ItineraryMasterBuilder createDate(Date val) {
 			this.createDate = val;
 			return this;
@@ -124,26 +107,6 @@ public class ItineraryMaster extends SABaseEntity {
 			return this;
 		}
 
-		public ItineraryMasterBuilder timeAtOrigin(Date val) {
-			this.timeAtOrigin = val;
-			return this;
-		}
-
-		public ItineraryMasterBuilder timeAtDestination(Date val) {
-			this.timeAtOrigin = val;
-			return this;
-		}
-
-		public ItineraryMasterBuilder itinerarySeqId(Integer val) {
-			this.itinerarySeqId = val;
-			return this;
-		}
-
-		public ItineraryMasterBuilder cancelStatus(Boolean val) {
-			this.cancelStatus = val;
-			return this;
-		}
-
 		public ItineraryMasterBuilder nonStopStatus(Boolean val) {
 			this.nonStopStatus = val;
 			return this;
@@ -157,21 +120,16 @@ public class ItineraryMaster extends SABaseEntity {
 			return updateItineraryMaster(this);
 		}
 
-		
 		public ItineraryMasterBuilder() {}
 		
 		public ItineraryMasterBuilder(ItineraryMaster itineraryMaster) {
 
 			this.itineraryMasterID = itineraryMaster.itineraryMasterID;
-			this.itineraryID = itineraryMaster.itineraryID;
 			this.originLocationCode = itineraryMaster.originLocationCode;
 			this.destinationLocationCode = itineraryMaster.destinationLocationCode;
-			this.timeAtOrigin = itineraryMaster.timeAtOrigin;
-			this.timeAtDestination = itineraryMaster.timeAtDestination;
-			this.itinerarySeqId = itineraryMaster.itinerarySeqId;
-			this.cancelStatus = itineraryMaster.cancelStatus;
 			this.nonStopStatus = itineraryMaster.nonStopStatus;
-			this.vehicleMaster = itineraryMaster.vehicleMaster;
+			this.dayOfWeek = itineraryMaster.dayOfWeek;
+			this.weekOfMonth = itineraryMaster.weekOfMonth;
 			this.createdBy = itineraryMaster.getCreatedBy();
 			this.updatedBy = itineraryMaster.getUpdatedBy();
 			this.createDate = itineraryMaster.getCreateDate();
@@ -186,15 +144,11 @@ public class ItineraryMaster extends SABaseEntity {
 	public ItineraryMaster updateItineraryMaster(
 			ItineraryMasterBuilder itineraryMasterBuilder) {
 		this.itineraryMasterID = itineraryMasterBuilder.itineraryMasterID;
-		this.itineraryID = itineraryMasterBuilder.itineraryID;
 		this.originLocationCode = itineraryMasterBuilder.originLocationCode;
 		this.destinationLocationCode = itineraryMasterBuilder.destinationLocationCode;
-		this.timeAtOrigin = itineraryMasterBuilder.timeAtOrigin;
-		this.timeAtDestination = itineraryMasterBuilder.timeAtDestination;
-		this.itinerarySeqId = itineraryMasterBuilder.itinerarySeqId;
-		this.cancelStatus = itineraryMasterBuilder.cancelStatus;
 		this.nonStopStatus = itineraryMasterBuilder.nonStopStatus;
-		this.vehicleMaster = itineraryMasterBuilder.vehicleMaster;
+		this.dayOfWeek = itineraryMasterBuilder.dayOfWeek;
+		this.weekOfMonth = itineraryMasterBuilder.weekOfMonth;
 		super.setCreatedBy(itineraryMasterBuilder.createdBy);
 		super.setUpdatedBy(itineraryMasterBuilder.updatedBy);
 		super.setCreateDate(itineraryMasterBuilder.createDate);
@@ -205,26 +159,22 @@ public class ItineraryMaster extends SABaseEntity {
 	private ItineraryMaster(ItineraryMasterBuilder builder) {
 
 		this.itineraryMasterID = builder.itineraryMasterID;
-		this.itineraryID = builder.itineraryID;
 		this.originLocationCode = builder.originLocationCode;
 		this.destinationLocationCode = builder.destinationLocationCode;
-		this.timeAtOrigin = builder.timeAtOrigin;
-		this.timeAtDestination = builder.timeAtDestination;
-		this.itinerarySeqId = builder.itinerarySeqId;
-		this.cancelStatus = builder.cancelStatus;
 		this.nonStopStatus = builder.nonStopStatus;
-		this.vehicleMaster = builder.vehicleMaster;
+		this.dayOfWeek = builder.dayOfWeek;
+		this.weekOfMonth = builder.weekOfMonth;
 		super.setCreatedBy(builder.createdBy);
 		super.setUpdatedBy(builder.updatedBy);
 		super.setCreateDate(builder.createDate);
 	}
-
+	
 	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = super.hashCode();
 		result = prime * result
-				+ ((cancelStatus == null) ? 0 : cancelStatus.hashCode());
+				+ ((dayOfWeek == null) ? 0 : dayOfWeek.hashCode());
 		result = prime
 				* result
 				+ ((destinationLocationCode == null) ? 0
@@ -234,21 +184,13 @@ public class ItineraryMaster extends SABaseEntity {
 				+ ((itineraryMasterID == null) ? 0 : itineraryMasterID
 						.hashCode());
 		result = prime * result
-				+ ((itineraryID == null) ? 0 : itineraryID.hashCode());
-		result = prime * result
-				+ ((itinerarySeqId == null) ? 0 : itinerarySeqId.hashCode());
-		result = prime * result
 				+ ((nonStopStatus == null) ? 0 : nonStopStatus.hashCode());
 		result = prime
 				* result
 				+ ((originLocationCode == null) ? 0 : originLocationCode
 						.hashCode());
-		result = prime
-				* result
-				+ ((timeAtDestination == null) ? 0 : timeAtDestination
-						.hashCode());
 		result = prime * result
-				+ ((timeAtOrigin == null) ? 0 : timeAtOrigin.hashCode());
+				+ ((weekOfMonth == null) ? 0 : weekOfMonth.hashCode());
 		return result;
 	}
 
@@ -261,10 +203,10 @@ public class ItineraryMaster extends SABaseEntity {
 		if (getClass() != obj.getClass())
 			return false;
 		ItineraryMaster other = (ItineraryMaster) obj;
-		if (cancelStatus == null) {
-			if (other.cancelStatus != null)
+		if (dayOfWeek == null) {
+			if (other.dayOfWeek != null)
 				return false;
-		} else if (!cancelStatus.equals(other.cancelStatus))
+		} else if (!dayOfWeek.equals(other.dayOfWeek))
 			return false;
 		if (destinationLocationCode == null) {
 			if (other.destinationLocationCode != null)
@@ -277,16 +219,6 @@ public class ItineraryMaster extends SABaseEntity {
 				return false;
 		} else if (!itineraryMasterID.equals(other.itineraryMasterID))
 			return false;
-		if (itineraryID == null) {
-			if (other.itineraryID != null)
-				return false;
-		} else if (!itineraryID.equals(other.itineraryID))
-			return false;
-		if (itinerarySeqId == null) {
-			if (other.itinerarySeqId != null)
-				return false;
-		} else if (!itinerarySeqId.equals(other.itinerarySeqId))
-			return false;
 		if (nonStopStatus == null) {
 			if (other.nonStopStatus != null)
 				return false;
@@ -297,25 +229,12 @@ public class ItineraryMaster extends SABaseEntity {
 				return false;
 		} else if (!originLocationCode.equals(other.originLocationCode))
 			return false;
-		if (timeAtDestination == null) {
-			if (other.timeAtDestination != null)
+		if (weekOfMonth == null) {
+			if (other.weekOfMonth != null)
 				return false;
-		} else if (!timeAtDestination.equals(other.timeAtDestination))
-			return false;
-		if (timeAtOrigin == null) {
-			if (other.timeAtOrigin != null)
-				return false;
-		} else if (!timeAtOrigin.equals(other.timeAtOrigin))
+		} else if (!weekOfMonth.equals(other.weekOfMonth))
 			return false;
 		return true;
-	}
-
-	public String getItineraryID() {
-		return itineraryID;
-	}
-
-	public void setItineraryID(String itineraryID) {
-		this.itineraryID = itineraryID;
 	}
 
 	public String getItineraryMasterID() {
@@ -342,38 +261,6 @@ public class ItineraryMaster extends SABaseEntity {
 		this.destinationLocationCode = destinationLocationCode;
 	}
 
-	public Date getTimeAtOrigin() {
-		return timeAtOrigin;
-	}
-
-	public void setTimeAtOrigin(Date timeAtOrigin) {
-		this.timeAtOrigin = timeAtOrigin;
-	}
-
-	public Date getTimeAtDestination() {
-		return timeAtDestination;
-	}
-
-	public void setTimeAtDestination(Date timeAtDestination) {
-		this.timeAtDestination = timeAtDestination;
-	}
-
-	public Integer getItinerarySeqId() {
-		return itinerarySeqId;
-	}
-
-	public void setItinerarySeqId(Integer itinerarySeqId) {
-		this.itinerarySeqId = itinerarySeqId;
-	}
-
-	public Boolean getCancelStatus() {
-		return cancelStatus;
-	}
-
-	public void setCancelStatus(Boolean cancelStatus) {
-		this.cancelStatus = cancelStatus;
-	}
-
 	public Boolean getNonStopStatus() {
 		return nonStopStatus;
 	}
@@ -382,11 +269,22 @@ public class ItineraryMaster extends SABaseEntity {
 		this.nonStopStatus = nonStopStatus;
 	}
 
-	public VehicleMaster getVehicleMaster() {
-		return vehicleMaster;
+	public Integer getDayOfWeek() {
+		return dayOfWeek;
 	}
 
-	public void setVehicleMaster(VehicleMaster vehicleMaster) {
-		this.vehicleMaster = vehicleMaster;
+	public void setDayOfWeek(Integer dayOfWeek) {
+		this.dayOfWeek = dayOfWeek;
 	}
+
+	public String getWeekOfMonth() {
+		return weekOfMonth;
+	}
+
+	public void setWeekOfMonth(String weekOfMonth) {
+		this.weekOfMonth = weekOfMonth;
+	}
+	
+	
+
 }

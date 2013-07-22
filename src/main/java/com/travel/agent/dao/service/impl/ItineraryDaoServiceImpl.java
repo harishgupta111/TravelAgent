@@ -47,4 +47,11 @@ public class ItineraryDaoServiceImpl implements IItineraryDaoService {
 		return this.iItineraryMasterDao.updateEntity(t);
 	}
 
+	@Override
+	@Transactional(readOnly = false, propagation = Propagation.REQUIRED, rollbackFor=TASystemException.class, isolation=Isolation.DEFAULT)
+	public int createUsingSet(Set<ItineraryMaster> set)
+			throws TASystemException {
+		return this.iItineraryMasterDao.createUsingSet(set);
+	}
+
 }
