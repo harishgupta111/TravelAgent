@@ -73,8 +73,12 @@
 	<logger name="com.sun.jersey.test">
 		<level value="error" />
 	</logger>
+	
+	<logger name="com.sun.grizzly">
+		<level value="fatal"/>
+	</logger>
 
-	<logger name="com.travel.agent.test">
+	<logger name="com.travel.agent">
 		<level value="info" />
 	</logger>
 
