@@ -10,15 +10,15 @@ import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.travel.agent.dao.IJourneyMasterDao;
-import com.travel.agent.dao.service.IJourneyMasterService;
+import com.travel.agent.dao.service.IJourneyMasterDaoService;
 import com.travel.agent.exception.TASystemException;
 import com.travel.agent.model.JourneyMaster;
 
 @Transactional(readOnly=true)
-@Component("iJourneyMasterService")
-public class JourneyMasterServiceImpl implements IJourneyMasterService {
+@Component("iJourneyMasterDaoService")
+public class JourneyMasterDaoServiceImpl implements IJourneyMasterDaoService {
 	
-	private static Logger logger = Logger.getLogger(JourneyMasterServiceImpl.class);
+	private static Logger logger = Logger.getLogger(JourneyMasterDaoServiceImpl.class);
 
 	@Autowired
 	private IJourneyMasterDao iJourneyMasterDao;
