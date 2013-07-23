@@ -63,5 +63,19 @@ public class AvailableVehicleDaoServiceTest {
 		AvailableVehicle created = iAvailableVehicleDaoService.create(c);
 		Assert.assertEquals(created, c);
 	}
+	
+	@Test
+	@Transactional(propagation = Propagation.REQUIRED)
+	public void shouldUpdate() throws TASystemException {
+		AvailableVehicle a = this.iAvailableVehicleDaoService.getById("1");
+		AvailableVehicleBuilder cb = a.new AvailableVehicleBuilder(a);
+		a = cb.activeIndicator(true).availableVehicleCount(10)
+				.dateOfRunning(new Date())
+				.vehicleMaster(iVehicleMasterDaoService.getById("1"))
+				.createdBy(RecordCreatorType.TEST)
+				.updatedBy(RecordCreatorType.TEST).buildNew();
+		AvailableVehicle updated = iAvailableVehicleDaoService.updateEntity(a);
+		Assert.assertEquals(updated.getAvailableVehicleCount().intValue(), 10);
+	}
 
 }

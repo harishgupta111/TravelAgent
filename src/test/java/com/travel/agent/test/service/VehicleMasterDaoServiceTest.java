@@ -62,5 +62,17 @@ public class VehicleMasterDaoServiceTest {
 		VehicleMaster vm = iVehicleMasterDaoService.getById("abc");
 		Assert.assertNull(vm);
 	}
+	
+	@Test
+	@Transactional(propagation = Propagation.REQUIRES_NEW)
+	public void shouldUpdate() throws TASystemException {
+		VehicleMaster vm = iVehicleMasterDaoService.getById("1");
+		VehicleMasterBuilder vmb = vm.new VehicleMasterBuilder(vm);
+		vm = vmb.plateNumber("ABC 1788").vehicleCount(10)
+				.update();
+		VehicleMaster updated = iVehicleMasterDaoService.updateEntity(vm);
+		Assert.assertEquals(updated.getPlateNumber(), "ABC 1788");
+	}
+
 
 }
