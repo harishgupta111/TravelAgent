@@ -5,7 +5,9 @@ import java.util.Set;
 
 import junit.framework.Assert;
 
+import org.junit.Rule;
 import org.junit.Test;
+import org.junit.rules.ExpectedException;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
@@ -31,6 +33,12 @@ public class LocationMasterDaoTest {
 
 	@Autowired
 	private ILocationMasterDao iLocationMasterDao;
+	
+	@Rule
+	public ExpectedException exception = ExpectedException.none();
+	
+	public static String junkString = "gugiuhdgugiuhduiyhshdxiuhx9wyshx9ydhci8dwygcuygdwkuchoudwychgdiuwhciudwhciuhdwuigciuwdgciudwgcigdwycgudywciuhdwcoiihwdoihciouwdhciukhgwdiycgiwdchpnwdic[0dwicoidwhciuwdgcgdwugcuywgdcdiuy9q7d98q87gibiubxy8ug8yhx0ju9yd897e2ydhioeqndiehwbiuiwhed9uhwecibx2eiugc9ewhd0ie2hjc9doeh2ouchweiuhcbiuw2bc"
++ "uiyhshdxiuhx9wyshx9ydhci8dwygcuygdwkuchoudwychgdiuwhciudwhciuhdwuigciuwdgciudwgcigdwycgudywciuhdwcoiihwdoihciouwdhciukhgwdiycgiwdchpnwdic[0dwicoidwhciuwdgcgdwugcuywgdcdiuy9q7d98q";
 
 	@Test
 	@Transactional(propagation = Propagation.REQUIRED)
@@ -55,6 +63,12 @@ public class LocationMasterDaoTest {
 	public void shouldGetByID() throws TASystemException {
 		LocationMaster lm = this.iLocationMasterDao.findById("1");
 		Assert.assertNotNull(lm);
+	}
+	
+	@Test
+	public void shouldNotGetByID() throws TASystemException {
+		LocationMaster lm = this.iLocationMasterDao.findById(LocationMasterDaoTest.junkString);
+		Assert.assertNull(lm);
 	}
 
 	@Test
