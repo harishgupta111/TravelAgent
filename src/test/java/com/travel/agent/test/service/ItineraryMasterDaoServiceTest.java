@@ -51,7 +51,7 @@ public class ItineraryMasterDaoServiceTest {
 		ItineraryMaster c = new ItineraryMaster();
 		ItineraryMasterBuilder cb = c.new ItineraryMasterBuilder();
 		c = cb.createDate(new Date()).createdBy(RecordCreatorType.TEST)
-				.dayOfWeek(1).destinationLocationCode("AK").nonStopStatus(true)
+				.dayOfWeek("1").destinationLocationCode("AK").nonStopStatus(true)
 				.originLocationCode("BAS")
 				.updatedBy(RecordCreatorType.TEST).buildNew();
 		ItineraryMaster created = iItineraryMasterDaoService.create(c);

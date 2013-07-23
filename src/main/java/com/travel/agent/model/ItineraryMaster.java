@@ -44,7 +44,7 @@ public class ItineraryMaster extends SABaseEntity {
 	private Boolean nonStopStatus;
 
 	@Column(name = "dayOfWeek")
-	private Integer dayOfWeek;
+	private String dayOfWeek;
 
 	@Column(name = "weekOfMonth")
 	private String weekOfMonth;
@@ -61,7 +61,7 @@ public class ItineraryMaster extends SABaseEntity {
 		private String originLocationCode;
 		private String destinationLocationCode;
 		private Boolean nonStopStatus;
-		private Integer dayOfWeek;
+		private String dayOfWeek;
 		private String weekOfMonth;
 		private RecordCreatorType createdBy;
 		private RecordCreatorType updatedBy;
@@ -72,7 +72,7 @@ public class ItineraryMaster extends SABaseEntity {
 			return this;
 		}
 
-		public ItineraryMasterBuilder dayOfWeek(Integer val) {
+		public ItineraryMasterBuilder dayOfWeek(String val) {
 			this.dayOfWeek = val;
 			return this;
 		}
@@ -269,11 +269,11 @@ public class ItineraryMaster extends SABaseEntity {
 		this.nonStopStatus = nonStopStatus;
 	}
 
-	public Integer getDayOfWeek() {
+	public String getDayOfWeek() {
 		return dayOfWeek;
 	}
 
-	public void setDayOfWeek(Integer dayOfWeek) {
+	public void setDayOfWeek(String dayOfWeek) {
 		this.dayOfWeek = dayOfWeek;
 	}
 
