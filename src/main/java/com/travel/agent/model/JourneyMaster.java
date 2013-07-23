@@ -17,6 +17,8 @@ import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 import org.hibernate.annotations.Fetch;
 
+import com.travel.agent.model.enums.RecordCreatorType;
+
 @Entity
 @Table(name = "ta_JourneyMaster")
 @Cache(region = "entity.ta_JourneyMaster", usage = CacheConcurrencyStrategy.READ_WRITE)
@@ -31,21 +33,115 @@ public class JourneyMaster extends SABaseEntity {
 	@Id
 	@Column(name = "journeyMasterID", insertable = false, updatable = false)
 	private String journeyMasterID;
-	
+
 	@Temporal(TemporalType.DATE)
 	@Column(name = "dateOfJourney")
 	private Date dateOfJourney;
-	
+
 	@Fetch(org.hibernate.annotations.FetchMode.JOIN)
 	@JoinColumn(name = "itineraryMasterID", referencedColumnName = "itineraryMasterID")
 	@ManyToOne(targetEntity = ItineraryMaster.class, fetch = FetchType.LAZY)
 	private ItineraryMaster itineraryMaster;
-	
+
 	@Fetch(org.hibernate.annotations.FetchMode.JOIN)
 	@JoinColumn(name = "vehicleMasterID", referencedColumnName = "vehicleMasterID")
 	@ManyToOne(targetEntity = VehicleMaster.class, fetch = FetchType.LAZY)
 	private VehicleMaster vehicleMaster;
-	
+
+	public class JourneyMasterBuilder {
+
+		private String journeyMasterID;
+		private Date dateOfJourney;
+		private ItineraryMaster itineraryMaster;
+		private VehicleMaster vehicleMaster;
+		private RecordCreatorType createdBy;
+		private RecordCreatorType updatedBy;
+		private Date createDate;
+
+		public JourneyMasterBuilder createDate(Date val) {
+			this.createDate = val;
+			return this;
+		}
+
+		public JourneyMasterBuilder createdBy(RecordCreatorType val) {
+			this.createdBy = val;
+			return this;
+		}
+
+		public JourneyMasterBuilder updatedBy(RecordCreatorType val) {
+			this.updatedBy = val;
+			return this;
+		}
+
+		public JourneyMasterBuilder journeyMasterID(String val) {
+			this.journeyMasterID = val;
+			return this;
+		}
+
+		public JourneyMasterBuilder dateOfJourney(Date val) {
+			this.dateOfJourney = val;
+			return this;
+		}
+
+		public JourneyMasterBuilder itineraryMaster(ItineraryMaster val) {
+			this.itineraryMaster = val;
+			return this;
+		}
+
+		public JourneyMasterBuilder vehicleMaster(VehicleMaster val) {
+			this.vehicleMaster = val;
+			return this;
+		}
+
+		public JourneyMaster buildNew() {
+			return new JourneyMaster(this);
+		}
+
+		public JourneyMaster update() {
+			return updateJourneyMaster(this);
+		}
+
+		public JourneyMasterBuilder(JourneyMaster journeyMaster) {
+			this.journeyMasterID = journeyMaster.journeyMasterID;
+			this.dateOfJourney = journeyMaster.dateOfJourney;
+			this.itineraryMaster = journeyMaster.itineraryMaster;
+			this.vehicleMaster = journeyMaster.vehicleMaster;
+			this.createdBy = journeyMaster.getCreatedBy();
+			this.updatedBy = journeyMaster.getUpdatedBy();
+			this.createDate = journeyMaster.getCreateDate();
+		}
+
+		public JourneyMasterBuilder() {
+		}
+
+	}
+
+	public JourneyMaster() {
+		super();
+	}
+
+	public JourneyMaster(JourneyMasterBuilder journeyMasterBuilder) {
+		super();
+		setValues(journeyMasterBuilder);
+	}
+
+	public JourneyMaster updateJourneyMaster(
+			JourneyMasterBuilder journeyMasterBuilder) {
+		setValues(journeyMasterBuilder);
+		return this;
+	}
+
+	private void setValues(JourneyMasterBuilder journeyMasterBuilder) {
+		this.journeyMasterID = journeyMasterBuilder.journeyMasterID;
+		this.dateOfJourney = journeyMasterBuilder.dateOfJourney;
+		this.itineraryMaster = journeyMasterBuilder.itineraryMaster;
+		this.vehicleMaster = journeyMasterBuilder.vehicleMaster;
+		this.setCreatedBy(journeyMasterBuilder.createdBy);
+		this.setUpdatedBy(journeyMasterBuilder.updatedBy);
+		this.setCreateDate(journeyMasterBuilder.createDate);
+
+	}
+
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -110,5 +206,5 @@ public class JourneyMaster extends SABaseEntity {
 	public void setVehicleMaster(VehicleMaster vehicleMaster) {
 		this.vehicleMaster = vehicleMaster;
 	}
-	
+
 }
