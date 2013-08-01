@@ -1,6 +1,8 @@
 package com.travel.agent.dao.service.impl;
 
 import java.util.Arrays;
+import java.util.Calendar;
+import java.util.GregorianCalendar;
 import java.util.Set;
 
 import org.apache.log4j.Logger;
@@ -29,7 +31,7 @@ public class JourneyMasterDaoServiceImpl implements IJourneyMasterDaoService {
 
 	@Autowired
 	private IItineraryMasterDaoService iItineraryMasterDaoService;
-
+	
 	@Override
 	@Transactional(readOnly = false, propagation = Propagation.REQUIRED, rollbackFor = TASystemException.class, isolation = Isolation.DEFAULT)
 	public JourneyMaster create(JourneyMaster t) throws TASystemException {
@@ -76,7 +78,10 @@ public class JourneyMasterDaoServiceImpl implements IJourneyMasterDaoService {
 				// create for the day of week and for week of month for next 30
 				// days... the
 			} else {
-
+				Calendar today = new GregorianCalendar();
+				Calendar after30Days = new GregorianCalendar();
+				after30Days.add(Calendar.DATE, 30);
+				
 			}
 
 		}

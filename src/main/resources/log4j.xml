@@ -6,58 +6,75 @@
 	<!-- Appenders -->
 	<appender name="console" class="org.apache.log4j.ConsoleAppender">
 		<param name="Target" value="System.out" />
+		<param name="threshold" value="error" />
 		<layout class="org.apache.log4j.PatternLayout">
 			<param name="ConversionPattern" value="%-5p: %c - %m%n" />
 		</layout>
 	</appender>
 
-	<!-- Application logger -->
+	<appender name="file" class="org.apache.log4j.rolling.RollingFileAppender">
+		<param name="threshold" value="info" />
+		<rollingPolicy name="file"
+			class="org.apache.log4j.rolling.TimeBasedRollingPolicy">
+			<param name="FileNamePattern" value="${basedir}/logs/ta.log.%d{yyyy-MM-dd}.gz" />
+			<param name="ActiveFileName" value="${basedir}/logs/ta.log" />
+		</rollingPolicy>
+		<layout class="org.apache.log4j.EnhancedPatternLayout">
+			<param name="ConversionPattern" value="%d{ISO8601} %-5p: %c - %m%n" />
+		</layout>
+	</appender>
 
 	<!-- 3rdparty Loggers -->
-	<logger name="org.springframework.beans">
-		<level value="error" />
-	</logger>
 
 	<logger name="org.hibernate">
-		<level value="error" />
+		<appender-ref ref="file" />
+		<appender-ref ref="console"/>
 	</logger>
 
 	<logger name="org.springframework.transaction">
-		<level value="error" />
+		<appender-ref ref="file" />
+		<appender-ref ref="console"/>
 	</logger>
 
 	<logger name="org.springframework.orm">
-		<level value="error" />
+		<appender-ref ref="file" />
+		<appender-ref ref="console"/>
 	</logger>
 
-	<logger name="org.springframework.beans.factory.parsing">
-		<level value="error" />
+	<logger name="org.springframework.beans">
+		<appender-ref ref="file" />
+		<appender-ref ref="console"/>
 	</logger>
 
 	<logger name="org.springframework.cache">
-		<level value="error" />
+		<appender-ref ref="file" />
+		<appender-ref ref="console"/>
 	</logger>
-	
+
 	<logger name="net.sf.ehcache">
-		<level value="error" />
+		<appender-ref ref="file" />
+		<appender-ref ref="console"/>
 	</logger>
 
 	<logger name="org.hibernate.tool.hbm2ddl">
-		<level value="fatal" />
+		<appender-ref ref="file" />
+		<appender-ref ref="console"/>
 	</logger>
-	
+
 	<logger name="com.googlecode">
-		<level value="error" />
+		<appender-ref ref="file" />
+		<appender-ref ref="console"/>
 	</logger>
-	
+
 	<logger name="com.travel">
-		<level value="debug" />
-	</logger>	
+		<appender-ref ref="file" />
+		<appender-ref ref="console"/>
+	</logger>
 
 	<!-- Root Logger -->
 	<root>
-		<priority value="error" />
 		<appender-ref ref="console" />
+		<appender-ref ref="console"/>
 	</root>
 
 </log4j:configuration>

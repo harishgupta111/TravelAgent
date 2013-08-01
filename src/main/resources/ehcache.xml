@@ -1,10 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ehcache xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:noNamespaceSchemaLocation="http://ehcache.org/ehcache.xsd" name="cacheManager"
-    updateCheck="false" monitoring="autodetect"
-    dynamicConfig="true">
+	updateCheck="false" monitoring="autodetect" dynamicConfig="true">
 
-	<diskStore path="travelAgent.cache" />
+	<diskStore path="${basedir}/TravelAgentCache" />
+
+	<defaultCache eternal="false" timeToIdleSeconds="120"
+		timeToLiveSeconds="120" diskExpiryThreadIntervalSeconds="120"
+		memoryStoreEvictionPolicy="LRU" />
 
 	<cache name="org.hibernate.cache.internal.StandardQueryCache"
 		maxElementsInMemory="10000" eternal="false" timeToIdleSeconds="3600"
@@ -15,70 +18,86 @@
 		maxElementsInMemory="10000" eternal="true">
 	</cache>
 
-	<cache name="entity.ta_AvailableVehicle" eternal="false" maxElementsInMemory="10000"
-		overflowToDisk="true" diskPersistent="true" timeToIdleSeconds="0"
-		timeToLiveSeconds="300" memoryStoreEvictionPolicy="LRU" />
+	<cache name="entity.ta_AvailableVehicle" eternal="false"
+		maxElementsInMemory="10000" overflowToDisk="true" diskPersistent="true"
+		timeToIdleSeconds="0" timeToLiveSeconds="300"
+		memoryStoreEvictionPolicy="LRU">
+	</cache>
 
-	<cache name="entity.ta_vehicleMaster" eternal="false" maxElementsInMemory="10000"
-		overflowToDisk="true" diskPersistent="true" timeToIdleSeconds="0"
-		timeToLiveSeconds="300" memoryStoreEvictionPolicy="LRU" />
+	<cache name="entity.ta_vehicleMaster" eternal="false"
+		maxElementsInMemory="10000" overflowToDisk="true" diskPersistent="true"
+		timeToIdleSeconds="0" timeToLiveSeconds="300"
+		memoryStoreEvictionPolicy="LRU">
+	</cache>
 
 	<cache name="entity.ta_User" eternal="false" maxElementsInMemory="10000"
 		overflowToDisk="true" diskPersistent="true" timeToIdleSeconds="0"
-		timeToLiveSeconds="300" memoryStoreEvictionPolicy="LRU" />
+		timeToLiveSeconds="300" memoryStoreEvictionPolicy="LRU">
+	</cache>
 
 	<cache name="entity.ta_rateMaster" eternal="false"
 		maxElementsInMemory="10000" overflowToDisk="true" diskPersistent="true"
 		timeToIdleSeconds="0" timeToLiveSeconds="300"
-		memoryStoreEvictionPolicy="LRU" />
+		memoryStoreEvictionPolicy="LRU">
+	</cache>
 
 	<cache name="entity.ta_passengerDetail" eternal="false"
 		maxElementsInMemory="10000" overflowToDisk="true" diskPersistent="true"
 		timeToIdleSeconds="0" timeToLiveSeconds="300"
-		memoryStoreEvictionPolicy="LRU" />
+		memoryStoreEvictionPolicy="LRU">
+	</cache>
 
 	<cache name="entity.ta_Booking" eternal="false"
 		maxElementsInMemory="10000" overflowToDisk="true" diskPersistent="true"
 		timeToIdleSeconds="0" timeToLiveSeconds="300"
-		memoryStoreEvictionPolicy="LRU" />
-		
+		memoryStoreEvictionPolicy="LRU">
+	</cache>
+
 	<cache name="entity.ta_StateMaster" eternal="false"
 		maxElementsInMemory="10000" overflowToDisk="true" diskPersistent="true"
 		timeToIdleSeconds="0" timeToLiveSeconds="300"
-		memoryStoreEvictionPolicy="LRU" />
-		
+		memoryStoreEvictionPolicy="LRU">
+	</cache>
+
 	<cache name="entity.ta_LocationMaster" eternal="false"
 		maxElementsInMemory="10000" overflowToDisk="true" diskPersistent="true"
 		timeToIdleSeconds="0" timeToLiveSeconds="300"
-		memoryStoreEvictionPolicy="LRU" />
-		
+		memoryStoreEvictionPolicy="LRU">
+	</cache>
+
 	<cache name="entity.ta_ContactUs" eternal="false"
 		maxElementsInMemory="10000" overflowToDisk="true" diskPersistent="true"
 		timeToIdleSeconds="0" timeToLiveSeconds="300"
-		memoryStoreEvictionPolicy="LRU" />
-		
+		memoryStoreEvictionPolicy="LRU">
+	</cache>
+
 	<cache name="entity.ta_UserMaster" eternal="false"
 		maxElementsInMemory="10000" overflowToDisk="true" diskPersistent="true"
 		timeToIdleSeconds="0" timeToLiveSeconds="300"
-		memoryStoreEvictionPolicy="LRU" />
-		
+		memoryStoreEvictionPolicy="LRU">
+	</cache>
+
 	<cache name="entity.ta_UserAuthorityMaster" eternal="false"
 		maxElementsInMemory="10000" overflowToDisk="true" diskPersistent="true"
 		timeToIdleSeconds="0" timeToLiveSeconds="300"
-		memoryStoreEvictionPolicy="LRU" />
-		
+		memoryStoreEvictionPolicy="LRU">
+	</cache>
+
 	<cache name="entity.ta_ItineraryMaster" eternal="false"
 		maxElementsInMemory="10000" overflowToDisk="true" diskPersistent="true"
 		timeToIdleSeconds="0" timeToLiveSeconds="300"
-		memoryStoreEvictionPolicy="LRU" />
-		
+		memoryStoreEvictionPolicy="LRU">
+	</cache>
+
 	<cache name="entity.ta_ItineraryDetail" eternal="false"
 		maxElementsInMemory="10000" overflowToDisk="true" diskPersistent="true"
 		timeToIdleSeconds="0" timeToLiveSeconds="300"
-		memoryStoreEvictionPolicy="LRU" />
-		
+		memoryStoreEvictionPolicy="LRU">
+	</cache>
+
 	<cache name="entity.ta_JourneyMaster" eternal="false"
 		maxElementsInMemory="10000" overflowToDisk="true" diskPersistent="true"
 		timeToIdleSeconds="0" timeToLiveSeconds="300"
-		memoryStoreEvictionPolicy="LRU" />
+		memoryStoreEvictionPolicy="LRU" >
+	</cache>	
 </ehcache>

@@ -9,6 +9,7 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.Response.Status;
 
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -29,6 +30,9 @@ public class EnumRestService {
 	@Autowired
 	private HibernateObjectMapper hibernateObjectMapper;
 	
+	private static Logger logger = Logger
+			.getLogger(EnumRestService.class);
+	
 	@GET
 	@Path("/rateType/getAll")
 	@Produces(MediaType.APPLICATION_JSON)
@@ -37,6 +41,7 @@ public class EnumRestService {
 		Map<Integer, RateType> map = RateType.returnMap();
 		ObjectMapper mapper = new ObjectMapper();
 		String json = mapper.writeValueAsString(map);
+		logger.debug("before setting " + json);
 		return Response.status(Status.CREATED.getStatusCode())
 				.header("Content-Type", "application/json").entity(json)
 				.build();
@@ -50,6 +55,7 @@ public class EnumRestService {
 		Map<Integer, ContactUsMessageType> map = ContactUsMessageType.returnMap();
 		ObjectMapper mapper = new ObjectMapper();
 		String json = mapper.writeValueAsString(map);
+		logger.debug("before setting " + json);
 		return Response.status(Status.CREATED)
 				.header("Content-Type", "application/json").entity(json)
 				.build();
@@ -64,6 +70,7 @@ public class EnumRestService {
 		Map<Integer, VehicleType> map = VehicleType.returnMap();
 		ObjectMapper mapper = new ObjectMapper();
 		String json = mapper.writeValueAsString(map);
+		logger.debug("before setting " + json);
 		return Response.status(Status.CREATED)
 				.header("Content-Type", "application/json").entity(json)
 				.build();
@@ -77,6 +84,7 @@ public class EnumRestService {
 		Map<Integer, RecordCreatorType> map = RecordCreatorType.returnMap();
 		ObjectMapper mapper = new ObjectMapper();
 		String json = mapper.writeValueAsString(map);
+		logger.debug("before setting " + json);
 		return Response.status(Status.CREATED)
 				.header("Content-Type", "application/json").entity(json)
 				.build();

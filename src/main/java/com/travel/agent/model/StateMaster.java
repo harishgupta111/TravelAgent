@@ -17,6 +17,9 @@ import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 import org.hibernate.annotations.Type;
 import org.hibernate.validator.constraints.NotEmpty;
+import org.springframework.beans.factory.config.ConfigurableBeanFactory;
+import org.springframework.context.annotation.Scope;
+import org.springframework.stereotype.Component;
 
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.travel.agent.model.enums.RecordCreatorType;
@@ -26,6 +29,8 @@ import com.travel.agent.model.enums.RecordCreatorType;
 		"stateName", "stateCode" }))
 @Cache(region = "entity.ta_StateMaster", usage = CacheConcurrencyStrategy.READ_WRITE)
 @Cacheable
+@Scope(value=ConfigurableBeanFactory.SCOPE_PROTOTYPE)
+@Component
 public class StateMaster extends SABaseEntity {
 
 	/**

@@ -21,7 +21,7 @@ import com.travel.agent.model.enums.RecordCreatorType;
 
 @Entity
 @Table(name = "ta_ContactUs")
-@Cache(region = "entity.contactUs", usage = CacheConcurrencyStrategy.READ_WRITE)
+@Cache(region = "entity.ta_ContactUs", usage = CacheConcurrencyStrategy.READ_WRITE)
 @Cacheable
 public class ContactUs extends SABaseEntity {
 

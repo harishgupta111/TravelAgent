@@ -31,7 +31,7 @@
 
 	<bean id="oqEhcache"
 		class="org.springframework.cache.ehcache.EhCacheManagerFactoryBean"
-		p:configLocation="classpath:oq-ehcache.xml" p:shared="true" />
+		p:configLocation="classpath:ehcache.xml" p:shared="true" />
 
 	<!-- Database -->
 	<bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource">
@@ -54,7 +54,7 @@
 				hibernate.default_schema=TravelAgent
 				hibernate.hbm2ddl.auto=create
 				hibernate.cache.use_second_level_cache=true
-				hibernate.cache.region.factory_class=org.hibernate.cache.ehcache.EhCacheRegionFactory
+				hibernate.cache.region.factory_class=org.hibernate.cache.ehcache.SingletonEhCacheRegionFactory
 				hibernate.cache.use_query_cache=true
 				hibernate.cache.use_structured_entries=true
 				hibernate.generate_statistics=true
